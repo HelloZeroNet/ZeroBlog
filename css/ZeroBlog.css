@@ -1,0 +1,114 @@
+/* Design based on medium */
+
+body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto', sans-serif; height: 15000px; overflow: hidden }
+body.loaded { height: auto; overflow: auto }
+h1, h2, h3, h4 { font-family: 'Roboto', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
+h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
+h2 { margin-top: 3em }
+h3 { font-size: 24px; margin-top: 2em }
+h1 + h2, h2 + h3 { margin-top: inherit }
+
+p { margin-top: 0.9em; margin-bottom: 0.9em }
+hr { margin: 20px 0px; border: none; border-bottom: 1px solid #eee; margin-left: auto; margin-right: auto; width: 120px; }
+small { font-size: 80%; color: #999; }
+
+a { border-bottom: 1px solid #3498db; text-decoration: none; color: black; font-weight: bold }
+a.nolink { border-bottom: none }
+a:hover { color: #3498db }
+
+.button { 
+	padding: 5px 10px; margin-left: 10px; background-color: #DDE0E0; border-bottom: 2px solid #999998; background-position: left center; 
+	border-radius: 2px; text-decoration: none; transition: all 0.5s ease-out; color: #333
+}
+.button:hover { background-color: #FFF400; border-color: white; border-bottom: 2px solid #4D4D4C; transition: none; color: inherit }
+.button:active { position: relative; top: 1px }
+
+/*.button-delete { background-color: #e74c3c; border-bottom-color: #A83F34; color: white }*/
+.button-outline { background-color: white; color: #DDD; border: 1px solid #eee }
+
+.button-delete:hover { background-color: #FF5442; border: 1px solid #FF5442; color: white } 
+.button-ok:hover { background-color: #27AE60; border: 1px solid #27AE60; color: white } 
+
+.button.loading { 
+	color: rgba(0,0,0,0); background: #999 url(../img/loading.gif) no-repeat center center; 
+	transition: all 0.5s ease-out; pointer-events: none; border-bottom: 2px solid #666
+} 
+
+.cancel { margin-left: 10px; font-size: 80%; color: #999; }
+
+
+.template { display: none }
+
+.editable { outline: none }
+.editable-edit:hover { opacity: 1 }
+.editable-edit { 
+	opacity: 0; float: left; margin-top: 0px; margin-left: -40px; padding: 2px 20px; transition: all 0.3s; width: 0px;
+	color: rgba(100,100,100,0.5); text-decoration: none; font-size: 18px; font-weight: normal; border: none;
+}
+.editing { white-space: pre-wrap; z-index: 1; position: relative; outline: 10000px solid rgba(255,255,255,0.9) !important; }
+.editing p { margin: 0px; padding: 0px } /* IE FIX */
+
+
+/* -- Editbar -- */
+
+.bottombar { 
+	display: none; position: fixed; padding: 10px 20px; opacity: 0; background-color: rgba(255,255,255,0.9);
+	right: 30px; bottom: 0px; z-index: 999; transition: all 0.3s; transform: translateY(50px) 
+}
+.bottombar.visible { transform: translateY(0px); opacity: 1 }
+.publishbar { z-index: 990; }
+.publishbar.visible { display: inline-block; }
+
+
+/* -- Left -- */
+
+.left { float: left; position: absolute; width: 170px; padding-left: 60px; padding-right: 20px; margin-top: 60px; text-align: right }
+.right { float: left; padding-left: 60px; margin-left: 240px; max-width: 650px; padding-right: 60px; padding-top: 60px }
+
+.left .avatar { 
+	background-color: #F0F0F0; width: 60px; height: 60px; border-radius: 100%; margin-bottom: 10px; 
+	background-position: center center; background-size: 70%; display: inline-block;
+}
+.left h1 a { font-family: Tinos; display: inline-block }
+.left h2 { font-size: 15px; font-family: Tinos; line-height: 1.6em; color: #AAA; margin-top: 14px; letter-spacing: 0.2px }
+.left ul, .left li { padding: 0px; margin: 0px; list-style-type: none; line-height: 2em }
+.left hr { margin-left: 100px; margin-right: 0px; width: auto }
+.left .links { width: 230px; margin-left: -60px }
+.left .links.editing { text-align: left }
+
+/* -- Post -- */
+
+.posts .new { display: none; position: absolute; top: -50px; margin-left: 0px; left: 50%; transform: translateX(-50%) }
+
+.posts, .post-full { display: none; position: relative; }
+.page-main .posts { display: block }
+.page-post .post-full { display: block }
+
+
+.post { margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid #eee; min-width: 500px }
+.post .title a { text-decoration: none; color: inherit; display: inline-block; border-bottom: none; font-weight: inherit }
+.posts .title a:visited { color: #666969 }
+.post .details { color: #BBB; margin-top: 5px; margin-bottom: 20px }
+.post .body { font-size: 21.5px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
+
+.post .body h1 { text-align: center; margin-top: 50px }
+.post .body h1:before { content: " "; border-top: 1px solid #EEE; width: 120px; display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px; }
+
+.post .body li { margin-top: 0.5em; margin-bottom: 0.5em }
+.post .body hr:first-of-type { display: none }
+
+.post .body code { 
+	background-color: #f5f5f5; border: 1px solid #ccc; padding: 0px 5px; overflow: auto; border-radius: 2px; display: inline-block;
+	color: #444; font-weight: normal; font-size: 60%; vertical-align: text-bottom; border-bottom-width: 2px;
+}
+.post .body pre { table-layout: fixed; width: 100%; display: table; white-space: normal; }
+.post .body pre code { padding: 10px 20px; white-space: pre; max-width: 850px }
+
+/*.post .more { 
+	display: inline-block; border: 1px solid #eee; padding: 10px 25px; border-radius: 26px; font-size: 11px; color: #AAA; font-weight: normal; 
+	left: 50%; position: relative; transform: translateX(-50%);
+}*/
+
+.post .more { font-size: 19px; border-bottom: none; display: none }
+.post .more .readmore { border-bottom: 2px solid #eee }
+.post .more:hover .readmore { border-bottom: 2px solid #3498db }

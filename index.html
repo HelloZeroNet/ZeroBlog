@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+ <title>ZeroBlog Demo</title>
+ <meta charset="utf-8">
+ <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+ <link rel="stylesheet" href="css/all.css" />
+ <base href="/1KRxE1s3oDyNDawuYWpzbLUwNm8oDbeEp6/" target="_top" id="base">
+ <script>base.href = document.location.href.replace("/media", "").replace("index.html", "") // Make hashtags work</script>
+
+</head>
+<body>
+
+<!-- editbar -->
+<div class="editbar bottombar">
+ Editing: <span class="object">Post:21.body</span> <a href="#Save" class="button save">Save</a> <a href="#Delete" class="button button-delete button-outline delete">Delete</a> <a href="#Cancel" class="cancel">Cancel</a>
+</div>
+<!-- EOF editbar -->
+
+
+<!-- publishbar -->
+<div class="publishbar bottombar">
+ <small>Content changed</small> <a href="#Publish" class="button button-outline button-ok publish">Sign &amp; Publish new content</a>
+</div>
+<!-- EOF publishbar -->
+
+
+<!-- left -->
+<div class="left" data-object="Site">
+ <a href="?Home" class="nolink"><div class="avatar"> </div></a>
+ <h1><a href="?Home" class="nolink" data-editable="title" data-editable-mode="simple"></a></h1>
+ <h2 data-editable="description"></h2>
+ <hr>
+ <div class="links" data-editable="links">
+ </div>
+</div>
+<!-- EOF left -->
+
+
+<!-- right -->
+<div class="right">
+ <!-- posts -->
+ <div class="posts">
+  <a href="#New+Post" class="button button-outline new">Add new post</a>
+  
+  <!-- Template: post -->
+  <div class="post template" data-object="Post:23" data-deletable="True">
+   <h1 class="title"><a href="?Post:23:Title" data-editable="title" data-editable-mode="simple">Title</a></h1>
+   <div class="details" data-editable="posted" data-editable-mode="timestamp">21 hours ago &middot; 2 min read</div>
+   <div class="body">Body</div>
+   <a class="more" href="#"><span class='readmore'>Read more</span> →</a>
+  </div>
+  <!-- EOF Template: post -->
+ 
+ </div>
+ <!-- EOF posts -->
+
+ <!-- post-full -->
+ <div class="post post-full" data-object="Post:23" data-deletable="True">
+  <h1 class="title"><a href="?Post:23:Title" data-editable="title" data-editable-mode="simple">Title</a></h1>
+  <div class="details" data-editable="posted" data-editable-mode="timestamp">21 hours ago &middot; 2 min read</div>
+  <div class="body" data-editable="body"></div>
+ </div>
+ <!-- EOF post-full -->
+
+</div>
+<!-- EOF right -->
+
+
+<div style="clear: both"></div>
+
+<script>
+// Load from media from backward compatibility
+var script = document.createElement('script');
+window.media_root = location.pathname.replace(/(media\/.*)\/.*/, "$1")
+script.src = media_root+"/js/all.js";
+document.getElementsByTagName('head')[0].appendChild(script);
+</script>
+<!-- from 0.1.6 works: <script type="text/javascript" src="js/all.js" asyc></script> -->
+
+</body>
+</html>

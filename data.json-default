@@ -1,0 +1,17 @@
+{
+	"title": "MyZeroBlog",
+	"description": "Demo for decentralized, self publishing blogging platform.",
+	"links": "- [Source code](https://github.com/HelloZeroNet)",
+	"next_id": 2,
+	"demo": false,
+	"modified": 1422102473,
+	"posts": [
+		{
+			"id": 1,
+			"title": "Hello ZeroBlog!",
+			"posted": 1422065620.441,
+			"edited": false,
+			"body": "Your first post"
+		}
+	]
+}

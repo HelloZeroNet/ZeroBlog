@@ -1,0 +1,45 @@
+{
+    "address": "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8", 
+    "background-color": "white", 
+    "description": "Blogging platform Demo", 
+    "files": {
+        "css/all.css": {
+            "sha1": "21e4c12bb5ab2a627eba5263fcb703ce16a37068", 
+            "sha512": "a558198f52601022e4d2955b6a8cc807dc32b5c35b838e6c26e59255faf4acc7", 
+            "size": 103665
+        }, 
+        "data.json": {
+            "sha1": "95ae20525b71991d299010c4dc7e0fdc6d60d2d4", 
+            "sha512": "3a6082e17aedb6265fb66785279aa305b54f1a210c42bb72a9680bdbcb90244d", 
+            "size": 4966
+        }, 
+        "data.json-default": {
+            "sha1": "c5e086beb6c4fb2243a0833e33fee134053a7ef0", 
+            "sha512": "53b13a1d181295af27bdeca328adfe7a45d4784044ce632bc647d5bbf7661831", 
+            "size": 367
+        }, 
+        "img/loading.gif": {
+            "sha1": "a669dbd8a577f6957656fc88ba4960b93fcd23d9", 
+            "sha512": "8a42b98962faea74618113166886be488c09dad10ca47fe97005edc5fb40cc00", 
+            "size": 723
+        }, 
+        "index.html": {
+            "sha1": "e0f67772ba195dee1fc6bb12995e89711eda8568", 
+            "sha512": "13788bd35787f601e9fc81d635cee5dd0fa183d4d54e26d53f15301d53fc763e", 
+            "size": 2779
+        }, 
+        "js/all.js": {
+            "sha1": "964293829a59809e0fcebfa8e048db54d31052ee", 
+            "sha512": "275479ad1688007d2ea23b710ce09ecd2bab9d393cc8dcc108cea864eea5d464", 
+            "size": 175292
+        }
+    }, 
+    "ignore": "(js|css)/(?!all.(js|css))", 
+    "modified": 1422150921.947, 
+    "sign": [
+        94853846199073492279879342423084724620790215497516934869657435399769106624650, 
+        102846947520069373619469728596000712163818394583545292081093360672824618217431
+    ], 
+    "title": "ZeroBlog", 
+    "zeronet_version": "0.1.6"
+}
