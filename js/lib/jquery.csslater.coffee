@@ -40,3 +40,11 @@ jQuery.fn.cssLater = (name, val, time = 500) ->
 		elem.css name, val
 	), time
 	return @
+
+
+jQuery.fn.toggleClassLater = (name, val, time = 10) ->
+	elem = @
+	setTimeout ( ->
+		elem.toggleClass name, val
+	), time
+	return @

@@ -20,6 +20,11 @@ class ZeroBlog extends ZeroFrame
 				@checkPublishbar()
 				$(".publishbar").on "click", @publish
 				$(".posts .button.new").css("display", "inline-block")
+				$(".editbar .icon-help").on "click", =>
+					$(".editbar .markdown-help").css("display", "block")
+					$(".editbar .markdown-help").toggleClassLater("visible", 10)
+					$(".editbar .icon-help").toggleClass("active")
+					return false
 
 		@log "inited!"
 
@@ -145,7 +150,7 @@ class ZeroBlog extends ZeroFrame
 
 		if post.body.match /^---/m # Has more over fold
 			details += " &middot; #{@readtime(post.body)}" # If has break add readtime
-			$(".more", elem).css("display", "inline").attr("href", "?Post:#{post.id}:#{title_hash}")
+			$(".more", elem).css("display", "inline-block").attr("href", "?Post:#{post.id}:#{title_hash}")
 		$(".details", elem).html(details)
 
 		if full 
@@ -175,7 +180,6 @@ class ZeroBlog extends ZeroFrame
 	getContent: (elem, raw=false) =>
 		[type, id] = @getObject(elem).data("object").split(":")
 		id = parseInt(id)
-		@log "Editing", type, id
 		if type == "Post"
 			post = (post for post in @data.posts when post.id == id)[0]
 			content = post[elem.data("editable")]
@@ -200,7 +204,6 @@ class ZeroBlog extends ZeroFrame
 
 		[type, id] = @getObject(elem).data("object").split(":")
 		id = parseInt(id)
-		@log "Saving", type, id
 
 		if type == "Post"
 			post = (post for post in @data.posts when post.id == id)[0]
@@ -248,6 +251,14 @@ class ZeroBlog extends ZeroFrame
 				@cmd "wrapperNotification", ["error", "File write error: #{res}"]
 				if cb then cb(false)
 			@checkPublishbar()
+
+		# Updating title in content.json
+		$.get "content.json", ((content) =>
+			content = content.replace /"title": ".*?"/, "\"title\": \"#{@data.title}\"" # Load as raw html to prevent js bignumber problems
+			@cmd "fileWrite", ["content.json", btoa(content)], (res) =>
+				if res != "ok"
+					@cmd "wrapperNotification", ["error", "Content.json write error: #{res}"]
+		), "html"
 
 
 	# - Date -

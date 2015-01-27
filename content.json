@@ -4,14 +4,14 @@
     "description": "Blogging platform Demo", 
     "files": {
         "css/all.css": {
-            "sha1": "21e4c12bb5ab2a627eba5263fcb703ce16a37068", 
-            "sha512": "a558198f52601022e4d2955b6a8cc807dc32b5c35b838e6c26e59255faf4acc7", 
-            "size": 103665
+            "sha1": "371f6633c485f3f8be751f71b0de9bed6cfedc16", 
+            "sha512": "6e341e3565c1caee704951dd41523658bf55ebc3a36c08f76a307a667a244749", 
+            "size": 106069
         }, 
         "data.json": {
-            "sha1": "95ae20525b71991d299010c4dc7e0fdc6d60d2d4", 
-            "sha512": "3a6082e17aedb6265fb66785279aa305b54f1a210c42bb72a9680bdbcb90244d", 
-            "size": 4966
+            "sha1": "8dae7170a6df38bdc14aa85a2a134f1d806cd188", 
+            "sha512": "862f0195e2b727a747d3dfb441029b84d359108f814f0bfc0d9d82411f55fa9d", 
+            "size": 7224
         }, 
         "data.json-default": {
             "sha1": "c5e086beb6c4fb2243a0833e33fee134053a7ef0", 
@@ -24,21 +24,21 @@
             "size": 723
         }, 
         "index.html": {
-            "sha1": "e0f67772ba195dee1fc6bb12995e89711eda8568", 
-            "sha512": "13788bd35787f601e9fc81d635cee5dd0fa183d4d54e26d53f15301d53fc763e", 
-            "size": 2779
+            "sha1": "7e27008caacdf6510896b532a6bdae04c29fc081", 
+            "sha512": "cf0f96682b9e7af52e7732fb3030e6d9b9ec799b3e8f2f1cbed810a66c4df84a", 
+            "size": 3319
         }, 
         "js/all.js": {
-            "sha1": "964293829a59809e0fcebfa8e048db54d31052ee", 
-            "sha512": "275479ad1688007d2ea23b710ce09ecd2bab9d393cc8dcc108cea864eea5d464", 
-            "size": 175292
+            "sha1": "7f065c565778936f5329bafd4cad718662f25850", 
+            "sha512": "78d70ecf4cfb587f792395fda63e9898cf19080fdee227533e39b92e3d93423a", 
+            "size": 177306
         }
     }, 
     "ignore": "(js|css)/(?!all.(js|css))", 
-    "modified": 1422150921.947, 
+    "modified": 1422385966.059, 
     "sign": [
-        94853846199073492279879342423084724620790215497516934869657435399769106624650, 
-        102846947520069373619469728596000712163818394583545292081093360672824618217431
+        94587623961322055838212889414488591175356401711817841721078899637114091345928, 
+        113406857146007970741123131712701348588401227407265764935840946386468303879722
     ], 
     "title": "ZeroBlog", 
     "zeronet_version": "0.1.6"

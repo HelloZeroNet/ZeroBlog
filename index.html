@@ -6,7 +6,7 @@
  <meta charset="utf-8">
  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
  <link rel="stylesheet" href="css/all.css" />
- <base href="/1KRxE1s3oDyNDawuYWpzbLUwNm8oDbeEp6/" target="_top" id="base">
+ <base href="" target="_top" id="base">
  <script>base.href = document.location.href.replace("/media", "").replace("index.html", "") // Make hashtags work</script>
 
 </head>
@@ -14,7 +14,24 @@
 
 <!-- editbar -->
 <div class="editbar bottombar">
- Editing: <span class="object">Post:21.body</span> <a href="#Save" class="button save">Save</a> <a href="#Delete" class="button button-delete button-outline delete">Delete</a> <a href="#Cancel" class="cancel">Cancel</a>
+ <ul class="markdown-help">
+  <li># H1</li>
+  <li>## H2</li>
+  <li>### H3</li>
+  <li><i>_italic_</i></li>
+  <li><b>**bold**</b></li>
+  <li>~~<s>strikethrough</s>~~</li>
+  <li>- Lists</li>
+  <li>1. Numbered lists</li>
+  <li>[Links](http://www.zeronet.io)</li>
+  <li>[References][1]<br>[1]: Can be used</li>
+  <li>![image alt](img/logo.png)</li>
+  <li>Inline <code>`code`</code></li>
+  <li><code>```python<br>print "Code block"<br>```</code></li>
+  <li>&gt; Quotes</li>
+  <li>--- Horizontal rule</li>
+ </ul>
+ <a href="#Markdown+help" class="icon-help">?</a> Editing: <span class="object">Post:21.body</span> <a href="#Save" class="button save">Save</a> <a href="#Delete" class="button button-delete button-outline delete">Delete</a> <a href="#Cancel" class="cancel">Cancel</a>
 </div>
 <!-- EOF editbar -->
 
@@ -48,7 +65,7 @@
   <div class="post template" data-object="Post:23" data-deletable="True">
    <h1 class="title"><a href="?Post:23:Title" data-editable="title" data-editable-mode="simple">Title</a></h1>
    <div class="details" data-editable="posted" data-editable-mode="timestamp">21 hours ago &middot; 2 min read</div>
-   <div class="body">Body</div>
+   <div class="body" data-editable="body">Body</div>
    <a class="more" href="#"><span class='readmore'>Read more</span> →</a>
   </div>
   <!-- EOF Template: post -->

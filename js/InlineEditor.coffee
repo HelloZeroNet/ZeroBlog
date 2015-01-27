@@ -3,9 +3,9 @@ class InlineEditor
 		@edit_button = $("<a href='#Edit' class='editable-edit'>§</a>")
 		@edit_button.on "click", @startEdit
 		@elem.addClass("editable").before(@edit_button)
+		@editor = null
 		@elem.on "mouseenter", (e) =>
 			@edit_button.css("opacity", "1")
-		@elem.on "mouseenter contextmenu", (e) =>
 			# Keep in display
 			scrolltop = $(window).scrollTop()
 			top = @edit_button.offset().top-parseInt(@edit_button.css("margin-top"))
@@ -16,19 +16,28 @@ class InlineEditor
 		@elem.on "mouseleave", =>
 			@edit_button.css("opacity", "")
 
+		if @elem.is(":hover") then @elem.trigger "mouseenter"
+
 
 	startEdit: =>
-		@elem.attr("contenteditable", "true")
 		@content_before = @elem.html() # Save current to restore on cancel
-		@elem.html @markdownToEditable(@getContent(@elem, true)) # Convert to html
-		@elem.css("outline", "10000px solid rgba(255,255,255,0)").cssLater("transition", "outline 0.3s", 5).addClassLater("editing",10) # Animate other elements fadeout
-		if $(window).scrollTop() == 0 then @elem.focus()
-		@elem.on "paste", => # Fix for html formatted paste
-			setTimeout (=>
-				fixed = @markdownToEditable(@editableToMarkdown( @elem.html() ))
-				if fixed != @elem.html()
-					@elem.html(fixed)
-			), 0
+
+		@editor = $("<textarea class='editor'></textarea>")
+		@editor.css("outline", "10000px solid rgba(255,255,255,0)").cssLater("transition", "outline 0.3s", 5).cssLater("outline", "10000px solid rgba(255,255,255,0.9)", 10) # Animate other elements fadeout
+		@editor.val @getContent(@elem, "raw")
+		@elem.after(@editor)
+
+		@elem.html [1..50].join("fill the width") # To make sure we span the editor as far as we can
+		@copyStyle(@elem, @editor) # Copy elem style to editor
+		@elem.html @content_before # Restore content
+
+		
+		@autoExpand(@editor) # Set editor to autoexpand
+		@elem.css("display", "none") # Hide elem
+
+		if $(window).scrollTop() == 0 # Focus textfield if scroll on top
+			@editor[0].selectionEnd = 0
+			@editor.focus()
 
 		$(".editable-edit").css("display", "none") # Hide all edit button until its not finished
 
@@ -47,33 +56,27 @@ class InlineEditor
 		else
 			$(".editbar .delete").css("display", "none")
 
-
-		### Tab fix (not works with contenteditable)
-		@elem.on 'keydown', (e) =>
-			if e.which == 9 # Tab fix
-				e.preventDefault();
-				s = @elem.selectionStart;
-				val = @elem.html()
-				debugger
-				@elem.html val.substring(0,@elem[0].selectionStart) + "\t" + val.substring(@elem[0].selectionEnd)
-				@elem[0].selectionEnd = s+1; 
-		###
+		window.onbeforeunload = ->
+			return 'Your unsaved blog changes will be lost!'
 		
 		return false
 
 
 	stopEdit: =>
-		$(".editable-edit").css("display", "")
-		@elem.attr("contenteditable", "false")
-		@elem.removeClass("editing")
-		@elem.off "blur"
+		@editor.remove()
+		@editor = null
+		@elem.css("display", "")
+
+		$(".editable-edit").css("display", "") # Show edit buttons
 
 		$(".editbar").cssLater("display", "none", 1000).removeClass("visible") # Hide editbar
 		$(".publishbar").css("opacity", 1) # Show publishbar
 
+		window.onbeforeunload = null
+
 
 	saveEdit: =>
-		content = @editableToMarkdown(@elem.html())
+		content = @editor.val()
 		$(".editbar .save").addClass("loading")
 		@saveContent @elem, content, (content_html) =>
 			if content_html # File write ok
@@ -107,15 +110,46 @@ class InlineEditor
 		return false
 
 
-	editableToMarkdown: (s) ->
-		s = s.replace(/<br><\/p>/g, "\n").replace(/<\/p>/g,"\n")# Convert newlines IE
-		s = s.replace(/<br><\/div>/g, "\n").replace(/<div>/g,"\n").replace(/<br.*?>/g, "\n")# Convert newlines
-		s = $("<div>"+s+"</div>").text() # Convert to text
-		return s
+	copyStyle: (elem_from, elem_to) ->
+		elem_to.addClass(elem_from[0].className)
+		from_style = getComputedStyle(elem_from[0])
+
+		elem_to.css
+			fontFamily: 	from_style.fontFamily
+			fontSize: 		from_style.fontSize
+			fontWeight: 	from_style.fontWeight
+			marginTop: 		from_style.marginTop
+			marginRight: 	from_style.marginRight
+			marginBottom: 	from_style.marginBottom
+			marginLeft: 	from_style.marginLeft
+			paddingTop: 	from_style.paddingTop
+			paddingRight: 	from_style.paddingRight
+			paddingBottom: 	from_style.paddingBottom
+			paddingLeft: 	from_style.paddingLeft
+			lineHeight: 	from_style.lineHeight
+			textAlign: 		from_style.textAlign
+			color: 			from_style.color
+			letterSpacing: 	from_style.letterSpacing
+			minWidth: 		elem_from.innerWidth()
 
 
-	markdownToEditable: (s) ->
-		return s.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>")
+	autoExpand: (elem) ->
+		editor = elem[0]
+		# Autoexpand
+		elem.height(1)
+		elem.on "input", ->
+			if editor.scrollHeight > elem.height()
+				elem.height(1).height(editor.scrollHeight + parseFloat(elem.css("borderTopWidth")) + parseFloat(elem.css("borderBottomWidth")))
+		elem.trigger "input"
+
+		# Tab key support
+		elem.on 'keydown', (e) ->
+			if e.which == 9
+				e.preventDefault()
+				s = this.selectionStart
+				val = elem.val()
+				elem.val(val.substring(0,this.selectionStart) + "\t" + val.substring(this.selectionEnd))
+				this.selectionEnd = s+1; 
 
  
 window.InlineEditor = InlineEditor

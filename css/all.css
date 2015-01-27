@@ -47,11 +47,13 @@ a:hover { color: #3498db }
 .editable { outline: none }
 .editable-edit:hover { opacity: 1 }
 .editable-edit { 
-	opacity: 0; float: left; margin-top: 0px; margin-left: -40px; padding: 2px 20px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; width: 0px;
-	color: rgba(100,100,100,0.5); text-decoration: none; font-size: 18px; font-weight: normal; border: none;
+	opacity: 0; float: left; margin-top: -6px; margin-left: -40px; padding: 8px 20px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; width: 0px;
+	color: rgba(100,100,100,0.5); text-decoration: none; font-size: 18px; font-weight: normal; border: none; 
 }
-.editing { white-space: pre-wrap; z-index: 1; position: relative; outline: 10000px solid rgba(255,255,255,0.9) !important; }
-.editing p { margin: 0px; padding: 0px } /* IE FIX */
+/*.editing { white-space: pre-wrap; z-index: 1; position: relative; outline: 10000px solid rgba(255,255,255,0.9) !important; }
+.editing p { margin: 0px; padding: 0px }*/ /* IE FIX */
+.editor { width: 100%; display: block; overflow :hidden; resize: none; border: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; z-index: 900; position: relative }
+.editor:focus { border: 0px; outline-offset: 0px }
 
 
 /* -- Editbar -- */
@@ -61,9 +63,18 @@ a:hover { color: #3498db }
 	right: 30px; bottom: 0px; z-index: 999; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; transform: translateY(50px) 
 }
 .bottombar.visible { -webkit-transform: translateY(0px); -moz-transform: translateY(0px); -o-transform: translateY(0px); -ms-transform: translateY(0px); transform: translateY(0px) ; opacity: 1 }
-.publishbar { z-index: 990; }
+.publishbar { z-index: 990}
 .publishbar.visible { display: inline-block; }
-
+.editbar { -webkit-perspective: 900px ; -moz-perspective: 900px ; -o-perspective: 900px ; -ms-perspective: 900px ; perspective: 900px  }
+.markdown-help { 
+	position: absolute; bottom: 30px; -webkit-transform: translateX(0px) rotateY(-40deg); -moz-transform: translateX(0px) rotateY(-40deg); -o-transform: translateX(0px) rotateY(-40deg); -ms-transform: translateX(0px) rotateY(-40deg); transform: translateX(0px) rotateY(-40deg) ; transform-origin: right; right: 0px; 
+	list-style-type: none; background-color: rgba(255,255,255,0.9); padding: 10px; opacity: 0; -webkit-transition: all 0.6s; -moz-transition: all 0.6s; -o-transition: all 0.6s; -ms-transition: all 0.6s; transition: all 0.6s ; display: none
+}
+.markdown-help.visible { -webkit-transform: none; -moz-transform: none; -o-transform: none; -ms-transform: none; transform: none ; opacity: 1 }
+.markdown-help li { margin: 10px 0px }
+.markdown-help code { font-size: 100% }
+.icon-help { border: 1px solid #EEE; padding: 2px; display: inline-block; width: 17px; text-align: center; font-size: 13px; margin-right: 6px; vertical-align: 1px }
+.icon-help.active { background-color: #EEE }
 
 /* -- Left -- */
 
@@ -74,12 +85,13 @@ a:hover { color: #3498db }
 	background-color: #F0F0F0; width: 60px; height: 60px; -webkit-border-radius: 100%; -moz-border-radius: 100%; -o-border-radius: 100%; -ms-border-radius: 100%; border-radius: 100% ; margin-bottom: 10px; 
 	background-position: center center; background-size: 70%; display: inline-block;
 }
-.left h1 a { font-family: Tinos; display: inline-block }
+.left h1 a.nolink { font-family: Tinos; display: inline-block; padding: 1px }
+.left h1 a.editable-edit { float: none }
 .left h2 { font-size: 15px; font-family: Tinos; line-height: 1.6em; color: #AAA; margin-top: 14px; letter-spacing: 0.2px }
 .left ul, .left li { padding: 0px; margin: 0px; list-style-type: none; line-height: 2em }
 .left hr { margin-left: 100px; margin-right: 0px; width: auto }
 .left .links { width: 230px; margin-left: -60px }
-.left .links.editing { text-align: left }
+.left .links.editor { text-align: left !important }
 
 /* -- Post -- */
 
@@ -99,24 +111,28 @@ a:hover { color: #3498db }
 .post .body h1 { text-align: center; margin-top: 50px }
 .post .body h1:before { content: " "; border-top: 1px solid #EEE; width: 120px; display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px; }
 
+.post .body p + ul { margin-top: -0.5em }
 .post .body li { margin-top: 0.5em; margin-bottom: 0.5em }
 .post .body hr:first-of-type { display: none }
 
-.post .body code { 
+code { 
 	background-color: #f5f5f5; border: 1px solid #ccc; padding: 0px 5px; overflow: auto; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; display: inline-block;
 	color: #444; font-weight: normal; font-size: 60%; vertical-align: text-bottom; border-bottom-width: 2px;
 }
-.post .body pre { table-layout: fixed; width: 100%; display: table; white-space: normal; }
+.post .body pre { table-layout: fixed; width: auto; display: table; white-space: normal; }
 .post .body pre code { padding: 10px 20px; white-space: pre; max-width: 850px }
 
+blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 /*.post .more { 
 	display: inline-block; border: 1px solid #eee; padding: 10px 25px; -webkit-border-radius: 26px; -moz-border-radius: 26px; -o-border-radius: 26px; -ms-border-radius: 26px; border-radius: 26px ; font-size: 11px; color: #AAA; font-weight: normal; 
 	left: 50%; position: relative; -webkit-transform: translateX(-50%); -moz-transform: translateX(-50%); -o-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%) ;
 }*/
 
-.post .more { font-size: 19px; border-bottom: none; display: none }
-.post .more .readmore { border-bottom: 2px solid #eee }
-.post .more:hover .readmore { border-bottom: 2px solid #3498db }
+.post .more { border: 2px solid #333; padding: 10px 20px; font-size: 15px; margin-top: 30px; display: none; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
+.post .more .readmore {  }
+.post .more:hover { color: white; -webkit-box-shadow: inset 150px 0px 0px 0px #333; -moz-box-shadow: inset 150px 0px 0px 0px #333; -o-box-shadow: inset 150px 0px 0px 0px #333; -ms-box-shadow: inset 150px 0px 0px 0px #333; box-shadow: inset 150px 0px 0px 0px #333 ; }
+.post .more:active { color: white; -webkit-box-shadow: inset 150px 0px 0px 0px #AF3BFF; -moz-box-shadow: inset 150px 0px 0px 0px #AF3BFF; -o-box-shadow: inset 150px 0px 0px 0px #AF3BFF; -ms-box-shadow: inset 150px 0px 0px 0px #AF3BFF; box-shadow: inset 150px 0px 0px 0px #AF3BFF ; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none ; border-color: #AF3BFF }
+
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */

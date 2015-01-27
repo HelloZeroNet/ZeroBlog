@@ -302,6 +302,18 @@
     return this;
   };
 
+  jQuery.fn.toggleClassLater = function(name, val, time) {
+    var elem;
+    if (time == null) {
+      time = 10;
+    }
+    elem = this;
+    setTimeout((function() {
+      return elem.toggleClass(name, val);
+    }), time);
+    return this;
+  };
+
 }).call(this);
 
 
@@ -538,11 +550,11 @@
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   InlineEditor = (function() {
-    function InlineEditor(elem, getContent, saveContent, getObject) {
-      this.elem = elem;
-      this.getContent = getContent;
-      this.saveContent = saveContent;
-      this.getObject = getObject;
+    function InlineEditor(_at_elem, _at_getContent, _at_saveContent, _at_getObject) {
+      this.elem = _at_elem;
+      this.getContent = _at_getContent;
+      this.saveContent = _at_saveContent;
+      this.getObject = _at_getObject;
       this.cancelEdit = __bind(this.cancelEdit, this);
       this.deletePost = __bind(this.deletePost, this);
       this.saveEdit = __bind(this.saveEdit, this);
@@ -551,14 +563,11 @@
       this.edit_button = $("<a href='#Edit' class='editable-edit'>§</a>");
       this.edit_button.on("click", this.startEdit);
       this.elem.addClass("editable").before(this.edit_button);
+      this.editor = null;
       this.elem.on("mouseenter", (function(_this) {
         return function(e) {
-          return _this.edit_button.css("opacity", "1");
-        };
-      })(this));
-      this.elem.on("mouseenter contextmenu", (function(_this) {
-        return function(e) {
           var scrolltop, top;
+          _this.edit_button.css("opacity", "1");
           scrolltop = $(window).scrollTop();
           top = _this.edit_button.offset().top - parseInt(_this.edit_button.css("margin-top"));
           if (scrolltop > top) {
@@ -573,27 +582,31 @@
           return _this.edit_button.css("opacity", "");
         };
       })(this));
+      if (this.elem.is(":hover")) {
+        this.elem.trigger("mouseenter");
+      }
     }
 
     InlineEditor.prototype.startEdit = function() {
-      this.elem.attr("contenteditable", "true");
+      var _i, _results;
       this.content_before = this.elem.html();
-      this.elem.html(this.markdownToEditable(this.getContent(this.elem, true)));
-      this.elem.css("outline", "10000px solid rgba(255,255,255,0)").cssLater("transition", "outline 0.3s", 5).addClassLater("editing", 10);
+      this.editor = $("<textarea class='editor'></textarea>");
+      this.editor.css("outline", "10000px solid rgba(255,255,255,0)").cssLater("transition", "outline 0.3s", 5).cssLater("outline", "10000px solid rgba(255,255,255,0.9)", 10);
+      this.editor.val(this.getContent(this.elem, "raw"));
+      this.elem.after(this.editor);
+      this.elem.html((function() {
+        _results = [];
+        for (_i = 1; _i <= 50; _i++){ _results.push(_i); }
+        return _results;
+      }).apply(this).join("fill the width"));
+      this.copyStyle(this.elem, this.editor);
+      this.elem.html(this.content_before);
+      this.autoExpand(this.editor);
+      this.elem.css("display", "none");
       if ($(window).scrollTop() === 0) {
-        this.elem.focus();
+        this.editor[0].selectionEnd = 0;
+        this.editor.focus();
       }
-      this.elem.on("paste", (function(_this) {
-        return function() {
-          return setTimeout((function() {
-            var fixed;
-            fixed = _this.markdownToEditable(_this.editableToMarkdown(_this.elem.html()));
-            if (fixed !== _this.elem.html()) {
-              return _this.elem.html(fixed);
-            }
-          }), 0);
-        };
-      })(this));
       $(".editable-edit").css("display", "none");
       $(".editbar").css("display", "inline-block").addClassLater("visible", 10);
       $(".publishbar").css("opacity", 0);
@@ -607,31 +620,25 @@
       } else {
         $(".editbar .delete").css("display", "none");
       }
-
-      /* Tab fix (not works with contenteditable)
-      		@elem.on 'keydown', (e) =>
-      			if e.which == 9 # Tab fix
-      				e.preventDefault();
-      				s = @elem.selectionStart;
-      				val = @elem.html()
-      				debugger
-      				@elem.html val.substring(0,@elem[0].selectionStart) + "\t" + val.substring(@elem[0].selectionEnd)
-      				@elem[0].selectionEnd = s+1; */
+      window.onbeforeunload = function() {
+        return 'Your unsaved blog changes will be lost!';
+      };
       return false;
     };
 
     InlineEditor.prototype.stopEdit = function() {
+      this.editor.remove();
+      this.editor = null;
+      this.elem.css("display", "");
       $(".editable-edit").css("display", "");
-      this.elem.attr("contenteditable", "false");
-      this.elem.removeClass("editing");
-      this.elem.off("blur");
       $(".editbar").cssLater("display", "none", 1000).removeClass("visible");
-      return $(".publishbar").css("opacity", 1);
+      $(".publishbar").css("opacity", 1);
+      return window.onbeforeunload = null;
     };
 
     InlineEditor.prototype.saveEdit = function() {
       var content;
-      content = this.editableToMarkdown(this.elem.html());
+      content = this.editor.val();
       $(".editbar .save").addClass("loading");
       this.saveContent(this.elem, content, (function(_this) {
         return function(content_html) {
@@ -671,15 +678,50 @@
       return false;
     };
 
-    InlineEditor.prototype.editableToMarkdown = function(s) {
-      s = s.replace(/<br><\/p>/g, "\n").replace(/<\/p>/g, "\n");
-      s = s.replace(/<br><\/div>/g, "\n").replace(/<div>/g, "\n").replace(/<br.*?>/g, "\n");
-      s = $("<div>" + s + "</div>").text();
-      return s;
+    InlineEditor.prototype.copyStyle = function(elem_from, elem_to) {
+      var from_style;
+      elem_to.addClass(elem_from[0].className);
+      from_style = getComputedStyle(elem_from[0]);
+      return elem_to.css({
+        fontFamily: from_style.fontFamily,
+        fontSize: from_style.fontSize,
+        fontWeight: from_style.fontWeight,
+        marginTop: from_style.marginTop,
+        marginRight: from_style.marginRight,
+        marginBottom: from_style.marginBottom,
+        marginLeft: from_style.marginLeft,
+        paddingTop: from_style.paddingTop,
+        paddingRight: from_style.paddingRight,
+        paddingBottom: from_style.paddingBottom,
+        paddingLeft: from_style.paddingLeft,
+        lineHeight: from_style.lineHeight,
+        textAlign: from_style.textAlign,
+        color: from_style.color,
+        letterSpacing: from_style.letterSpacing,
+        minWidth: elem_from.innerWidth()
+      });
     };
 
-    InlineEditor.prototype.markdownToEditable = function(s) {
-      return s.replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/\n/g, "<br>");
+    InlineEditor.prototype.autoExpand = function(elem) {
+      var editor;
+      editor = elem[0];
+      elem.height(1);
+      elem.on("input", function() {
+        if (editor.scrollHeight > elem.height()) {
+          return elem.height(1).height(editor.scrollHeight + parseFloat(elem.css("borderTopWidth")) + parseFloat(elem.css("borderBottomWidth")));
+        }
+      });
+      elem.trigger("input");
+      return elem.on('keydown', function(e) {
+        var s, val;
+        if (e.which === 9) {
+          e.preventDefault();
+          s = this.selectionStart;
+          val = elem.val();
+          elem.val(val.substring(0, this.selectionStart) + "\t" + val.substring(this.selectionEnd));
+          return this.selectionEnd = s + 1;
+        }
+      });
     };
 
     return InlineEditor;
@@ -698,8 +740,8 @@
 (function() {
   var ZeroBlog,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __hasProp = {}.hasOwnProperty,
-    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
 
   ZeroBlog = (function(_super) {
     __extends(ZeroBlog, _super);
@@ -732,7 +774,13 @@
             _this.addInlineEditors();
             _this.checkPublishbar();
             $(".publishbar").on("click", _this.publish);
-            return $(".posts .button.new").css("display", "inline-block");
+            $(".posts .button.new").css("display", "inline-block");
+            return $(".editbar .icon-help").on("click", function() {
+              $(".editbar .markdown-help").css("display", "block");
+              $(".editbar .markdown-help").toggleClassLater("visible", 10);
+              $(".editbar .icon-help").toggleClass("active");
+              return false;
+            });
           }
         };
       })(this));
@@ -740,7 +788,7 @@
     };
 
     ZeroBlog.prototype.loadData = function() {
-      return $.get("" + window.media_root + "/data.json", (function(_this) {
+      return $.get(window.media_root + "/data.json", (function(_this) {
         return function(data) {
           _this.data = data;
           $(".left h1 a").html(data.title);
@@ -872,7 +920,7 @@
       details = this.formatSince(post.posted);
       if (post.body.match(/^---/m)) {
         details += " &middot; " + (this.readtime(post.body));
-        $(".more", elem).css("display", "inline").attr("href", "?Post:" + post.id + ":" + title_hash);
+        $(".more", elem).css("display", "inline-block").attr("href", "?Post:" + post.id + ":" + title_hash);
       }
       $(".details", elem).html(details);
       if (full) {
@@ -908,7 +956,6 @@
       }
       _ref = this.getObject(elem).data("object").split(":"), type = _ref[0], id = _ref[1];
       id = parseInt(id);
-      this.log("Editing", type, id);
       if (type === "Post") {
         post = ((function() {
           var _i, _len, _ref1, _results;
@@ -948,7 +995,6 @@
       }
       _ref = this.getObject(elem).data("object").split(":"), type = _ref[0], id = _ref[1];
       id = parseInt(id);
-      this.log("Saving", type, id);
       if (type === "Post") {
         post = ((function() {
           var _i, _len, _ref1, _results;
@@ -1024,7 +1070,7 @@
       }
       this.data.modified = this.timestamp();
       json_raw = unescape(encodeURIComponent(JSON.stringify(this.data, void 0, '\t')));
-      return this.cmd("fileWrite", ["data.json", btoa(json_raw)], (function(_this) {
+      this.cmd("fileWrite", ["data.json", btoa(json_raw)], (function(_this) {
         return function(res) {
           if (res === "ok") {
             if (cb) {
@@ -1039,6 +1085,16 @@
           return _this.checkPublishbar();
         };
       })(this));
+      return $.get("content.json", ((function(_this) {
+        return function(content) {
+          content = content.replace(/"title": ".*?"/, "\"title\": \"" + _this.data.title + "\"");
+          return _this.cmd("fileWrite", ["content.json", btoa(content)], function(res) {
+            if (res !== "ok") {
+              return _this.cmd("wrapperNotification", ["error", "Content.json write error: " + res]);
+            }
+          });
+        };
+      })(this)), "html");
     };
 
     ZeroBlog.prototype.formatSince = function(time) {
@@ -1048,11 +1104,11 @@
       if (secs < 60) {
         back = "Just now";
       } else if (secs < 60 * 60) {
-        back = "" + (Math.round(secs / 60)) + " minutes ago";
+        back = (Math.round(secs / 60)) + " minutes ago";
       } else if (secs < 60 * 60 * 24) {
-        back = "" + (Math.round(secs / 60 / 60)) + " hours ago";
+        back = (Math.round(secs / 60 / 60)) + " hours ago";
       } else if (secs < 60 * 60 * 24 * 3) {
-        back = "" + (Math.round(secs / 60 / 60 / 24)) + " days ago";
+        back = (Math.round(secs / 60 / 60 / 24)) + " days ago";
       } else {
         back = "on " + this.formatDate(time);
       }
