@@ -1,7 +1,9 @@
 class ZeroBlog extends ZeroFrame
 	init: ->
 		# Set avatar
-		address = document.location.href.match(/media\/(.*?)\//)[1]
+		address = document.location.href.replace("/media", "").match(/\/([A-Za-z0-9\._-]+)\//)[1]
+		@log "Address:", address
+
 		imagedata = new Identicon(address, 70).toString();
 		$("body").append("<style>.avatar { background-image: url(data:image/png;base64,#{imagedata}) }</style>")
 
@@ -30,7 +32,7 @@ class ZeroBlog extends ZeroFrame
 
 
 	loadData: ->
-		$.get "#{window.media_root}/data.json", (data) =>
+		$.get "data.json", (data) =>
 			@data = data
 			$(".left h1 a").html(data.title)
 			$(".left h2").html(marked(data.description))

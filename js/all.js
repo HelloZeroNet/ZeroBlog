@@ -124,7 +124,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/highlight.pack.js ---- */
 
 
@@ -315,7 +314,6 @@
   };
 
 }).call(this);
-
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/marked.min.js ---- */
@@ -733,7 +731,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/ZeroBlog.coffee ---- */
 
 
@@ -759,7 +756,8 @@
 
     ZeroBlog.prototype.init = function() {
       var address, imagedata;
-      address = document.location.href.match(/media\/(.*?)\//)[1];
+      address = document.location.href.replace("/media", "").match(/\/([A-Za-z0-9\._-]+)\//)[1];
+      this.log("Address:", address);
       imagedata = new Identicon(address, 70).toString();
       $("body").append("<style>.avatar { background-image: url(data:image/png;base64," + imagedata + ") }</style>");
       this.data = null;
@@ -788,7 +786,7 @@
     };
 
     ZeroBlog.prototype.loadData = function() {
-      return $.get(window.media_root + "/data.json", (function(_this) {
+      return $.get("data.json", (function(_this) {
         return function(data) {
           _this.data = data;
           $(".left h1 a").html(data.title);

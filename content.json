@@ -1,45 +1,96 @@
 {
-    "address": "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8", 
-    "background-color": "white", 
-    "description": "Blogging platform Demo", 
-    "files": {
-        "css/all.css": {
-            "sha1": "371f6633c485f3f8be751f71b0de9bed6cfedc16", 
-            "sha512": "6e341e3565c1caee704951dd41523658bf55ebc3a36c08f76a307a667a244749", 
-            "size": 106069
-        }, 
-        "data.json": {
-            "sha1": "8dae7170a6df38bdc14aa85a2a134f1d806cd188", 
-            "sha512": "862f0195e2b727a747d3dfb441029b84d359108f814f0bfc0d9d82411f55fa9d", 
-            "size": 7224
-        }, 
-        "data.json-default": {
-            "sha1": "c5e086beb6c4fb2243a0833e33fee134053a7ef0", 
-            "sha512": "53b13a1d181295af27bdeca328adfe7a45d4784044ce632bc647d5bbf7661831", 
-            "size": 367
-        }, 
-        "img/loading.gif": {
-            "sha1": "a669dbd8a577f6957656fc88ba4960b93fcd23d9", 
-            "sha512": "8a42b98962faea74618113166886be488c09dad10ca47fe97005edc5fb40cc00", 
-            "size": 723
-        }, 
-        "index.html": {
-            "sha1": "7e27008caacdf6510896b532a6bdae04c29fc081", 
-            "sha512": "cf0f96682b9e7af52e7732fb3030e6d9b9ec799b3e8f2f1cbed810a66c4df84a", 
-            "size": 3319
-        }, 
-        "js/all.js": {
-            "sha1": "7f065c565778936f5329bafd4cad718662f25850", 
-            "sha512": "78d70ecf4cfb587f792395fda63e9898cf19080fdee227533e39b92e3d93423a", 
-            "size": 177306
-        }
+  "address": "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8", 
+  "background-color": "white", 
+  "description": "Blogging platform Demo", 
+  "domain": "Blog.ZeroNetwork.bit", 
+  "files": {
+    "css/all.css": {
+      "sha1": "f0ad30ad5eccdf4c3740a3c8aa62e83b9c7544e4", 
+      "sha512": "2a9a13b6a0e461e0df2caa948b3a85383e060a0210719fd8ac53dec65a8e10be", 
+      "size": 106106
     }, 
-    "ignore": "(js|css)/(?!all.(js|css))", 
-    "modified": 1422385966.059, 
-    "sign": [
-        94587623961322055838212889414488591175356401711817841721078899637114091345928, 
-        113406857146007970741123131712701348588401227407265764935840946386468303879722
-    ], 
-    "title": "ZeroBlog", 
-    "zeronet_version": "0.1.6"
+    "data.json": {
+      "sha1": "66c833f1543b2293c0351a2d029ad7819aed6718", 
+      "sha512": "b91a4125f818d4f8fc49ded8e7c27a9c29fd643324ebcffa8b03afff3dc48697", 
+      "size": 18746
+    }, 
+    "data.json-default": {
+      "sha1": "c5e086beb6c4fb2243a0833e33fee134053a7ef0", 
+      "sha512": "53b13a1d181295af27bdeca328adfe7a45d4784044ce632bc647d5bbf7661831", 
+      "size": 367
+    }, 
+    "img/loading.gif": {
+      "sha1": "a669dbd8a577f6957656fc88ba4960b93fcd23d9", 
+      "sha512": "8a42b98962faea74618113166886be488c09dad10ca47fe97005edc5fb40cc00", 
+      "size": 723
+    }, 
+    "img/post/autoupdate.png": {
+      "sha1": "44614d2597b632e848410675416604fdce0d7987", 
+      "sha512": "d2b4dc8e0da2861ea051c0c13490a4eccf8933d77383a5b43de447c49d816e71", 
+      "size": 24460
+    }, 
+    "img/post/domain.png": {
+      "sha1": "baf4993774204f24e29a63fd5664fc390279d743", 
+      "sha512": "ce87e0831f4d1e95a95d7120ca4d33f8273c6fce9f5bbedf7209396ea0b57b6a", 
+      "size": 11881
+    }, 
+    "img/post/memory.png": {
+      "sha1": "a144e004c2c2a05ff3869a5dcdb2dfff5d0f0294", 
+      "sha512": "dd56515085b4a79b5809716f76f267ec3a204be3ee0d215591a77bf0f390fa4e", 
+      "size": 12775
+    }, 
+    "img/post/multiuser.png": {
+      "sha1": "3e3c9a48b0a2dafa3532dc8ba1f5c715f7b81d0f", 
+      "sha512": "88e3f795f9b86583640867897de6efc14e1aa42f93e848ed1645213e6cc210c6", 
+      "size": 29480
+    }, 
+    "img/post/progressbar.png": {
+      "sha1": "daed129cfe8d6816c04121d8c83d32440d2a535f", 
+      "sha512": "23d592ae386ce14158cec34d32a3556771725e331c14d5a4905c59e0fe980ebf", 
+      "size": 13294
+    }, 
+    "img/post/zeroname.png": {
+      "sha1": "636e537d7b273fb87ba8f6ed85017f0bf043cdb9", 
+      "sha512": "bab45a1bb2087b64e4f69f756b2ffa5ad39b7fdc48c83609cdde44028a7a155d", 
+      "size": 36031
+    }, 
+    "img/post/zerotalk-mark.png": {
+      "sha1": "c84f3abd0b2b938748acd3de4b2907c9014384f8", 
+      "sha512": "a335b2fedeb8d291ca68d3091f567c180628e80f41de4331a5feb19601d078af", 
+      "size": 44862
+    }, 
+    "img/post/zerotalk-upvote.png": {
+      "sha1": "6cd2925417dc3862b76b32a67c706159f026f64e", 
+      "sha512": "b1ffd7f948b4f99248dde7efe256c2efdfd997f7e876fb9734f986ef2b561732", 
+      "size": 41092
+    }, 
+    "img/post/zerotalk.png": {
+      "sha1": "e895a3d1be6302c079e22c5415a45423196ac676", 
+      "sha512": "54d10497a1ffca9a4780092fd1bd158c15f639856d654d2eb33a42f9d8e33cd8", 
+      "size": 26606
+    }, 
+    "index.html": {
+      "sha1": "a953bec1321c6b1b396cce732366338206767c94", 
+      "sha512": "0aee2bdc996cb6c2b2f52d4d590361869b6d5ecc755a1bb4611f61ab8237d1fc", 
+      "size": 3042
+    }, 
+    "js/all.js": {
+      "sha1": "12e90b8ed71361baea465bf659bb78fb9485157b", 
+      "sha512": "0a48f1a5a6d198a98251e32165e2098d1055d01eb358c5a273fee0df8d541fdd", 
+      "size": 177349
+    }
+  }, 
+  "ignore": "(js|css)/(?!all.(js|css))", 
+  "modified": 1427758561.089, 
+  "sign": [
+    53953400820955190667635972349061991029644657484611237957871861698091410857920, 
+    107066614956441522514077176017113827700277673122983235786944239766041598409619
+  ], 
+  "signers_sign": "G7W/oNvczE5nPTFYVOqv8+GOpQd23LS/Dc1Q6xQ1NRDDHlYzmoSE63UQ7Za05kD0rwIYXbuUSr8z8p6RhZmnUs8=", 
+  "signs": {
+    "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "G/TBxlRoCOVv+T1Q/WmizzKiCtquKdV2ch1OvEjtPrZWKMbPyiUAmlGb09wU79+lcYi/v8EI7Ha21UPj+/6Jb34="
+  }, 
+  "signs_required": 1, 
+  "title": "ZeroBlog", 
+  "zeronet_version": "0.2.8"
 }
