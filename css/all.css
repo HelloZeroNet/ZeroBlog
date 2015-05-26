@@ -1,5 +1,57 @@
 
 
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
+
+
+.comments { margin-bottom: 60px }
+.comment { background-color: white; padding: 25px 0px; margin: 1px; border-top: 1px solid #EEE }
+.comment .user_name { font-size: 14px; font-weight: bold }
+.comment .added { color: #AAA }
+.comment .reply { color: #CCC; opacity: 0; -webkit-transition: opacity 0.3s ; -moz-transition: opacity 0.3s ; -o-transition: opacity 0.3s ; -ms-transition: opacity 0.3s ; transition: opacity 0.3s  }
+.comment:hover .reply { opacity: 1 }
+.comment .reply .icon { opacity: 0.3 }
+.comment .reply:hover { border-bottom: none; color: #666 }
+.comment .reply:hover .icon { opacity: 1 }
+.comment .info { font-size: 12px; color: #AAA; margin-bottom: 7px }
+.comment .info .score { margin-left: 5px }
+.comment .body { line-height: 1.5em }
+.comment .body p { margin-top: 0.5em; margin-bottom: 0.5em }
+.comment .body.editor { margin-top: 0.5em !important; margin-bottom: 0.5em !important }
+.comment .body h1, .comment .body h2, .comment .body h3 { font-size: 110% }
+.comment .body blockquote { padding: 1px 15px; border-left: 2px solid #E7E7E7; margin: 0px; margin-top: 30px }
+.comment .body blockquote:first-child { margin-top: 0px }
+.comment .body blockquote p { margin: 0px; color: #999; font-size: 90% }
+.comment .body blockquote a { color: #333 }
+
+.comment-new { margin-bottom: 5px; border-top: 0px }
+.comment-new .button-submit { 
+	margin: 0px; font-weight: normal; padding: 5px 15px; display: inline-block;
+	background-color: #FFF85F; border-bottom: 2px solid #CDBD1E; font-size: 15px; line-height: 30px
+}
+.comment-new h2 { margin-bottom: 25px }
+
+/* Input */
+.comment-new textarea { 
+	line-height: 1.5em; width: 100%; padding: 10px; font-family: 'Roboto', sans-serif; font-size: 16px;
+	-webkit-transition: border 0.3s; -moz-transition: border 0.3s; -o-transition: border 0.3s; -ms-transition: border 0.3s; transition: border 0.3s ; border: 2px solid #eee; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; overflow-y: auto
+}
+input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; background-color: white }
+
+.comment-nocert textarea { opacity: 0.5; pointer-events: none }
+.comment-nocert .info { opacity: 0.1; pointer-events: none }
+.comment-nocert .button-submit-comment { opacity: 0.1; pointer-events: none }
+.comment-nocert .button.button-certselect { display: inherit }
+.button.button-certselect { 
+	position: absolute; left: 50%; white-space: nowrap; -webkit-transform: translateX(-50%); -moz-transform: translateX(-50%); -o-transform: translateX(-50%); -ms-transform: translateX(-50%); transform: translateX(-50%) ; z-index: 99;
+	margin-top: 13px; background-color: #007AFF; color: white; border-bottom-color: #3543F9; display: none
+}
+.button.button-certselect:hover { background-color: #3396FF; color: white; border-bottom-color: #5D68FF; }
+.button.button-certselect:active { position: absolute; -webkit-transform: translateX(-50%) translateY(1px); -moz-transform: translateX(-50%) translateY(1px); -o-transform: translateX(-50%) translateY(1px); -ms-transform: translateX(-50%) translateY(1px); transform: translateX(-50%) translateY(1px) ; top: auto; }
+
+.user-size { font-size: 11px; margin-top: 6px; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; text-transform: uppercase; display: inline-block; color: #AAA }
+.user-size-used { position: absolute; color: #B10DC9; overflow: hidden; width: 40px; white-space: nowrap } 
+
+
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
 
 
@@ -99,13 +151,16 @@ a:hover { color: #3498db }
 
 .posts, .post-full { display: none; position: relative; }
 .page-main .posts { display: block }
-.page-post .post-full { display: block }
+.page-post.loaded .post-full { display: block; border-bottom: none }
 
 
 .post { margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid #eee; min-width: 500px }
 .post .title a { text-decoration: none; color: inherit; display: inline-block; border-bottom: none; font-weight: inherit }
 .posts .title a:visited { color: #666969 }
 .post .details { color: #BBB; margin-top: 5px; margin-bottom: 20px }
+.post .details .comments-num { border: none; color: #BBB; font-weight: normal; }
+.post .details .comments-num .num { border-bottom: 1px solid #eee; color: #000; }
+.post .details .comments-num:hover .num { border-bottom: 1px solid #D6A1DE; }
 .post .body { font-size: 21.5px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
 
 .post .body h1 { text-align: center; margin-top: 50px }
@@ -115,6 +170,7 @@ a:hover { color: #3498db }
 .post .body li { margin-top: 0.5em; margin-bottom: 0.5em }
 .post .body hr:first-of-type { display: none }
 
+.post .body a img { margin-bottom: -8px }
 .post .body img { max-width: 100% }
 
 code { 
@@ -301,3 +357,14 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-chunk {
   color: #aaa;
 }
+
+
+
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
+
+
+.icon-profile { font-size: 6px; top: 0em; -webkit-border-radius: 0.7em 0.7em 0 0; -moz-border-radius: 0.7em 0.7em 0 0; -o-border-radius: 0.7em 0.7em 0 0; -ms-border-radius: 0.7em 0.7em 0 0; border-radius: 0.7em 0.7em 0 0 ; background: #FFFFFF; width: 1.5em; height: 0.7em; position: relative; display: inline-block; margin-right: 4px }
+.icon-profile:before { position: absolute; content: ""; top: -1em; left: 0.38em; width: 0.8em; height: 0.85em; -webkit-border-radius: 50%; -moz-border-radius: 50%; -o-border-radius: 50%; -ms-border-radius: 50%; border-radius: 50% ; background: #FFFFFF; } 
+
+.icon-comment { width: 16px; height: 10px; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; background: #B10DC9; margin-top: 0px; display: inline-block; position: relative; top: -2px; }
+.icon-comment:after { left: 9px; border: 2px solid transparent; border-top-color: #B10DC9; border-left-color: #B10DC9; background: transparent; content: ""; display: block; margin-top: 10px; width: 0px; margin-left: 7px; }

@@ -1,0 +1,5 @@
+.icon-profile { font-size: 6px; top: 0em; border-radius: 0.7em 0.7em 0 0; background: #FFFFFF; width: 1.5em; height: 0.7em; position: relative; display: inline-block; margin-right: 4px }
+.icon-profile:before { position: absolute; content: ""; top: -1em; left: 0.38em; width: 0.8em; height: 0.85em; border-radius: 50%; background: #FFFFFF; } 
+
+.icon-comment { width: 16px; height: 10px; border-radius: 2px; background: #B10DC9; margin-top: 0px; display: inline-block; position: relative; top: -2px; }
+.icon-comment:after { left: 9px; border: 2px solid transparent; border-top-color: #B10DC9; border-left-color: #B10DC9; background: transparent; content: ""; display: block; margin-top: 10px; width: 0px; margin-left: 7px; }

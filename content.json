@@ -5,92 +5,119 @@
   "domain": "Blog.ZeroNetwork.bit", 
   "files": {
     "css/all.css": {
-      "sha1": "f0ad30ad5eccdf4c3740a3c8aa62e83b9c7544e4", 
-      "sha512": "2a9a13b6a0e461e0df2caa948b3a85383e060a0210719fd8ac53dec65a8e10be", 
-      "size": 106106
+      "sha512": "df1181197a5a9ceb896048b9f84d93ee2342426aeacecf759ce4f051a06ddb27", 
+      "size": 111169
     }, 
-    "data.json": {
-      "sha1": "66c833f1543b2293c0351a2d029ad7819aed6718", 
-      "sha512": "b91a4125f818d4f8fc49ded8e7c27a9c29fd643324ebcffa8b03afff3dc48697", 
-      "size": 18746
+    "data-default/data.json": {
+      "sha512": "3f5c5a220bde41b464ab116cce0bd670dd0b4ff5fe4a73d1dffc4719140038f2", 
+      "size": 196
     }, 
-    "data.json-default": {
-      "sha1": "c5e086beb6c4fb2243a0833e33fee134053a7ef0", 
-      "sha512": "53b13a1d181295af27bdeca328adfe7a45d4784044ce632bc647d5bbf7661831", 
-      "size": 367
+    "data-default/users/content-default.json": {
+      "sha512": "0603ce08f7abb92b3840ad0cf40e95ea0b3ed3511b31524d4d70e88adba83daa", 
+      "size": 679
     }, 
-    "img/loading.gif": {
-      "sha1": "a669dbd8a577f6957656fc88ba4960b93fcd23d9", 
-      "sha512": "8a42b98962faea74618113166886be488c09dad10ca47fe97005edc5fb40cc00", 
-      "size": 723
+    "data/data.json": {
+      "sha512": "f3df0c6e47b8475b46e4fcddf2f05dca760fde4cc3506d27461d861ed12f0e51", 
+      "size": 30813
     }, 
-    "img/post/autoupdate.png": {
-      "sha1": "44614d2597b632e848410675416604fdce0d7987", 
+    "data/img/autoupdate.png": {
       "sha512": "d2b4dc8e0da2861ea051c0c13490a4eccf8933d77383a5b43de447c49d816e71", 
       "size": 24460
     }, 
-    "img/post/domain.png": {
-      "sha1": "baf4993774204f24e29a63fd5664fc390279d743", 
+    "data/img/direct_domains.png": {
+      "sha512": "5f14b30c1852735ab329b22496b1e2ea751cb04704789443ad73a70587c59719", 
+      "size": 16185
+    }, 
+    "data/img/domain.png": {
       "sha512": "ce87e0831f4d1e95a95d7120ca4d33f8273c6fce9f5bbedf7209396ea0b57b6a", 
       "size": 11881
     }, 
-    "img/post/memory.png": {
-      "sha1": "a144e004c2c2a05ff3869a5dcdb2dfff5d0f0294", 
+    "data/img/memory.png": {
       "sha512": "dd56515085b4a79b5809716f76f267ec3a204be3ee0d215591a77bf0f390fa4e", 
       "size": 12775
     }, 
-    "img/post/multiuser.png": {
-      "sha1": "3e3c9a48b0a2dafa3532dc8ba1f5c715f7b81d0f", 
+    "data/img/multiuser.png": {
       "sha512": "88e3f795f9b86583640867897de6efc14e1aa42f93e848ed1645213e6cc210c6", 
       "size": 29480
     }, 
-    "img/post/progressbar.png": {
-      "sha1": "daed129cfe8d6816c04121d8c83d32440d2a535f", 
+    "data/img/progressbar.png": {
       "sha512": "23d592ae386ce14158cec34d32a3556771725e331c14d5a4905c59e0fe980ebf", 
       "size": 13294
     }, 
-    "img/post/zeroname.png": {
-      "sha1": "636e537d7b273fb87ba8f6ed85017f0bf043cdb9", 
+    "data/img/slides.png": {
+      "sha512": "1933db3b90ab93465befa1bd0843babe38173975e306286e08151be9992f767e", 
+      "size": 14439
+    }, 
+    "data/img/slots_memory.png": {
+      "sha512": "82a250e6da909d7f66341e5b5c443353958f86728cd3f06e988b6441e6847c29", 
+      "size": 9488
+    }, 
+    "data/img/trayicon.png": {
+      "sha512": "e7ae65bf280f13fb7175c1293dad7d18f1fcb186ebc9e1e33850cdaccb897b8f", 
+      "size": 19040
+    }, 
+    "data/img/zeroblog-comments.png": {
+      "sha512": "efe4e815a260e555303e5c49e550a689d27a8361f64667bd4a91dbcccb83d2b4", 
+      "size": 24001
+    }, 
+    "data/img/zeroid.png": {
+      "sha512": "b46d541a9e51ba2ddc8a49955b7debbc3b45fd13467d3c20ef104e9d938d052b", 
+      "size": 18875
+    }, 
+    "data/img/zeroname.png": {
       "sha512": "bab45a1bb2087b64e4f69f756b2ffa5ad39b7fdc48c83609cdde44028a7a155d", 
       "size": 36031
     }, 
-    "img/post/zerotalk-mark.png": {
-      "sha1": "c84f3abd0b2b938748acd3de4b2907c9014384f8", 
+    "data/img/zerotalk-mark.png": {
       "sha512": "a335b2fedeb8d291ca68d3091f567c180628e80f41de4331a5feb19601d078af", 
       "size": 44862
     }, 
-    "img/post/zerotalk-upvote.png": {
-      "sha1": "6cd2925417dc3862b76b32a67c706159f026f64e", 
+    "data/img/zerotalk-upvote.png": {
       "sha512": "b1ffd7f948b4f99248dde7efe256c2efdfd997f7e876fb9734f986ef2b561732", 
       "size": 41092
     }, 
-    "img/post/zerotalk.png": {
-      "sha1": "e895a3d1be6302c079e22c5415a45423196ac676", 
+    "data/img/zerotalk.png": {
       "sha512": "54d10497a1ffca9a4780092fd1bd158c15f639856d654d2eb33a42f9d8e33cd8", 
       "size": 26606
     }, 
+    "dbschema.json": {
+      "sha512": "7b756e8e475d4d6b345a24e2ae14254f5c6f4aa67391a94491a026550fe00df8", 
+      "size": 1529
+    }, 
+    "img/loading.gif": {
+      "sha512": "8a42b98962faea74618113166886be488c09dad10ca47fe97005edc5fb40cc00", 
+      "size": 723
+    }, 
+    "img/post/slides.png": {
+      "sha512": "1933db3b90ab93465befa1bd0843babe38173975e306286e08151be9992f767e", 
+      "size": 14439
+    }, 
     "index.html": {
-      "sha1": "a953bec1321c6b1b396cce732366338206767c94", 
-      "sha512": "0aee2bdc996cb6c2b2f52d4d590361869b6d5ecc755a1bb4611f61ab8237d1fc", 
-      "size": 3042
+      "sha512": "a5491a826284e1a4189f27a34724aa3648fc31ac483018273668affbb51e71e1", 
+      "size": 4551
     }, 
     "js/all.js": {
-      "sha1": "12e90b8ed71361baea465bf659bb78fb9485157b", 
-      "sha512": "0a48f1a5a6d198a98251e32165e2098d1055d01eb358c5a273fee0df8d541fdd", 
-      "size": 177349
+      "sha512": "8e08c6796ecdff7b37374b8a40ff4f809af139241a3cde18c519e2c19ba8b22c", 
+      "size": 203681
     }
   }, 
-  "ignore": "(js|css)/(?!all.(js|css))", 
-  "modified": 1427758561.089, 
+  "ignore": "((js|css)/(?!all.(js|css))|data/.*db|data/users/.*/.*)", 
+  "includes": {
+    "data/users/content.json": {
+      "signers": [], 
+      "signers_required": 1
+    }
+  }, 
+  "modified": 1432553186.297, 
   "sign": [
-    53953400820955190667635972349061991029644657484611237957871861698091410857920, 
-    107066614956441522514077176017113827700277673122983235786944239766041598409619
+    105555054054113025747542657031928354966312963790903427393098566938883997052983, 
+    81423101399547255552344950697489499996433371779546841212447229873461700442154
   ], 
   "signers_sign": "G7W/oNvczE5nPTFYVOqv8+GOpQd23LS/Dc1Q6xQ1NRDDHlYzmoSE63UQ7Za05kD0rwIYXbuUSr8z8p6RhZmnUs8=", 
   "signs": {
-    "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "G/TBxlRoCOVv+T1Q/WmizzKiCtquKdV2ch1OvEjtPrZWKMbPyiUAmlGb09wU79+lcYi/v8EI7Ha21UPj+/6Jb34="
+    "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "G0ik/beLriP3pMcPAqx8NbJNZ2RRN6dBd3q6yDqG8ufZsVLMZECrLuc5cVjx8JpG4RIP8HfNXbxzwmYvLE1CZ2g="
   }, 
   "signs_required": 1, 
   "title": "ZeroBlog", 
-  "zeronet_version": "0.2.8"
+  "zeronet_version": "0.3.0"
 }

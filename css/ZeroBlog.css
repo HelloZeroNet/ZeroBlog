@@ -94,13 +94,16 @@ a:hover { color: #3498db }
 
 .posts, .post-full { display: none; position: relative; }
 .page-main .posts { display: block }
-.page-post .post-full { display: block }
+.page-post.loaded .post-full { display: block; border-bottom: none }
 
 
 .post { margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid #eee; min-width: 500px }
 .post .title a { text-decoration: none; color: inherit; display: inline-block; border-bottom: none; font-weight: inherit }
 .posts .title a:visited { color: #666969 }
 .post .details { color: #BBB; margin-top: 5px; margin-bottom: 20px }
+.post .details .comments-num { border: none; color: #BBB; font-weight: normal; }
+.post .details .comments-num .num { border-bottom: 1px solid #eee; color: #000; }
+.post .details .comments-num:hover .num { border-bottom: 1px solid #D6A1DE; }
 .post .body { font-size: 21.5px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
 
 .post .body h1 { text-align: center; margin-top: 50px }
@@ -110,6 +113,7 @@ a:hover { color: #3498db }
 .post .body li { margin-top: 0.5em; margin-bottom: 0.5em }
 .post .body hr:first-of-type { display: none }
 
+.post .body a img { margin-bottom: -8px }
 .post .body img { max-width: 100% }
 
 code { 

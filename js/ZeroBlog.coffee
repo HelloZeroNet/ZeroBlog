@@ -1,19 +1,11 @@
 class ZeroBlog extends ZeroFrame
 	init: ->
-		# Set avatar
-		address = document.location.href.replace("/media", "").match(/\/([A-Za-z0-9\._-]+)\//)[1]
-		@log "Address:", address
-
-		imagedata = new Identicon(address, 70).toString();
-		$("body").append("<style>.avatar { background-image: url(data:image/png;base64,#{imagedata}) }</style>")
-
 		@data = null
 		@site_info = null
 		@server_info = null
 
 		@event_page_load = $.Deferred()
 		@event_site_info = $.Deferred()
-		@loadData()
 
 		# Editable items on own site
 		$.when(@event_page_load, @event_site_info).done =>
@@ -28,18 +20,29 @@ class ZeroBlog extends ZeroFrame
 					$(".editbar .icon-help").toggleClass("active")
 					return false
 
+		$.when(@event_site_info).done =>
+			@log "event site info"
+			# Set avatar
+			imagedata = new Identicon(@site_info.address, 70).toString();
+			$("body").append("<style>.avatar { background-image: url(data:image/png;base64,#{imagedata}) }</style>")
+
 		@log "inited!"
 
 
-	loadData: ->
-		$.get "data.json", (data) =>
-			@data = data
-			$(".left h1 a").html(data.title)
-			$(".left h2").html(marked(data.description))
-			$(".left .links").html(marked(data.links))
-
-			# Show page based on url
-			@routeUrl(window.location.search.substring(1))
+	loadData: (query="new") ->
+		# Get blog parameters
+		if query == "old" # Old type query for pre 0.3.0
+			query = "SELECT key, value FROM json LEFT JOIN keyvalue USING (json_id) WHERE path = 'data.json'"
+		else
+			query = "SELECT key, value FROM json LEFT JOIN keyvalue USING (json_id) WHERE directory = '' AND file_name = 'data.json'"
+		@cmd "dbQuery", [query], (res) =>
+			@data = {}
+			if res
+				for row in res
+					@data[row.key] = row.value
+				$(".left h1 a").html(@data.title).data("content", @data.title)
+				$(".left h2").html(Text.toMarked(@data.description)).data("content", @data.description)
+				$(".left .links").html(Text.toMarked(@data.links)).data("content", @data.links)
 
 
 	routeUrl: (url) ->
@@ -57,73 +60,77 @@ class ZeroBlog extends ZeroFrame
 
 	pagePost: (post_id) ->
 		s = (+ new Date)
-		found = false
-		for post in @data.posts
-			if post.id == post_id
-				found = true
-				break
+		@cmd "dbQuery", ["SELECT * FROM post WHERE post_id = #{post_id} LIMIT 1"], (res) =>
+			if res.length
+				@applyPostdata($(".post-full"), res[0], true)
+				Comments.pagePost(post_id)
+			else
+				$(".post-full").html("<h1>Not found</h1>")
+			@pageLoaded()
 
-		if found
-			@applyPostdata($(".post-full"), post, true)
-		else
-			$(".post-full").html("<h1>Not found</h1>")
-		@pageLoaded()
-		@log "Post loaded in", ((+ new Date)-s),"ms"
 
 
 
 	pageMain: ->
-		s = (+ new Date)
-		for post in @data.posts
-			elem = $(".post.template").clone().removeClass("template")
-			@applyPostdata(elem, post)
-			elem.appendTo(".posts")
-		@pageLoaded()
-		@log "Posts loaded in", ((+ new Date)-s),"ms"
+		@cmd "dbQuery", ["SELECT post.*, COUNT(comment_id) AS comments FROM post LEFT JOIN comment USING (post_id) GROUP BY post_id ORDER BY date_published"], (res) =>
+			s = (+ new Date)
+			for post in res
+				elem = $("#post_#{post.post_id}")
+				if elem.length == 0 # Not exits yet
+					elem = $(".post.template").clone().removeClass("template").attr("id", "post_#{post.post_id}")
+					elem.prependTo(".posts")
+				@applyPostdata(elem, post)
+			@pageLoaded()
+			@log "Posts loaded in", ((+ new Date)-s),"ms"
 
-		$(".posts .new").on "click", => # Create new blog post
-			# Add to data
-			@data.posts.unshift
-				id: @data.next_id
-				title: "New blog post"
-				posted: (+ new Date)/1000
-				edited: false
-				body: "Blog post body"
-			@data.next_id += 1
+			$(".posts .new").on "click", => # Create new blog post
+				@cmd "fileGet", ["data/data.json"], (res) =>
+					data = JSON.parse(res)
+					# Add to data
+					data.post.unshift
+						post_id: data.next_post_id
+						title: "New blog post"
+						date_published: (+ new Date)/1000
+						body: "Blog post body"
+					data.next_post_id += 1
 
-			# Create html elements
-			elem = $(".post.template").clone().removeClass("template")
-			@applyPostdata(elem, @data.posts[0])
-			elem.hide()
-			elem.prependTo(".posts").slideDown()
-			@addInlineEditors(elem)
+					# Create html elements
+					elem = $(".post.template").clone().removeClass("template")
+					@applyPostdata(elem, data.post[0])
+					elem.hide()
+					elem.prependTo(".posts").slideDown()
+					@addInlineEditors(elem)
 
-			@writeData()
-			return false
-
+					@writeData(data)
+				return false
 
 
 	# - EOF Pages -
 
 
 	# All page content loaded
-	pageLoaded: ->
+	pageLoaded: =>
 		$("body").addClass("loaded") # Back/forward button keep position support
 		$('pre code').each (i, block) -> # Higlight code blocks
 			hljs.highlightBlock(block)
 		@event_page_load.resolve()
+		@cmd "innerLoaded", true
 
 
-	# Add inline editor markers
 	addInlineEditors: (parent) ->
-		elems = $("[data-editable]:visible", parent)
+		@logStart "Adding inline editors"
+		elems = $("[data-editable]:visible", parent) 
 		for elem in elems
-			new InlineEditor($(elem), @getContent, @saveContent, @getObject)
+			elem = $(elem)
+			if not elem.data("editor") and not elem.hasClass("editor")
+				editor = new InlineEditor(elem, @getContent, @saveContent, @getObject)
+				elem.data("editor", editor)
+		@logEnd "Adding inline editors"
 
 
 	# Check if publishing is necessary
 	checkPublishbar: ->
-		if not @data.modified or @data.modified > @site_info.content.modified
+		if not @site_modified or @site_modified > @site_info.content.modified
 			$(".publishbar").addClass("visible")
 		else
 			$(".publishbar").removeClass("visible")
@@ -131,9 +138,6 @@ class ZeroBlog extends ZeroFrame
 
 	# Sign and Publish site
 	publish: =>
-		if not @server_info.ip_external # No port open
-			@cmd "wrapperNotification", ["error", "To publish the site please open port <b>#{@server_info.fileserver_port}</b> on your router"]
-			return false
 		@cmd "wrapperPrompt", ["Enter your private key:", "password"], (privatekey) => # Prompt the private key
 			$(".publishbar .button").addClass("loading")
 			@cmd "sitePublish", [privatekey], (res) =>
@@ -146,31 +150,38 @@ class ZeroBlog extends ZeroFrame
 	# Apply from data to post html element
 	applyPostdata: (elem, post, full=false) ->
 		title_hash = post.title.replace(/[#?& ]/g, "+").replace(/[+]+/g, "+")
-		elem.data("object", "Post:"+post.id)
-		$(".title a", elem).html(post.title).attr("href", "?Post:#{post.id}:#{title_hash}")
-		details = @formatSince(post.posted)
-
+		elem.data("object", "Post:"+post.post_id)
+		$(".title .editable", elem).html(post.title).attr("href", "?Post:#{post.post_id}:#{title_hash}").data("content", post.title)
+		date_published = Time.since(post.date_published)
+		# Published date
 		if post.body.match /^---/m # Has more over fold
-			details += " &middot; #{@readtime(post.body)}" # If has break add readtime
-			$(".more", elem).css("display", "inline-block").attr("href", "?Post:#{post.id}:#{title_hash}")
-		$(".details", elem).html(details)
+			date_published += " &middot; #{Time.readtime(post.body)}" # If has break add readtime
+			$(".more", elem).css("display", "inline-block").attr("href", "?Post:#{post.post_id}:#{title_hash}")
+		$(".details .published", elem).html(date_published).data("content", post.date_published)
+		# Comments num
+		if post.comments > 0
+			$(".details .comments-num", elem).css("display", "inline").attr("href", "?Post:#{post.post_id}:#{title_hash}#Comments")
+			$(".details .comments-num .num", elem).text("#{post.comments} comments")
+		else
+			$(".details .comments-num", elem).css("display", "none")
 
 		if full 
 			body = post.body
 		else # On main page only show post until the first --- hr separator
 			body = post.body.replace(/^([\s\S]*?)\n---\n[\s\S]*$/, "$1")
 
-		$(".body", elem).html(marked(body))
+		$(".body", elem).html(Text.toMarked(body)).data("content", post.body)
 
 
 	# Wrapper websocket connection ready
 	onOpenWebsocket: (e) =>
+		@loadData()
+		@routeUrl(window.location.search.substring(1))
 		@cmd "siteInfo", {}, @setSiteinfo
 		@cmd "serverInfo", {}, (ret) => # Get server info
 			@server_info = ret
-			version = @server_info.version.split(".")
-			if version[0] == "0" and version[1] == "1" and parseInt(version[2]) < 6
-				@cmd "wrapperNotification", ["error", "ZeroBlog requires ZeroNet 0.1.6, please update!"]
+			if @server_info.rev < 160
+				@loadData("old")
 
 
 	# Returns the elem parent object
@@ -182,71 +193,68 @@ class ZeroBlog extends ZeroFrame
 	getContent: (elem, raw=false) =>
 		[type, id] = @getObject(elem).data("object").split(":")
 		id = parseInt(id)
-		if type == "Post"
-			post = (post for post in @data.posts when post.id == id)[0]
-			content = post[elem.data("editable")]
-
-			if elem.data("editable-mode") == "timestamp" # Time hash
-				content = @formatDate(content, "full")
-		else if type == "Site"
-			content = @data[elem.data("editable")]
-		else
-			content = "Unknown"
-
+		content = elem.data("content")
+		if elem.data("editable-mode") == "timestamp" # Convert to time
+			content = Time.date(content, "full")
 
 		if elem.data("editable-mode") == "simple" or raw # No markdown
 			return content
 		else
-			return marked(content)
+			return Text.toMarked(content)
 
 
 	# Save content to data.json
 	saveContent: (elem, content, cb=false) =>
 		if elem.data("deletable") and content == null then return @deleteObject(elem) # Its a delete request
-
+		elem.data("content", content)
 		[type, id] = @getObject(elem).data("object").split(":")
 		id = parseInt(id)
+		@cmd "fileGet", ["data/data.json"], (res) =>
+			data = JSON.parse(res)
+			if type == "Post"
+				post = (post for post in data.post when post.post_id == id)[0]
 
-		if type == "Post"
-			post = (post for post in @data.posts when post.id == id)[0]
+				if elem.data("editable-mode") == "timestamp" # Time parse to timestamp
+					content = Time.timestamp(content)
 
-			if elem.data("editable-mode") == "timestamp" # Time parse to timestamp
-				content = @timestamp(content)
+				post[elem.data("editable")] = content
+			else if type == "Site"
+				data[elem.data("editable")] = content
 
-			post[elem.data("editable")] = content
-		else if type == "Site"
-			@data[elem.data("editable")] = content
-
-		@writeData (res) =>
-			if cb
-				if res == true # OK
-					if elem.data("editable-mode") == "simple" # No markdown
-						cb(content)
-					else if elem.data("editable-mode") == "timestamp" # Format timestamp
-						cb(@formatSince(content))
-					else
-						cb(marked(content))
-				else # Error
-					cb(false)
+			@writeData data, (res) =>
+				if cb
+					if res == true # OK
+						if elem.data("editable-mode") == "simple" # No markdown
+							cb(content)
+						else if elem.data("editable-mode") == "timestamp" # Format timestamp
+							cb(Time.since(content))
+						else
+							cb(Text.toMarked(content))
+					else # Error
+						cb(false)
 
 
 	deleteObject: (elem) ->
 		[type, id] = elem.data("object").split(":")
 		id = parseInt(id)
 
-		if type == "Post"
-			post = (post for post in @data.posts when post.id == id)[0]
-			if not post then return false # No post found for this id
-			@data.posts.splice(@data.posts.indexOf(post), 1) # Remove from data
+		@cmd "fileGet", ["data/data.json"], (res) =>
+			data = JSON.parse(res)
+			if type == "Post"
+				post = (post for post in data.post when post.post_id == id)[0]
+				if not post then return false # No post found for this id
+				data.post.splice(data.post.indexOf(post), 1) # Remove from data
 
-			@writeData (res) ->
-				if res == true then window.open("?Home", "_top") # Go to home
+				@writeData data, (res) =>
+					if res == true then window.open("?Home", "_top") # Go to home
 
 
-	writeData: (cb=null) ->
-		@data.modified = @timestamp()
-		json_raw = unescape(encodeURIComponent(JSON.stringify(@data, undefined, '\t'))) # Encode to json, encode utf8
-		@cmd "fileWrite", ["data.json", btoa(json_raw)], (res) => # Convert to to base64 and send
+	writeData: (data, cb=null) ->
+		if not data
+			return @log "Data missing"
+		@data["modified"] = data.modified = Time.timestamp()
+		json_raw = unescape(encodeURIComponent(JSON.stringify(data, undefined, '\t'))) # Encode to json, encode utf8
+		@cmd "fileWrite", ["data/data.json", btoa(json_raw)], (res) => # Convert to to base64 and send
 			if res == "ok"
 				if cb then cb(true)
 			else
@@ -256,59 +264,30 @@ class ZeroBlog extends ZeroFrame
 
 		# Updating title in content.json
 		$.get "content.json", ((content) =>
-			content = content.replace /"title": ".*?"/, "\"title\": \"#{@data.title}\"" # Load as raw html to prevent js bignumber problems
+			content = content.replace /"title": ".*?"/, "\"title\": \"#{data.title}\"" # Load as raw html to prevent js bignumber problems
 			@cmd "fileWrite", ["content.json", btoa(content)], (res) =>
 				if res != "ok"
 					@cmd "wrapperNotification", ["error", "Content.json write error: #{res}"]
 		), "html"
 
 
-	# - Date -
+	writePublish: (inner_path, data, cb) ->
+		@cmd "fileWrite", [inner_path, data], (res) =>
+			if res != "ok" # fileWrite failed
+				@cmd "wrapperNotification", ["error", "File write error: #{res}"]
+				cb(false)
+				return false
 
-	formatSince: (time) ->
-		now = +(new Date)/1000
-		secs = now - time
-		if secs < 60
-			back = "Just now"
-		else if secs < 60*60
-			back = "#{Math.round(secs/60)} minutes ago"
-		else if secs < 60*60*24
-			back = "#{Math.round(secs/60/60)} hours ago"
-		else if secs < 60*60*24*3
-			back = "#{Math.round(secs/60/60/24)} days ago"
-		else
-			back = "on "+@formatDate(time)
-		back = back.replace(/1 ([a-z]+)s/, "1 $1") # 1 days ago fix
-		return back
+			@cmd "sitePublish", {"inner_path": inner_path}, (res) =>
+				if res == "ok"
+					cb(true)
+				else
+					cb(res)
 
 
-	# Get elistamated read time for post
-	readtime: (text) ->
-		chars = text.length
-		if chars > 1500
-			return parseInt(chars/1500)+" min read"
-		else
-			return "less than 1 min read"
 
-
-	formatDate: (timestamp, format="short") ->
-		parts = (new Date(timestamp*1000)).toString().split(" ")
-		if format == "short"
-			display = parts.slice(1, 4)
-		else
-			display = parts.slice(1, 5)
-		return display.join(" ").replace(/( [0-9]{4})/, ",$1")
-
-
-	timestamp: (date="") ->
-		if date == "now" or date == ""
-			return parseInt(+(new Date)/1000)
-		else
-			return parseInt(Date.parse(date)/1000)
-
-
-	# Route incoming requests
-	route: (cmd, message) ->
+	# Parse incoming requests
+	onRequest: (cmd, message) ->
 		if cmd == "setSiteInfo" # Site updated
 			@actionSetSiteInfo(message)
 		else
@@ -317,7 +296,6 @@ class ZeroBlog extends ZeroFrame
 
 	# Siteinfo changed
 	actionSetSiteInfo: (message) =>
-		@log "setSiteinfo", message
 		@setSiteinfo(message.params)
 		@checkPublishbar()
 
@@ -325,6 +303,19 @@ class ZeroBlog extends ZeroFrame
 	setSiteinfo: (site_info) =>
 		@site_info = site_info
 		@event_site_info.resolve(site_info)
+		if $("body").hasClass("page-post") then Comments.checkCert() # Update if username changed
+		# User commented
+		if site_info.event?[0] == "file_done" and site_info.event[1].match /.*users.*data.json$/
+			if $("body").hasClass("page-post") 
+				Comments.loadComments() # Post page, reload comments
+			if $("body").hasClass("page-main")
+				RateLimit 500, =>
+					@pageMain()
+		else if site_info.event?[0] == "file_done" and site_info.event[1] == "data/data.json"
+			@loadData()
+			@pageMain()
+		else
 
 
-window.zero_blog = new ZeroBlog()
+
+window.Page = new ZeroBlog()

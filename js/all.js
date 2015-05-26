@@ -10,120 +10,6 @@
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/ZeroFrame.coffee ---- */
-
-
-(function() {
-  var ZeroFrame,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-    __slice = [].slice;
-
-  ZeroFrame = (function() {
-    function ZeroFrame(url) {
-      this.onCloseWebsocket = __bind(this.onCloseWebsocket, this);
-      this.onOpenWebsocket = __bind(this.onOpenWebsocket, this);
-      this.route = __bind(this.route, this);
-      this.onMessage = __bind(this.onMessage, this);
-      this.url = url;
-      this.waiting_cb = {};
-      this.connect();
-      this.next_message_id = 1;
-      this.init();
-    }
-
-    ZeroFrame.prototype.init = function() {
-      return this;
-    };
-
-    ZeroFrame.prototype.connect = function() {
-      this.target = window.parent;
-      window.addEventListener("message", this.onMessage, false);
-      return this.cmd("innerReady");
-    };
-
-    ZeroFrame.prototype.onMessage = function(e) {
-      var cmd, message;
-      message = e.data;
-      cmd = message.cmd;
-      if (cmd === "response") {
-        if (this.waiting_cb[message.to] != null) {
-          return this.waiting_cb[message.to](message.result);
-        } else {
-          return this.log("Websocket callback not found:", message);
-        }
-      } else if (cmd === "wrapperReady") {
-        return this.cmd("innerReady");
-      } else if (cmd === "ping") {
-        return this.response(message.id, "pong");
-      } else if (cmd === "wrapperOpenedWebsocket") {
-        return this.onOpenWebsocket();
-      } else if (cmd === "wrapperClosedWebsocket") {
-        return this.onCloseWebsocket();
-      } else {
-        return this.route(cmd, message);
-      }
-    };
-
-    ZeroFrame.prototype.route = function(cmd, message) {
-      return this.log("Unknown command", message);
-    };
-
-    ZeroFrame.prototype.response = function(to, result) {
-      return this.send({
-        "cmd": "response",
-        "to": to,
-        "result": result
-      });
-    };
-
-    ZeroFrame.prototype.cmd = function(cmd, params, cb) {
-      if (params == null) {
-        params = {};
-      }
-      if (cb == null) {
-        cb = null;
-      }
-      return this.send({
-        "cmd": cmd,
-        "params": params
-      }, cb);
-    };
-
-    ZeroFrame.prototype.send = function(message, cb) {
-      if (cb == null) {
-        cb = null;
-      }
-      message.id = this.next_message_id;
-      this.next_message_id += 1;
-      this.target.postMessage(message, "*");
-      if (cb) {
-        return this.waiting_cb[message.id] = cb;
-      }
-    };
-
-    ZeroFrame.prototype.log = function() {
-      var args;
-      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
-      return console.log.apply(console, ["[ZeroFrame]"].concat(__slice.call(args)));
-    };
-
-    ZeroFrame.prototype.onOpenWebsocket = function() {
-      return this.log("Websocket open");
-    };
-
-    ZeroFrame.prototype.onCloseWebsocket = function() {
-      return this.log("Websocket close");
-    };
-
-    return ZeroFrame;
-
-  })();
-
-  window.ZeroFrame = ZeroFrame;
-
-}).call(this);
-
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/highlight.pack.js ---- */
 
 
@@ -227,10 +113,84 @@
 })();
 
 
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/jquery.cssanim.coffee ---- */
+
+
+(function() {
+  jQuery.fn.cssSlideDown = function() {
+    var elem;
+    elem = this;
+    elem.css({
+      "opacity": 0,
+      "margin-bottom": 0,
+      "margin-top": 0,
+      "padding-bottom": 0,
+      "padding-top": 0,
+      "display": "none",
+      "transform": "scale(0.8)"
+    });
+    setTimeout((function() {
+      var height;
+      elem.css("display", "");
+      height = elem.outerHeight();
+      elem.css({
+        "height": 0,
+        "display": ""
+      }).cssLater("transition", "all 0.3s ease-out", 20);
+      elem.cssLater({
+        "height": height,
+        "opacity": 1,
+        "margin-bottom": "",
+        "margin-top": "",
+        "padding-bottom": "",
+        "padding-top": "",
+        "transform": "scale(1)"
+      }, null, 40);
+      return elem.cssLater("transition", "", 1000, "noclear");
+    }), 10);
+    return this;
+  };
+
+  jQuery.fn.fancySlideDown = function() {
+    var elem;
+    elem = this;
+    return elem.css({
+      "opacity": 0,
+      "transform": "scale(0.9)"
+    }).slideDown().animate({
+      "opacity": 1,
+      "scale": 1
+    }, {
+      "duration": 600,
+      "queue": false,
+      "easing": "easeOutBack"
+    });
+  };
+
+  jQuery.fn.fancySlideUp = function() {
+    var elem;
+    elem = this;
+    return elem.delay(600).slideUp(600).animate({
+      "opacity": 0,
+      "scale": 0.9
+    }, {
+      "duration": 600,
+      "queue": false,
+      "easing": "easeOutQuad"
+    });
+  };
+
+}).call(this);
+
+
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/jquery.csslater.coffee ---- */
 
 
 (function() {
+  var timers;
+
+  timers = {};
+
   jQuery.fn.readdClass = function(class_name) {
     var elem;
     elem = this;
@@ -254,60 +214,84 @@
   };
 
   jQuery.fn.hideLater = function(time) {
-    var elem;
     if (time == null) {
       time = 500;
     }
-    elem = this;
-    setTimeout((function() {
-      return elem.css("display", "none");
-    }), time);
+    this.cssLater("display", "none", time);
     return this;
   };
 
-  jQuery.fn.addClassLater = function(class_name, time) {
+  jQuery.fn.addClassLater = function(class_name, time, mode) {
     var elem;
     if (time == null) {
       time = 5;
     }
+    if (mode == null) {
+      mode = "clear";
+    }
     elem = this;
-    setTimeout((function() {
+    if (timers[class_name] && mode === "clear") {
+      clearInterval(timers[class_name]);
+    }
+    timers[class_name] = setTimeout((function() {
       return elem.addClass(class_name);
     }), time);
     return this;
   };
 
-  jQuery.fn.removeClassLater = function(class_name, time) {
+  jQuery.fn.removeClassLater = function(class_name, time, mode) {
     var elem;
     if (time == null) {
       time = 500;
     }
+    if (mode == null) {
+      mode = "clear";
+    }
     elem = this;
-    setTimeout((function() {
+    if (timers[class_name] && mode === "clear") {
+      clearInterval(timers[class_name]);
+    }
+    timers[class_name] = setTimeout((function() {
       return elem.removeClass(class_name);
     }), time);
     return this;
   };
 
-  jQuery.fn.cssLater = function(name, val, time) {
+  jQuery.fn.cssLater = function(name, val, time, mode) {
     var elem;
     if (time == null) {
       time = 500;
     }
+    if (mode == null) {
+      mode = "clear";
+    }
     elem = this;
-    setTimeout((function() {
-      return elem.css(name, val);
-    }), time);
+    if (timers[name] && mode === "clear") {
+      clearInterval(timers[name]);
+    }
+    if (time === "now") {
+      elem.css(name, val);
+    } else {
+      timers[name] = setTimeout((function() {
+        return elem.css(name, val);
+      }), time);
+    }
     return this;
   };
 
-  jQuery.fn.toggleClassLater = function(name, val, time) {
+  jQuery.fn.toggleClassLater = function(name, val, time, mode) {
     var elem;
     if (time == null) {
       time = 10;
     }
+    if (mode == null) {
+      mode = "clear";
+    }
     elem = this;
-    setTimeout((function() {
+    if (timers[name] && mode === "clear") {
+      clearInterval(timers[name]);
+    }
+    timers[name] = setTimeout((function() {
       return elem.toggleClass(name, val);
     }), time);
     return this;
@@ -540,6 +524,786 @@
 
 
 
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Class.coffee ---- */
+
+
+(function() {
+  var Class,
+    __slice = [].slice;
+
+  Class = (function() {
+    function Class() {}
+
+    Class.prototype.trace = true;
+
+    Class.prototype.log = function() {
+      var args;
+      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      if (!this.trace) {
+        return;
+      }
+      if (typeof console === 'undefined') {
+        return;
+      }
+      args.unshift("[" + this.constructor.name + "]");
+      console.log.apply(console, args);
+      return this;
+    };
+
+    Class.prototype.logStart = function() {
+      var args, name;
+      name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      if (!this.trace) {
+        return;
+      }
+      this.logtimers || (this.logtimers = {});
+      this.logtimers[name] = +(new Date);
+      if (args.length > 0) {
+        this.log.apply(this, ["" + name].concat(__slice.call(args), ["(started)"]));
+      }
+      return this;
+    };
+
+    Class.prototype.logEnd = function() {
+      var args, ms, name;
+      name = arguments[0], args = 2 <= arguments.length ? __slice.call(arguments, 1) : [];
+      ms = +(new Date) - this.logtimers[name];
+      this.log.apply(this, ["" + name].concat(__slice.call(args), ["(Done in " + ms + "ms)"]));
+      return this;
+    };
+
+    return Class;
+
+  })();
+
+  window.Class = Class;
+
+}).call(this);
+
+
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/InlineEditor.coffee ---- */
+
+
+(function() {
+  var InlineEditor,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  InlineEditor = (function() {
+    function InlineEditor(_at_elem, _at_getContent, _at_saveContent, _at_getObject) {
+      this.elem = _at_elem;
+      this.getContent = _at_getContent;
+      this.saveContent = _at_saveContent;
+      this.getObject = _at_getObject;
+      this.cancelEdit = __bind(this.cancelEdit, this);
+      this.deleteObject = __bind(this.deleteObject, this);
+      this.saveEdit = __bind(this.saveEdit, this);
+      this.stopEdit = __bind(this.stopEdit, this);
+      this.startEdit = __bind(this.startEdit, this);
+      this.edit_button = $("<a href='#Edit' class='editable-edit icon-edit'></a>");
+      this.edit_button.on("click", this.startEdit);
+      this.elem.addClass("editable").before(this.edit_button);
+      this.editor = null;
+      this.elem.on("mouseenter", (function(_this) {
+        return function(e) {
+          var scrolltop, top;
+          _this.edit_button.css("opacity", "0.4");
+          scrolltop = $(window).scrollTop();
+          top = _this.edit_button.offset().top - parseInt(_this.edit_button.css("margin-top"));
+          if (scrolltop > top) {
+            return _this.edit_button.css("margin-top", scrolltop - top + e.clientY - 20);
+          } else {
+            return _this.edit_button.css("margin-top", "");
+          }
+        };
+      })(this));
+      this.elem.on("mouseleave", (function(_this) {
+        return function() {
+          return _this.edit_button.css("opacity", "");
+        };
+      })(this));
+      if (this.elem.is(":hover")) {
+        this.elem.trigger("mouseenter");
+      }
+    }
+
+    InlineEditor.prototype.startEdit = function() {
+      var _i, _results;
+      this.content_before = this.elem.html();
+      this.editor = $("<textarea class='editor'></textarea>");
+      this.editor.css("outline", "10000px solid rgba(255,255,255,0)").cssLater("transition", "outline 0.3s", 5).cssLater("outline", "10000px solid rgba(255,255,255,0.9)", 10);
+      this.editor.val(this.getContent(this.elem, "raw"));
+      this.elem.after(this.editor);
+      this.elem.html((function() {
+        _results = [];
+        for (_i = 1; _i <= 50; _i++){ _results.push(_i); }
+        return _results;
+      }).apply(this).join("fill the width"));
+      this.copyStyle(this.elem, this.editor);
+      this.elem.html(this.content_before);
+      this.autoExpand(this.editor);
+      this.elem.css("display", "none");
+      if ($(window).scrollTop() === 0) {
+        this.editor[0].selectionEnd = 0;
+        this.editor.focus();
+      }
+      $(".editable-edit").css("display", "none");
+      $(".editbar").css("display", "inline-block").addClassLater("visible", 10);
+      $(".publishbar").css("opacity", 0);
+      $(".editbar .object").text(this.getObject(this.elem).data("object") + "." + this.elem.data("editable"));
+      $(".editbar .button").removeClass("loading");
+      $(".editbar .save").off("click").on("click", this.saveEdit);
+      $(".editbar .delete").off("click").on("click", this.deleteObject);
+      $(".editbar .cancel").off("click").on("click", this.cancelEdit);
+      if (this.getObject(this.elem).data("deletable")) {
+        $(".editbar .delete").css("display", "").html("Delete " + this.getObject(this.elem).data("object").split(":")[0]);
+      } else {
+        $(".editbar .delete").css("display", "none");
+      }
+      window.onbeforeunload = function() {
+        return 'Your unsaved blog changes will be lost!';
+      };
+      return false;
+    };
+
+    InlineEditor.prototype.stopEdit = function() {
+      this.editor.remove();
+      this.editor = null;
+      this.elem.css("display", "");
+      $(".editable-edit").css("display", "");
+      $(".editbar").cssLater("display", "none", 1000).removeClass("visible");
+      $(".publishbar").css("opacity", 1);
+      return window.onbeforeunload = null;
+    };
+
+    InlineEditor.prototype.saveEdit = function() {
+      var content;
+      content = this.editor.val();
+      $(".editbar .save").addClass("loading");
+      this.saveContent(this.elem, content, (function(_this) {
+        return function(content_html) {
+          if (content_html) {
+            $(".editbar .save").removeClass("loading");
+            _this.stopEdit();
+            if (typeof content_html === "string") {
+              _this.elem.html(content_html);
+            }
+            return $('pre code').each(function(i, block) {
+              return hljs.highlightBlock(block);
+            });
+          } else {
+            return $(".editbar .save").removeClass("loading");
+          }
+        };
+      })(this));
+      return false;
+    };
+
+    InlineEditor.prototype.deleteObject = function() {
+      var object_type;
+      object_type = this.getObject(this.elem).data("object").split(":")[0];
+      Page.cmd("wrapperConfirm", ["Are you sure you sure to delete this " + object_type + "?", "Delete"], (function(_this) {
+        return function(confirmed) {
+          $(".editbar .delete").addClass("loading");
+          return Page.saveContent(_this.getObject(_this.elem), null, function() {
+            return _this.stopEdit();
+          });
+        };
+      })(this));
+      return false;
+    };
+
+    InlineEditor.prototype.cancelEdit = function() {
+      this.stopEdit();
+      this.elem.html(this.content_before);
+      $('pre code').each(function(i, block) {
+        return hljs.highlightBlock(block);
+      });
+      return false;
+    };
+
+    InlineEditor.prototype.copyStyle = function(elem_from, elem_to) {
+      var from_style;
+      elem_to.addClass(elem_from[0].className);
+      from_style = getComputedStyle(elem_from[0]);
+      elem_to.css({
+        fontFamily: from_style.fontFamily,
+        fontSize: from_style.fontSize,
+        fontWeight: from_style.fontWeight,
+        marginTop: from_style.marginTop,
+        marginRight: from_style.marginRight,
+        marginBottom: from_style.marginBottom,
+        marginLeft: from_style.marginLeft,
+        paddingTop: from_style.paddingTop,
+        paddingRight: from_style.paddingRight,
+        paddingBottom: from_style.paddingBottom,
+        paddingLeft: from_style.paddingLeft,
+        lineHeight: from_style.lineHeight,
+        textAlign: from_style.textAlign,
+        color: from_style.color,
+        letterSpacing: from_style.letterSpacing
+      });
+      if (elem_from.innerWidth() < 1000) {
+        return elem_to.css("minWidth", elem_from.innerWidth());
+      }
+    };
+
+    InlineEditor.prototype.autoExpand = function(elem) {
+      var editor;
+      editor = elem[0];
+      elem.height(1);
+      elem.on("input", function() {
+        if (editor.scrollHeight > elem.height()) {
+          return elem.height(1).height(editor.scrollHeight + parseFloat(elem.css("borderTopWidth")) + parseFloat(elem.css("borderBottomWidth")));
+        }
+      });
+      elem.trigger("input");
+      return elem.on('keydown', function(e) {
+        var s, val;
+        if (e.which === 9) {
+          e.preventDefault();
+          s = this.selectionStart;
+          val = elem.val();
+          elem.val(val.substring(0, this.selectionStart) + "\t" + val.substring(this.selectionEnd));
+          return this.selectionEnd = s + 1;
+        }
+      });
+    };
+
+    return InlineEditor;
+
+  })();
+
+  window.InlineEditor = InlineEditor;
+
+}).call(this);
+
+
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/RateLimit.coffee ---- */
+
+
+(function() {
+  var call_after_interval, limits;
+
+  limits = {};
+
+  call_after_interval = {};
+
+  window.RateLimit = function(interval, fn) {
+    if (!limits[fn]) {
+      call_after_interval[fn] = false;
+      fn();
+      return limits[fn] = setTimeout((function() {
+        if (call_after_interval[fn]) {
+          fn();
+        }
+        delete limits[fn];
+        return delete call_after_interval[fn];
+      }), interval);
+    } else {
+      return call_after_interval[fn] = true;
+    }
+  };
+
+}).call(this);
+
+
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Text.coffee ---- */
+
+
+(function() {
+  var Renderer, Text,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
+
+  Renderer = (function(_super) {
+    __extends(Renderer, _super);
+
+    function Renderer() {
+      return Renderer.__super__.constructor.apply(this, arguments);
+    }
+
+    Renderer.prototype.image = function(href, title, text) {
+      return "<code>![" + text + "](" + href + ")</code>";
+    };
+
+    return Renderer;
+
+  })(marked.Renderer);
+
+  Text = (function() {
+    function Text() {
+      this.toUrl = __bind(this.toUrl, this);
+    }
+
+    Text.prototype.toColor = function(text) {
+      var color, hash, i, value, _i, _j, _ref;
+      hash = 0;
+      for (i = _i = 0, _ref = text.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
+        hash = text.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      color = '#';
+      return "hsl(" + (hash % 360) + ",30%,50%)";
+      for (i = _j = 0; _j <= 2; i = ++_j) {
+        value = (hash >> (i * 8)) & 0xFF;
+        color += ('00' + value.toString(16)).substr(-2);
+      }
+      return color;
+    };
+
+    Text.prototype.toMarked = function(text, options) {
+      if (options == null) {
+        options = {};
+      }
+      options["gfm"] = true;
+      options["breaks"] = true;
+      if (options.sanitize) {
+        options["renderer"] = renderer;
+      }
+      text = marked(text, options);
+      return this.fixHtmlLinks(text);
+    };
+
+    Text.prototype.fixHtmlLinks = function(text) {
+      if (window.is_proxy) {
+        return text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="http://zero');
+      } else {
+        return text.replace(/href="http:\/\/(127.0.0.1|localhost):43110/g, 'href="');
+      }
+    };
+
+    Text.prototype.fixLink = function(link) {
+      if (window.is_proxy) {
+        return link.replace(/http:\/\/(127.0.0.1|localhost):43110/, 'http://zero');
+      } else {
+        return link.replace(/http:\/\/(127.0.0.1|localhost):43110/, '');
+      }
+    };
+
+    Text.prototype.toUrl = function(text) {
+      return text.replace(/[^A-Za-z0-9]/g, "+").replace(/[+]+/g, "+").replace(/[+]+$/, "");
+    };
+
+    return Text;
+
+  })();
+
+  window.is_proxy = window.location.pathname === "/";
+
+  window.renderer = new Renderer();
+
+  window.Text = new Text();
+
+}).call(this);
+
+
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Time.coffee ---- */
+
+
+(function() {
+  var Time;
+
+  Time = (function() {
+    function Time() {}
+
+    Time.prototype.since = function(time) {
+      var back, now, secs;
+      now = +(new Date) / 1000;
+      secs = now - time;
+      if (secs < 60) {
+        back = "Just now";
+      } else if (secs < 60 * 60) {
+        back = (Math.round(secs / 60)) + " minutes ago";
+      } else if (secs < 60 * 60 * 24) {
+        back = (Math.round(secs / 60 / 60)) + " hours ago";
+      } else if (secs < 60 * 60 * 24 * 3) {
+        back = (Math.round(secs / 60 / 60 / 24)) + " days ago";
+      } else {
+        back = "on " + this.date(time);
+      }
+      back = back.replace(/1 ([a-z]+)s/, "1 $1");
+      return back;
+    };
+
+    Time.prototype.date = function(timestamp, format) {
+      var display, parts;
+      if (format == null) {
+        format = "short";
+      }
+      parts = (new Date(timestamp * 1000)).toString().split(" ");
+      if (format === "short") {
+        display = parts.slice(1, 4);
+      } else {
+        display = parts.slice(1, 5);
+      }
+      return display.join(" ").replace(/( [0-9]{4})/, ",$1");
+    };
+
+    Time.prototype.timestamp = function(date) {
+      if (date == null) {
+        date = "";
+      }
+      if (date === "now" || date === "") {
+        return parseInt(+(new Date) / 1000);
+      } else {
+        return parseInt(Date.parse(date) / 1000);
+      }
+    };
+
+    Time.prototype.readtime = function(text) {
+      var chars;
+      chars = text.length;
+      if (chars > 1500) {
+        return parseInt(chars / 1500) + " min read";
+      } else {
+        return "less than 1 min read";
+      }
+    };
+
+    return Time;
+
+  })();
+
+  window.Time = new Time;
+
+}).call(this);
+
+
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/ZeroFrame.coffee ---- */
+
+
+(function() {
+  var ZeroFrame,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
+
+  ZeroFrame = (function(_super) {
+    __extends(ZeroFrame, _super);
+
+    function ZeroFrame(url) {
+      this.onCloseWebsocket = __bind(this.onCloseWebsocket, this);
+      this.onOpenWebsocket = __bind(this.onOpenWebsocket, this);
+      this.route = __bind(this.route, this);
+      this.onMessage = __bind(this.onMessage, this);
+      this.url = url;
+      this.waiting_cb = {};
+      this.connect();
+      this.next_message_id = 1;
+      this.init();
+    }
+
+    ZeroFrame.prototype.init = function() {
+      return this;
+    };
+
+    ZeroFrame.prototype.connect = function() {
+      this.target = window.parent;
+      window.addEventListener("message", this.onMessage, false);
+      return this.cmd("innerReady");
+    };
+
+    ZeroFrame.prototype.onMessage = function(e) {
+      var cmd, message;
+      message = e.data;
+      cmd = message.cmd;
+      if (cmd === "response") {
+        if (this.waiting_cb[message.to] != null) {
+          return this.waiting_cb[message.to](message.result);
+        } else {
+          return this.log("Websocket callback not found:", message);
+        }
+      } else if (cmd === "wrapperReady") {
+        return this.cmd("innerReady");
+      } else if (cmd === "ping") {
+        return this.response(message.id, "pong");
+      } else if (cmd === "wrapperOpenedWebsocket") {
+        return this.onOpenWebsocket();
+      } else if (cmd === "wrapperClosedWebsocket") {
+        return this.onCloseWebsocket();
+      } else {
+        return this.onRequest(cmd, message);
+      }
+    };
+
+    ZeroFrame.prototype.route = function(cmd, message) {
+      return this.log("Unknown command", message);
+    };
+
+    ZeroFrame.prototype.response = function(to, result) {
+      return this.send({
+        "cmd": "response",
+        "to": to,
+        "result": result
+      });
+    };
+
+    ZeroFrame.prototype.cmd = function(cmd, params, cb) {
+      if (params == null) {
+        params = {};
+      }
+      if (cb == null) {
+        cb = null;
+      }
+      return this.send({
+        "cmd": cmd,
+        "params": params
+      }, cb);
+    };
+
+    ZeroFrame.prototype.send = function(message, cb) {
+      if (cb == null) {
+        cb = null;
+      }
+      message.id = this.next_message_id;
+      this.next_message_id += 1;
+      this.target.postMessage(message, "*");
+      if (cb) {
+        return this.waiting_cb[message.id] = cb;
+      }
+    };
+
+    ZeroFrame.prototype.onOpenWebsocket = function() {
+      return this.log("Websocket open");
+    };
+
+    ZeroFrame.prototype.onCloseWebsocket = function() {
+      return this.log("Websocket close");
+    };
+
+    return ZeroFrame;
+
+  })(Class);
+
+  window.ZeroFrame = ZeroFrame;
+
+}).call(this);
+
+
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/Comments.coffee ---- */
+
+
+(function() {
+  var Comments,
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty;
+
+  Comments = (function(_super) {
+    __extends(Comments, _super);
+
+    function Comments() {
+      return Comments.__super__.constructor.apply(this, arguments);
+    }
+
+    Comments.prototype.pagePost = function(post_id, cb) {
+      if (cb == null) {
+        cb = false;
+      }
+      this.post_id = post_id;
+      this.rules = {};
+      $(".button-submit-comment").on("click", (function(_this) {
+        return function() {
+          _this.submitComment();
+          return false;
+        };
+      })(this));
+      this.loadComments("noanim", cb);
+      this.autoExpand($(".comment-textarea"));
+      return $(".certselect").on("click", (function(_this) {
+        return function() {
+          if (Page.server_info.rev < 160) {
+            Page.cmd("wrapperNotification", ["error", "Comments requires at least ZeroNet 0.3.0 Please upgade!"]);
+          } else {
+            Page.cmd("certSelect", [["zeroid.bit"]]);
+          }
+          return false;
+        };
+      })(this));
+    };
+
+    Comments.prototype.loadComments = function(type, cb) {
+      var query;
+      if (type == null) {
+        type = "show";
+      }
+      if (cb == null) {
+        cb = false;
+      }
+      query = "SELECT comment.*, json_content.json_id AS content_json_id, keyvalue.value AS cert_user_id, json.directory, (SELECT COUNT(*) FROM comment_vote WHERE comment_vote.comment_uri = comment.comment_id || '@' || json.directory)+1 AS votes FROM comment LEFT JOIN json USING (json_id) LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json') LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id') WHERE post_id = " + this.post_id + " ORDER BY date_added DESC";
+      return Page.cmd("dbQuery", query, (function(_this) {
+        return function(comments) {
+          var comment, comment_address, elem, user_address, _i, _len, _results;
+          $(".comments-num").text(comments.length);
+          _results = [];
+          for (_i = 0, _len = comments.length; _i < _len; _i++) {
+            comment = comments[_i];
+            user_address = comment.directory.replace("users/", "");
+            comment_address = comment.comment_id + "_" + user_address;
+            elem = $("#comment_" + comment_address);
+            if (elem.length === 0) {
+              elem = $(".comment.template").clone().removeClass("template").attr("id", "comment_" + comment_address).data("post_id", _this.post_id);
+              if (type !== "noanim") {
+                elem.cssSlideDown();
+              }
+            }
+            _this.applyCommentData(elem, comment);
+            _results.push(elem.appendTo(".comments"));
+          }
+          return _results;
+        };
+      })(this));
+    };
+
+    Comments.prototype.applyCommentData = function(elem, comment) {
+      var cert_domain, user_address, user_name, _ref;
+      _ref = comment.cert_user_id.split("@"), user_name = _ref[0], cert_domain = _ref[1];
+      user_address = comment.directory.replace("users/", "");
+      $(".comment-body", elem).html(Text.toMarked(comment.body, {
+        "sanitize": true
+      }));
+      $(".user_name", elem).text(user_name).css({
+        "color": Text.toColor(comment.cert_user_id)
+      }).attr("title", user_name + "@" + cert_domain + ": " + user_address);
+      return $(".added", elem).text(Time.since(comment.date_added)).attr("title", Time.date(comment.date_added, "long"));
+    };
+
+    Comments.prototype.submitComment = function() {
+      var body, inner_path;
+      if (!Page.site_info.cert_user_id) {
+        Page.cmd("wrapperNotification", ["info", "Please, select your account."]);
+        return false;
+      }
+      body = $(".comment-new .comment-textarea").val();
+      if (!body) {
+        $(".comment-new .comment-textarea").focus();
+        return false;
+      }
+      $(".comment-new .button-submit").addClass("loading");
+      inner_path = "data/users/" + Page.site_info.auth_address + "/data.json";
+      return Page.cmd("fileGet", {
+        "inner_path": inner_path,
+        "required": false
+      }, (function(_this) {
+        return function(data) {
+          var json_raw;
+          if (data) {
+            data = JSON.parse(data);
+          } else {
+            data = {
+              "next_comment_id": 1,
+              "comment": [],
+              "comment_vote": {}
+            };
+          }
+          data.comment.push({
+            "comment_id": data.next_comment_id,
+            "body": body,
+            "post_id": _this.post_id,
+            "date_added": Time.timestamp()
+          });
+          data.next_comment_id += 1;
+          json_raw = unescape(encodeURIComponent(JSON.stringify(data, void 0, '\t')));
+          return Page.writePublish(inner_path, btoa(json_raw), function(res) {
+            $(".comment-new .button-submit").removeClass("loading");
+            _this.loadComments();
+            _this.checkCert("updaterules");
+            _this.log("Writepublish result", res);
+            if (res !== false) {
+              return $(".comment-new .comment-textarea").val("");
+            }
+          });
+        };
+      })(this));
+    };
+
+    Comments.prototype.checkCert = function(type) {
+      var last_cert_user_id;
+      last_cert_user_id = $(".comment-new .user_name").text();
+      if (Page.site_info.cert_user_id) {
+        $(".comment-new").removeClass("comment-nocert");
+        $(".comment-new .user_name").text(Page.site_info.cert_user_id);
+      } else {
+        $(".comment-new").addClass("comment-nocert");
+        $(".comment-new .user_name").text("Please sign in");
+      }
+      if ($(".comment-new .user_name").text() !== last_cert_user_id || type === "updaterules") {
+        if (Page.site_info.cert_user_id) {
+          return Page.cmd("fileRules", "data/users/" + Page.site_info.auth_address + "/content.json", (function(_this) {
+            return function(rules) {
+              _this.rules = rules;
+              if (rules.max_size) {
+                return _this.setCurrentSize(rules.current_size);
+              } else {
+                return _this.setCurrentSize(0);
+              }
+            };
+          })(this));
+        } else {
+          return this.setCurrentSize(0);
+        }
+      }
+    };
+
+    Comments.prototype.setCurrentSize = function(current_size) {
+      var current_size_kb;
+      if (current_size) {
+        current_size_kb = current_size / 1000;
+        $(".user-size").text("used: " + (current_size_kb.toFixed(1)) + "k/" + (Math.round(this.rules.max_size / 1000)) + "k");
+        return $(".user-size-used").css("width", Math.round(70 * current_size / this.rules.max_size));
+      } else {
+        return $(".user-size").text("");
+      }
+    };
+
+    Comments.prototype.autoExpand = function(elem) {
+      var editor;
+      editor = elem[0];
+      if (elem.height() > 0) {
+        elem.height(1);
+      }
+      elem.on("input", (function(_this) {
+        return function() {
+          var current_size, min_height, new_height, old_height;
+          if (editor.scrollHeight > elem.height()) {
+            old_height = elem.height();
+            elem.height(1);
+            new_height = editor.scrollHeight;
+            new_height += parseFloat(elem.css("borderTopWidth"));
+            new_height += parseFloat(elem.css("borderBottomWidth"));
+            new_height -= parseFloat(elem.css("paddingTop"));
+            new_height -= parseFloat(elem.css("paddingBottom"));
+            min_height = parseFloat(elem.css("lineHeight")) * 2;
+            if (new_height < min_height) {
+              new_height = min_height + 4;
+            }
+            elem.height(new_height - 4);
+          }
+          if (_this.rules.max_size) {
+            if (elem.val().length > 0) {
+              current_size = _this.rules.current_size + elem.val().length + 90;
+            } else {
+              current_size = _this.rules.current_size;
+            }
+            return _this.setCurrentSize(current_size);
+          }
+        };
+      })(this));
+      if (elem.height() > 0) {
+        return elem.trigger("input");
+      } else {
+        return elem.height("48px");
+      }
+    };
+
+    return Comments;
+
+  })(Class);
+
+  window.Comments = new Comments();
+
+}).call(this);
+
+
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/InlineEditor.coffee ---- */
 
 
@@ -606,8 +1370,8 @@
         this.editor.focus();
       }
       $(".editable-edit").css("display", "none");
-      $(".editbar").css("display", "inline-block").addClassLater("visible", 10);
-      $(".publishbar").css("opacity", 0);
+      $(".editbar").cssLater("display", "inline-block", "now").addClassLater("visible", 10);
+      $(".publishbar").cssLater("opacity", 0, "now");
       $(".editbar .object").text(this.getObject(this.elem).data("object") + "." + this.elem.data("editable"));
       $(".editbar .button").removeClass("loading");
       $(".editbar .save").off("click").on("click", this.saveEdit);
@@ -658,7 +1422,7 @@
     InlineEditor.prototype.deletePost = function() {
       var object_type;
       object_type = this.getObject(this.elem).data("object").split(":")[0];
-      window.zero_blog.cmd("wrapperConfirm", ["Are you sure you sure to delete this " + object_type + "?", "Delete"], (function(_this) {
+      Page.cmd("wrapperConfirm", ["Are you sure you sure to delete this " + object_type + "?", "Delete"], (function(_this) {
         return function(confirmed) {
           _this.stopEdit();
           return _this.saveContent(_this.getObject(_this.elem), null);
@@ -751,21 +1515,16 @@
       this.getObject = __bind(this.getObject, this);
       this.onOpenWebsocket = __bind(this.onOpenWebsocket, this);
       this.publish = __bind(this.publish, this);
+      this.pageLoaded = __bind(this.pageLoaded, this);
       return ZeroBlog.__super__.constructor.apply(this, arguments);
     }
 
     ZeroBlog.prototype.init = function() {
-      var address, imagedata;
-      address = document.location.href.replace("/media", "").match(/\/([A-Za-z0-9\._-]+)\//)[1];
-      this.log("Address:", address);
-      imagedata = new Identicon(address, 70).toString();
-      $("body").append("<style>.avatar { background-image: url(data:image/png;base64," + imagedata + ") }</style>");
       this.data = null;
       this.site_info = null;
       this.server_info = null;
       this.event_page_load = $.Deferred();
       this.event_site_info = $.Deferred();
-      this.loadData();
       $.when(this.event_page_load, this.event_site_info).done((function(_this) {
         return function() {
           if (_this.site_info.settings.own || _this.data.demo) {
@@ -782,17 +1541,39 @@
           }
         };
       })(this));
+      $.when(this.event_site_info).done((function(_this) {
+        return function() {
+          var imagedata;
+          _this.log("event site info");
+          imagedata = new Identicon(_this.site_info.address, 70).toString();
+          return $("body").append("<style>.avatar { background-image: url(data:image/png;base64," + imagedata + ") }</style>");
+        };
+      })(this));
       return this.log("inited!");
     };
 
-    ZeroBlog.prototype.loadData = function() {
-      return $.get("data.json", (function(_this) {
-        return function(data) {
-          _this.data = data;
-          $(".left h1 a").html(data.title);
-          $(".left h2").html(marked(data.description));
-          $(".left .links").html(marked(data.links));
-          return _this.routeUrl(window.location.search.substring(1));
+    ZeroBlog.prototype.loadData = function(query) {
+      if (query == null) {
+        query = "new";
+      }
+      if (query === "old") {
+        query = "SELECT key, value FROM json LEFT JOIN keyvalue USING (json_id) WHERE path = 'data.json'";
+      } else {
+        query = "SELECT key, value FROM json LEFT JOIN keyvalue USING (json_id) WHERE directory = '' AND file_name = 'data.json'";
+      }
+      return this.cmd("dbQuery", [query], (function(_this) {
+        return function(res) {
+          var row, _i, _len;
+          _this.data = {};
+          if (res) {
+            for (_i = 0, _len = res.length; _i < _len; _i++) {
+              row = res[_i];
+              _this.data[row.key] = row.value;
+            }
+            $(".left h1 a").html(_this.data.title).data("content", _this.data.title);
+            $(".left h2").html(Text.toMarked(_this.data.description)).data("content", _this.data.description);
+            return $(".left .links").html(Text.toMarked(_this.data.links)).data("content", _this.data.links);
+          }
         };
       })(this));
     };
@@ -810,55 +1591,57 @@
     };
 
     ZeroBlog.prototype.pagePost = function(post_id) {
-      var found, post, s, _i, _len, _ref;
+      var s;
       s = +(new Date);
-      found = false;
-      _ref = this.data.posts;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        post = _ref[_i];
-        if (post.id === post_id) {
-          found = true;
-          break;
-        }
-      }
-      if (found) {
-        this.applyPostdata($(".post-full"), post, true);
-      } else {
-        $(".post-full").html("<h1>Not found</h1>");
-      }
-      this.pageLoaded();
-      return this.log("Post loaded in", (+(new Date)) - s, "ms");
+      return this.cmd("dbQuery", ["SELECT * FROM post WHERE post_id = " + post_id + " LIMIT 1"], (function(_this) {
+        return function(res) {
+          if (res.length) {
+            _this.applyPostdata($(".post-full"), res[0], true);
+            Comments.pagePost(post_id);
+          } else {
+            $(".post-full").html("<h1>Not found</h1>");
+          }
+          return _this.pageLoaded();
+        };
+      })(this));
     };
 
     ZeroBlog.prototype.pageMain = function() {
-      var elem, post, s, _i, _len, _ref;
-      s = +(new Date);
-      _ref = this.data.posts;
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        post = _ref[_i];
-        elem = $(".post.template").clone().removeClass("template");
-        this.applyPostdata(elem, post);
-        elem.appendTo(".posts");
-      }
-      this.pageLoaded();
-      this.log("Posts loaded in", (+(new Date)) - s, "ms");
-      return $(".posts .new").on("click", (function(_this) {
-        return function() {
-          _this.data.posts.unshift({
-            id: _this.data.next_id,
-            title: "New blog post",
-            posted: (+(new Date)) / 1000,
-            edited: false,
-            body: "Blog post body"
+      return this.cmd("dbQuery", ["SELECT post.*, COUNT(comment_id) AS comments FROM post LEFT JOIN comment USING (post_id) GROUP BY post_id ORDER BY date_published"], (function(_this) {
+        return function(res) {
+          var elem, post, s, _i, _len;
+          s = +(new Date);
+          for (_i = 0, _len = res.length; _i < _len; _i++) {
+            post = res[_i];
+            elem = $("#post_" + post.post_id);
+            if (elem.length === 0) {
+              elem = $(".post.template").clone().removeClass("template").attr("id", "post_" + post.post_id);
+              elem.prependTo(".posts");
+            }
+            _this.applyPostdata(elem, post);
+          }
+          _this.pageLoaded();
+          _this.log("Posts loaded in", (+(new Date)) - s, "ms");
+          return $(".posts .new").on("click", function() {
+            _this.cmd("fileGet", ["data/data.json"], function(res) {
+              var data;
+              data = JSON.parse(res);
+              data.post.unshift({
+                post_id: data.next_post_id,
+                title: "New blog post",
+                date_published: (+(new Date)) / 1000,
+                body: "Blog post body"
+              });
+              data.next_post_id += 1;
+              elem = $(".post.template").clone().removeClass("template");
+              _this.applyPostdata(elem, data.post[0]);
+              elem.hide();
+              elem.prependTo(".posts").slideDown();
+              _this.addInlineEditors(elem);
+              return _this.writeData(data);
+            });
+            return false;
           });
-          _this.data.next_id += 1;
-          elem = $(".post.template").clone().removeClass("template");
-          _this.applyPostdata(elem, _this.data.posts[0]);
-          elem.hide();
-          elem.prependTo(".posts").slideDown();
-          _this.addInlineEditors(elem);
-          _this.writeData();
-          return false;
         };
       })(this));
     };
@@ -868,22 +1651,27 @@
       $('pre code').each(function(i, block) {
         return hljs.highlightBlock(block);
       });
-      return this.event_page_load.resolve();
+      this.event_page_load.resolve();
+      return this.cmd("innerLoaded", true);
     };
 
     ZeroBlog.prototype.addInlineEditors = function(parent) {
-      var elem, elems, _i, _len, _results;
+      var editor, elem, elems, _i, _len;
+      this.logStart("Adding inline editors");
       elems = $("[data-editable]:visible", parent);
-      _results = [];
       for (_i = 0, _len = elems.length; _i < _len; _i++) {
         elem = elems[_i];
-        _results.push(new InlineEditor($(elem), this.getContent, this.saveContent, this.getObject));
+        elem = $(elem);
+        if (!elem.data("editor") && !elem.hasClass("editor")) {
+          editor = new InlineEditor(elem, this.getContent, this.saveContent, this.getObject);
+          elem.data("editor", editor);
+        }
       }
-      return _results;
+      return this.logEnd("Adding inline editors");
     };
 
     ZeroBlog.prototype.checkPublishbar = function() {
-      if (!this.data.modified || this.data.modified > this.site_info.content.modified) {
+      if (!this.site_modified || this.site_modified > this.site_info.content.modified) {
         return $(".publishbar").addClass("visible");
       } else {
         return $(".publishbar").removeClass("visible");
@@ -891,10 +1679,6 @@
     };
 
     ZeroBlog.prototype.publish = function() {
-      if (!this.server_info.ip_external) {
-        this.cmd("wrapperNotification", ["error", "To publish the site please open port <b>" + this.server_info.fileserver_port + "</b> on your router"]);
-        return false;
-      }
       this.cmd("wrapperPrompt", ["Enter your private key:", "password"], (function(_this) {
         return function(privatekey) {
           $(".publishbar .button").addClass("loading");
@@ -908,36 +1692,42 @@
     };
 
     ZeroBlog.prototype.applyPostdata = function(elem, post, full) {
-      var body, details, title_hash;
+      var body, date_published, title_hash;
       if (full == null) {
         full = false;
       }
       title_hash = post.title.replace(/[#?& ]/g, "+").replace(/[+]+/g, "+");
-      elem.data("object", "Post:" + post.id);
-      $(".title a", elem).html(post.title).attr("href", "?Post:" + post.id + ":" + title_hash);
-      details = this.formatSince(post.posted);
+      elem.data("object", "Post:" + post.post_id);
+      $(".title .editable", elem).html(post.title).attr("href", "?Post:" + post.post_id + ":" + title_hash).data("content", post.title);
+      date_published = Time.since(post.date_published);
       if (post.body.match(/^---/m)) {
-        details += " &middot; " + (this.readtime(post.body));
-        $(".more", elem).css("display", "inline-block").attr("href", "?Post:" + post.id + ":" + title_hash);
+        date_published += " &middot; " + (Time.readtime(post.body));
+        $(".more", elem).css("display", "inline-block").attr("href", "?Post:" + post.post_id + ":" + title_hash);
       }
-      $(".details", elem).html(details);
+      $(".details .published", elem).html(date_published).data("content", post.date_published);
+      if (post.comments > 0) {
+        $(".details .comments-num", elem).css("display", "inline").attr("href", "?Post:" + post.post_id + ":" + title_hash + "#Comments");
+        $(".details .comments-num .num", elem).text(post.comments + " comments");
+      } else {
+        $(".details .comments-num", elem).css("display", "none");
+      }
       if (full) {
         body = post.body;
       } else {
         body = post.body.replace(/^([\s\S]*?)\n---\n[\s\S]*$/, "$1");
       }
-      return $(".body", elem).html(marked(body));
+      return $(".body", elem).html(Text.toMarked(body)).data("content", post.body);
     };
 
     ZeroBlog.prototype.onOpenWebsocket = function(e) {
+      this.loadData();
+      this.routeUrl(window.location.search.substring(1));
       this.cmd("siteInfo", {}, this.setSiteinfo);
       return this.cmd("serverInfo", {}, (function(_this) {
         return function(ret) {
-          var version;
           _this.server_info = ret;
-          version = _this.server_info.version.split(".");
-          if (version[0] === "0" && version[1] === "1" && parseInt(version[2]) < 6) {
-            return _this.cmd("wrapperNotification", ["error", "ZeroBlog requires ZeroNet 0.1.6, please update!"]);
+          if (_this.server_info.rev < 160) {
+            return _this.loadData("old");
           }
         };
       })(this));
@@ -948,127 +1738,123 @@
     };
 
     ZeroBlog.prototype.getContent = function(elem, raw) {
-      var content, id, post, type, _ref;
+      var content, id, type, _ref;
       if (raw == null) {
         raw = false;
       }
       _ref = this.getObject(elem).data("object").split(":"), type = _ref[0], id = _ref[1];
       id = parseInt(id);
-      if (type === "Post") {
-        post = ((function() {
-          var _i, _len, _ref1, _results;
-          _ref1 = this.data.posts;
-          _results = [];
-          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-            post = _ref1[_i];
-            if (post.id === id) {
-              _results.push(post);
-            }
-          }
-          return _results;
-        }).call(this))[0];
-        content = post[elem.data("editable")];
-        if (elem.data("editable-mode") === "timestamp") {
-          content = this.formatDate(content, "full");
-        }
-      } else if (type === "Site") {
-        content = this.data[elem.data("editable")];
-      } else {
-        content = "Unknown";
+      content = elem.data("content");
+      if (elem.data("editable-mode") === "timestamp") {
+        content = Time.date(content, "full");
       }
       if (elem.data("editable-mode") === "simple" || raw) {
         return content;
       } else {
-        return marked(content);
+        return Text.toMarked(content);
       }
     };
 
     ZeroBlog.prototype.saveContent = function(elem, content, cb) {
-      var id, post, type, _ref;
+      var id, type, _ref;
       if (cb == null) {
         cb = false;
       }
       if (elem.data("deletable") && content === null) {
         return this.deleteObject(elem);
       }
+      elem.data("content", content);
       _ref = this.getObject(elem).data("object").split(":"), type = _ref[0], id = _ref[1];
       id = parseInt(id);
-      if (type === "Post") {
-        post = ((function() {
-          var _i, _len, _ref1, _results;
-          _ref1 = this.data.posts;
-          _results = [];
-          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-            post = _ref1[_i];
-            if (post.id === id) {
-              _results.push(post);
-            }
-          }
-          return _results;
-        }).call(this))[0];
-        if (elem.data("editable-mode") === "timestamp") {
-          content = this.timestamp(content);
-        }
-        post[elem.data("editable")] = content;
-      } else if (type === "Site") {
-        this.data[elem.data("editable")] = content;
-      }
-      return this.writeData((function(_this) {
+      return this.cmd("fileGet", ["data/data.json"], (function(_this) {
         return function(res) {
-          if (cb) {
-            if (res === true) {
-              if (elem.data("editable-mode") === "simple") {
-                return cb(content);
-              } else if (elem.data("editable-mode") === "timestamp") {
-                return cb(_this.formatSince(content));
-              } else {
-                return cb(marked(content));
+          var data, post;
+          data = JSON.parse(res);
+          if (type === "Post") {
+            post = ((function() {
+              var _i, _len, _ref1, _results;
+              _ref1 = data.post;
+              _results = [];
+              for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+                post = _ref1[_i];
+                if (post.post_id === id) {
+                  _results.push(post);
+                }
               }
-            } else {
-              return cb(false);
+              return _results;
+            })())[0];
+            if (elem.data("editable-mode") === "timestamp") {
+              content = Time.timestamp(content);
             }
+            post[elem.data("editable")] = content;
+          } else if (type === "Site") {
+            data[elem.data("editable")] = content;
           }
+          return _this.writeData(data, function(res) {
+            if (cb) {
+              if (res === true) {
+                if (elem.data("editable-mode") === "simple") {
+                  return cb(content);
+                } else if (elem.data("editable-mode") === "timestamp") {
+                  return cb(Time.since(content));
+                } else {
+                  return cb(Text.toMarked(content));
+                }
+              } else {
+                return cb(false);
+              }
+            }
+          });
         };
       })(this));
     };
 
     ZeroBlog.prototype.deleteObject = function(elem) {
-      var id, post, type, _ref;
+      var id, type, _ref;
       _ref = elem.data("object").split(":"), type = _ref[0], id = _ref[1];
       id = parseInt(id);
-      if (type === "Post") {
-        post = ((function() {
-          var _i, _len, _ref1, _results;
-          _ref1 = this.data.posts;
-          _results = [];
-          for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-            post = _ref1[_i];
-            if (post.id === id) {
-              _results.push(post);
+      return this.cmd("fileGet", ["data/data.json"], (function(_this) {
+        return function(res) {
+          var data, post;
+          data = JSON.parse(res);
+          if (type === "Post") {
+            post = ((function() {
+              var _i, _len, _ref1, _results;
+              _ref1 = data.post;
+              _results = [];
+              for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+                post = _ref1[_i];
+                if (post.post_id === id) {
+                  _results.push(post);
+                }
+              }
+              return _results;
+            })())[0];
+            if (!post) {
+              return false;
             }
+            data.post.splice(data.post.indexOf(post), 1);
+            return _this.writeData(data, function(res) {
+              if (res === true) {
+                return window.open("?Home", "_top");
+              }
+            });
           }
-          return _results;
-        }).call(this))[0];
-        if (!post) {
-          return false;
-        }
-        this.data.posts.splice(this.data.posts.indexOf(post), 1);
-        return this.writeData(function(res) {
-          if (res === true) {
-            return window.open("?Home", "_top");
-          }
-        });
-      }
+        };
+      })(this));
     };
 
-    ZeroBlog.prototype.writeData = function(cb) {
+    ZeroBlog.prototype.writeData = function(data, cb) {
       var json_raw;
       if (cb == null) {
         cb = null;
       }
-      this.data.modified = this.timestamp();
-      json_raw = unescape(encodeURIComponent(JSON.stringify(this.data, void 0, '\t')));
-      this.cmd("fileWrite", ["data.json", btoa(json_raw)], (function(_this) {
+      if (!data) {
+        return this.log("Data missing");
+      }
+      this.data["modified"] = data.modified = Time.timestamp();
+      json_raw = unescape(encodeURIComponent(JSON.stringify(data, void 0, '\t')));
+      this.cmd("fileWrite", ["data/data.json", btoa(json_raw)], (function(_this) {
         return function(res) {
           if (res === "ok") {
             if (cb) {
@@ -1085,7 +1871,7 @@
       })(this));
       return $.get("content.json", ((function(_this) {
         return function(content) {
-          content = content.replace(/"title": ".*?"/, "\"title\": \"" + _this.data.title + "\"");
+          content = content.replace(/"title": ".*?"/, "\"title\": \"" + data.title + "\"");
           return _this.cmd("fileWrite", ["content.json", btoa(content)], function(res) {
             if (res !== "ok") {
               return _this.cmd("wrapperNotification", ["error", "Content.json write error: " + res]);
@@ -1095,61 +1881,28 @@
       })(this)), "html");
     };
 
-    ZeroBlog.prototype.formatSince = function(time) {
-      var back, now, secs;
-      now = +(new Date) / 1000;
-      secs = now - time;
-      if (secs < 60) {
-        back = "Just now";
-      } else if (secs < 60 * 60) {
-        back = (Math.round(secs / 60)) + " minutes ago";
-      } else if (secs < 60 * 60 * 24) {
-        back = (Math.round(secs / 60 / 60)) + " hours ago";
-      } else if (secs < 60 * 60 * 24 * 3) {
-        back = (Math.round(secs / 60 / 60 / 24)) + " days ago";
-      } else {
-        back = "on " + this.formatDate(time);
-      }
-      back = back.replace(/1 ([a-z]+)s/, "1 $1");
-      return back;
+    ZeroBlog.prototype.writePublish = function(inner_path, data, cb) {
+      return this.cmd("fileWrite", [inner_path, data], (function(_this) {
+        return function(res) {
+          if (res !== "ok") {
+            _this.cmd("wrapperNotification", ["error", "File write error: " + res]);
+            cb(false);
+            return false;
+          }
+          return _this.cmd("sitePublish", {
+            "inner_path": inner_path
+          }, function(res) {
+            if (res === "ok") {
+              return cb(true);
+            } else {
+              return cb(res);
+            }
+          });
+        };
+      })(this));
     };
 
-    ZeroBlog.prototype.readtime = function(text) {
-      var chars;
-      chars = text.length;
-      if (chars > 1500) {
-        return parseInt(chars / 1500) + " min read";
-      } else {
-        return "less than 1 min read";
-      }
-    };
-
-    ZeroBlog.prototype.formatDate = function(timestamp, format) {
-      var display, parts;
-      if (format == null) {
-        format = "short";
-      }
-      parts = (new Date(timestamp * 1000)).toString().split(" ");
-      if (format === "short") {
-        display = parts.slice(1, 4);
-      } else {
-        display = parts.slice(1, 5);
-      }
-      return display.join(" ").replace(/( [0-9]{4})/, ",$1");
-    };
-
-    ZeroBlog.prototype.timestamp = function(date) {
-      if (date == null) {
-        date = "";
-      }
-      if (date === "now" || date === "") {
-        return parseInt(+(new Date) / 1000);
-      } else {
-        return parseInt(Date.parse(date) / 1000);
-      }
-    };
-
-    ZeroBlog.prototype.route = function(cmd, message) {
+    ZeroBlog.prototype.onRequest = function(cmd, message) {
       if (cmd === "setSiteInfo") {
         return this.actionSetSiteInfo(message);
       } else {
@@ -1158,20 +1911,40 @@
     };
 
     ZeroBlog.prototype.actionSetSiteInfo = function(message) {
-      this.log("setSiteinfo", message);
       this.setSiteinfo(message.params);
       return this.checkPublishbar();
     };
 
     ZeroBlog.prototype.setSiteinfo = function(site_info) {
+      var _ref, _ref1;
       this.site_info = site_info;
-      return this.event_site_info.resolve(site_info);
+      this.event_site_info.resolve(site_info);
+      if ($("body").hasClass("page-post")) {
+        Comments.checkCert();
+      }
+      if (((_ref = site_info.event) != null ? _ref[0] : void 0) === "file_done" && site_info.event[1].match(/.*users.*data.json$/)) {
+        if ($("body").hasClass("page-post")) {
+          Comments.loadComments();
+        }
+        if ($("body").hasClass("page-main")) {
+          return RateLimit(500, (function(_this) {
+            return function() {
+              return _this.pageMain();
+            };
+          })(this));
+        }
+      } else if (((_ref1 = site_info.event) != null ? _ref1[0] : void 0) === "file_done" && site_info.event[1] === "data/data.json") {
+        this.loadData();
+        return this.pageMain();
+      } else {
+
+      }
     };
 
     return ZeroBlog;
 
   })(ZeroFrame);
 
-  window.zero_blog = new ZeroBlog();
+  window.Page = new ZeroBlog();
 
 }).call(this);

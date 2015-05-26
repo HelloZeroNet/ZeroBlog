@@ -1,11 +1,11 @@
 class InlineEditor
 	constructor: (@elem, @getContent, @saveContent, @getObject) ->
-		@edit_button = $("<a href='#Edit' class='editable-edit'>§</a>")
+		@edit_button = $("<a href='#Edit' class='editable-edit icon-edit'></a>")
 		@edit_button.on "click", @startEdit
 		@elem.addClass("editable").before(@edit_button)
 		@editor = null
 		@elem.on "mouseenter", (e) =>
-			@edit_button.css("opacity", "1")
+			@edit_button.css("opacity", "0.4")
 			# Keep in display
 			scrolltop = $(window).scrollTop()
 			top = @edit_button.offset().top-parseInt(@edit_button.css("margin-top"))
@@ -41,13 +41,13 @@ class InlineEditor
 
 		$(".editable-edit").css("display", "none") # Hide all edit button until its not finished
 
-		$(".editbar").cssLater("display", "inline-block", "now").addClassLater("visible", 10) 
-		$(".publishbar").cssLater("opacity", 0, "now") # Hide publishbar
+		$(".editbar").css("display", "inline-block").addClassLater("visible", 10) 
+		$(".publishbar").css("opacity", 0) # Hide publishbar
 		$(".editbar .object").text @getObject(@elem).data("object")+"."+@elem.data("editable")
 		$(".editbar .button").removeClass("loading")
 
 		$(".editbar .save").off("click").on "click", @saveEdit
-		$(".editbar .delete").off("click").on "click", @deletePost
+		$(".editbar .delete").off("click").on "click", @deleteObject
 		$(".editbar .cancel").off("click").on "click", @cancelEdit
 
 		# Deletable button show/hide
@@ -82,7 +82,8 @@ class InlineEditor
 			if content_html # File write ok
 				$(".editbar .save").removeClass("loading")
 				@stopEdit()
-				@elem.html content_html
+				if typeof content_html == "string" # Returned the new content
+					@elem.html content_html
 
 				$('pre code').each (i, block) -> # Higlight code blocks
 					hljs.highlightBlock(block)
@@ -92,11 +93,12 @@ class InlineEditor
 		return false
 
 
-	deletePost: =>
+	deleteObject: =>
 		object_type = @getObject(@elem).data("object").split(":")[0]
 		Page.cmd "wrapperConfirm", ["Are you sure you sure to delete this #{object_type}?", "Delete"], (confirmed) => 
-			@stopEdit()
-			@saveContent @getObject(@elem), null
+			$(".editbar .delete").addClass("loading")
+			Page.saveContent @getObject(@elem), null, =>
+				@stopEdit()
 		return false
 
 
@@ -130,7 +132,9 @@ class InlineEditor
 			textAlign: 		from_style.textAlign
 			color: 			from_style.color
 			letterSpacing: 	from_style.letterSpacing
-			minWidth: 		elem_from.innerWidth()
+
+		if elem_from.innerWidth() < 1000 # inline elems fix
+			elem_to.css "minWidth", elem_from.innerWidth()
 
 
 	autoExpand: (elem) ->
