@@ -40,7 +40,7 @@ class ZeroBlog extends ZeroFrame
 			if res
 				for row in res
 					@data[row.key] = row.value
-				$(".left h1 a").html(@data.title).data("content", @data.title)
+				$(".left h1 a:not(.editable-edit)").html(@data.title).data("content", @data.title)
 				$(".left h2").html(Text.toMarked(@data.description)).data("content", @data.description)
 				$(".left .links").html(Text.toMarked(@data.links)).data("content", @data.links)
 
@@ -49,7 +49,8 @@ class ZeroBlog extends ZeroFrame
 		@log "Routing url:", url
 		if match = url.match /Post:([0-9]+)/
 			$("body").addClass("page-post")
-			@pagePost(parseInt(match[1]))
+			@post_id = parseInt(match[1])
+			@pagePost()
 		else
 			$("body").addClass("page-main")
 			@pageMain()
@@ -58,12 +59,12 @@ class ZeroBlog extends ZeroFrame
 	# - Pages -
 
 
-	pagePost: (post_id) ->
+	pagePost: () ->
 		s = (+ new Date)
-		@cmd "dbQuery", ["SELECT * FROM post WHERE post_id = #{post_id} LIMIT 1"], (res) =>
+		@cmd "dbQuery", ["SELECT * FROM post WHERE post_id = #{@post_id} LIMIT 1"], (res) =>
 			if res.length
 				@applyPostdata($(".post-full"), res[0], true)
-				Comments.pagePost(post_id)
+				Comments.pagePost(@post_id)
 			else
 				$(".post-full").html("<h1>Not found</h1>")
 			@pageLoaded()
@@ -186,7 +187,7 @@ class ZeroBlog extends ZeroFrame
 
 	# Returns the elem parent object
 	getObject: (elem) =>
-		return elem.parents("[data-object]")
+		return elem.parents("[data-object]:first")
 
 
 	# Get content from data.json
@@ -205,10 +206,18 @@ class ZeroBlog extends ZeroFrame
 
 	# Save content to data.json
 	saveContent: (elem, content, cb=false) =>
-		if elem.data("deletable") and content == null then return @deleteObject(elem) # Its a delete request
+		if elem.data("deletable") and content == null then return @deleteObject(elem, cb) # Its a delete request
 		elem.data("content", content)
 		[type, id] = @getObject(elem).data("object").split(":")
 		id = parseInt(id)
+		if type == "Post" or type == "Site"
+			@saveSite(elem, type, id, content, cb)
+		else if type == "Comment"
+			@saveComment(elem, type, id, content, cb)
+
+
+
+	saveSite: (elem, type, id, content, cb) ->
 		@cmd "fileGet", ["data/data.json"], (res) =>
 			data = JSON.parse(res)
 			if type == "Post"
@@ -234,19 +243,54 @@ class ZeroBlog extends ZeroFrame
 						cb(false)
 
 
-	deleteObject: (elem) ->
+	saveComment: (elem, type, id, content, cb) ->
+		@log "Saving comment...", id
+		@getObject(elem).css "height", "auto"
+		inner_path = "data/users/#{Page.site_info.auth_address}/data.json"
+		Page.cmd "fileGet", {"inner_path": inner_path, "required": false}, (data) =>
+			data = JSON.parse(data)
+			comment = (comment for comment in data.comment when comment.comment_id == id)[0]
+			comment[elem.data("editable")] = content
+			@log data
+			json_raw = unescape(encodeURIComponent(JSON.stringify(data, undefined, '\t')))
+			@writePublish inner_path, btoa(json_raw), (res) =>
+				if res == true
+					Comments.checkCert("updaterules")
+					if cb then cb(Text.toMarked(content, {"sanitize": true}))
+				else
+					@cmd "wrapperNotification", ["error", "File write error: #{res}"]
+					if cb then cb(false)
+
+
+
+
+	deleteObject: (elem, cb=False) ->
 		[type, id] = elem.data("object").split(":")
 		id = parseInt(id)
 
-		@cmd "fileGet", ["data/data.json"], (res) =>
-			data = JSON.parse(res)
-			if type == "Post"
-				post = (post for post in data.post when post.post_id == id)[0]
-				if not post then return false # No post found for this id
-				data.post.splice(data.post.indexOf(post), 1) # Remove from data
+		if type == "Post"
+			@cmd "fileGet", ["data/data.json"], (res) =>
+				data = JSON.parse(res)
+				if type == "Post"
+					post = (post for post in data.post when post.post_id == id)[0]
+					if not post then return false # No post found for this id
+					data.post.splice(data.post.indexOf(post), 1) # Remove from data
 
-				@writeData data, (res) =>
-					if res == true then window.open("?Home", "_top") # Go to home
+					@writeData data, (res) =>
+						if cb then cb()
+						if res == true then elem.slideUp()
+		else if type == "Comment"
+			inner_path = "data/users/#{Page.site_info.auth_address}/data.json"
+			@cmd "fileGet", {"inner_path": inner_path, "required": false}, (data) =>
+				data = JSON.parse(data)
+				comment = (comment for comment in data.comment when comment.comment_id == id)[0]
+				data.comment.splice(data.comment.indexOf(comment), 1)
+				json_raw = unescape(encodeURIComponent(JSON.stringify(data, undefined, '\t')))
+				@writePublish inner_path, btoa(json_raw), (res) =>
+					if res == true
+						elem.slideUp()
+					if cb then cb()
+
 
 
 	writeData: (data, cb=null) ->
@@ -263,12 +307,11 @@ class ZeroBlog extends ZeroFrame
 			@checkPublishbar()
 
 		# Updating title in content.json
-		$.get "content.json", ((content) =>
+		@cmd "fileGet", ["content.json"], (content) =>
 			content = content.replace /"title": ".*?"/, "\"title\": \"#{data.title}\"" # Load as raw html to prevent js bignumber problems
 			@cmd "fileWrite", ["content.json", btoa(content)], (res) =>
 				if res != "ok"
 					@cmd "wrapperNotification", ["error", "Content.json write error: #{res}"]
-		), "html"
 
 
 	writePublish: (inner_path, data, cb) ->
@@ -313,7 +356,9 @@ class ZeroBlog extends ZeroFrame
 					@pageMain()
 		else if site_info.event?[0] == "file_done" and site_info.event[1] == "data/data.json"
 			@loadData()
-			@pageMain()
+			if $("body").hasClass("page-main") then @pageMain()
+			if $("body").hasClass("page-post") then @pagePost()
+
 		else
 
 

@@ -183,6 +183,7 @@
 }).call(this);
 
 
+
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/jquery.csslater.coffee ---- */
 
 
@@ -298,6 +299,7 @@
   };
 
 }).call(this);
+
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/marked.min.js ---- */
@@ -581,6 +583,7 @@
 }).call(this);
 
 
+
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/InlineEditor.coffee ---- */
 
 
@@ -778,6 +781,7 @@
 }).call(this);
 
 
+
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/RateLimit.coffee ---- */
 
 
@@ -805,6 +809,7 @@
   };
 
 }).call(this);
+
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Text.coffee ---- */
@@ -897,6 +902,7 @@
 }).call(this);
 
 
+
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Time.coffee ---- */
 
 
@@ -967,6 +973,7 @@
   window.Time = new Time;
 
 }).call(this);
+
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/ZeroFrame.coffee ---- */
@@ -1080,6 +1087,7 @@
 }).call(this);
 
 
+
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/Comments.coffee ---- */
 
 
@@ -1132,9 +1140,8 @@
       query = "SELECT comment.*, json_content.json_id AS content_json_id, keyvalue.value AS cert_user_id, json.directory, (SELECT COUNT(*) FROM comment_vote WHERE comment_vote.comment_uri = comment.comment_id || '@' || json.directory)+1 AS votes FROM comment LEFT JOIN json USING (json_id) LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json') LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id') WHERE post_id = " + this.post_id + " ORDER BY date_added DESC";
       return Page.cmd("dbQuery", query, (function(_this) {
         return function(comments) {
-          var comment, comment_address, elem, user_address, _i, _len, _results;
+          var comment, comment_address, elem, user_address, _i, _len;
           $(".comments-num").text(comments.length);
-          _results = [];
           for (_i = 0, _len = comments.length; _i < _len; _i++) {
             comment = comments[_i];
             user_address = comment.directory.replace("users/", "");
@@ -1145,11 +1152,16 @@
               if (type !== "noanim") {
                 elem.cssSlideDown();
               }
+              $(".reply", elem).on("click", function(e) {
+                return _this.buttonReply($(e.target).parents(".comment"));
+              });
             }
             _this.applyCommentData(elem, comment);
-            _results.push(elem.appendTo(".comments"));
+            elem.appendTo(".comments");
           }
-          return _results;
+          return setTimeout((function() {
+            return Page.addInlineEditors();
+          }), 1000);
         };
       })(this));
     };
@@ -1164,7 +1176,26 @@
       $(".user_name", elem).text(user_name).css({
         "color": Text.toColor(comment.cert_user_id)
       }).attr("title", user_name + "@" + cert_domain + ": " + user_address);
-      return $(".added", elem).text(Time.since(comment.date_added)).attr("title", Time.date(comment.date_added, "long"));
+      $(".added", elem).text(Time.since(comment.date_added)).attr("title", Time.date(comment.date_added, "long"));
+      if (user_address === Page.site_info.auth_address) {
+        $(elem).attr("data-object", "Comment:" + comment.comment_id).attr("data-deletable", "yes");
+        return $(".comment-body", elem).attr("data-editable", "body").data("content", comment.body);
+      }
+    };
+
+    Comments.prototype.buttonReply = function(elem) {
+      var body_add, elem_quote, post_id, user_name;
+      this.log("Reply to", elem);
+      user_name = $(".user_name", elem).text();
+      post_id = elem.attr("id");
+      body_add = "> [" + user_name + "](\#" + post_id + "): ";
+      elem_quote = $(".comment-body", elem).clone();
+      $("blockquote", elem_quote).remove();
+      body_add += elem_quote.text().trim("\n").replace(/\n/g, "\n> ");
+      body_add += "\n\n";
+      $(".comment-new .comment-textarea").val($(".comment-new .comment-textarea").val() + body_add);
+      $(".comment-new .comment-textarea").trigger("input").focus();
+      return false;
     };
 
     Comments.prototype.submitComment = function() {
@@ -1304,196 +1335,6 @@
 }).call(this);
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/InlineEditor.coffee ---- */
-
-
-(function() {
-  var InlineEditor,
-    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
-
-  InlineEditor = (function() {
-    function InlineEditor(_at_elem, _at_getContent, _at_saveContent, _at_getObject) {
-      this.elem = _at_elem;
-      this.getContent = _at_getContent;
-      this.saveContent = _at_saveContent;
-      this.getObject = _at_getObject;
-      this.cancelEdit = __bind(this.cancelEdit, this);
-      this.deletePost = __bind(this.deletePost, this);
-      this.saveEdit = __bind(this.saveEdit, this);
-      this.stopEdit = __bind(this.stopEdit, this);
-      this.startEdit = __bind(this.startEdit, this);
-      this.edit_button = $("<a href='#Edit' class='editable-edit'>§</a>");
-      this.edit_button.on("click", this.startEdit);
-      this.elem.addClass("editable").before(this.edit_button);
-      this.editor = null;
-      this.elem.on("mouseenter", (function(_this) {
-        return function(e) {
-          var scrolltop, top;
-          _this.edit_button.css("opacity", "1");
-          scrolltop = $(window).scrollTop();
-          top = _this.edit_button.offset().top - parseInt(_this.edit_button.css("margin-top"));
-          if (scrolltop > top) {
-            return _this.edit_button.css("margin-top", scrolltop - top + e.clientY - 20);
-          } else {
-            return _this.edit_button.css("margin-top", "");
-          }
-        };
-      })(this));
-      this.elem.on("mouseleave", (function(_this) {
-        return function() {
-          return _this.edit_button.css("opacity", "");
-        };
-      })(this));
-      if (this.elem.is(":hover")) {
-        this.elem.trigger("mouseenter");
-      }
-    }
-
-    InlineEditor.prototype.startEdit = function() {
-      var _i, _results;
-      this.content_before = this.elem.html();
-      this.editor = $("<textarea class='editor'></textarea>");
-      this.editor.css("outline", "10000px solid rgba(255,255,255,0)").cssLater("transition", "outline 0.3s", 5).cssLater("outline", "10000px solid rgba(255,255,255,0.9)", 10);
-      this.editor.val(this.getContent(this.elem, "raw"));
-      this.elem.after(this.editor);
-      this.elem.html((function() {
-        _results = [];
-        for (_i = 1; _i <= 50; _i++){ _results.push(_i); }
-        return _results;
-      }).apply(this).join("fill the width"));
-      this.copyStyle(this.elem, this.editor);
-      this.elem.html(this.content_before);
-      this.autoExpand(this.editor);
-      this.elem.css("display", "none");
-      if ($(window).scrollTop() === 0) {
-        this.editor[0].selectionEnd = 0;
-        this.editor.focus();
-      }
-      $(".editable-edit").css("display", "none");
-      $(".editbar").cssLater("display", "inline-block", "now").addClassLater("visible", 10);
-      $(".publishbar").cssLater("opacity", 0, "now");
-      $(".editbar .object").text(this.getObject(this.elem).data("object") + "." + this.elem.data("editable"));
-      $(".editbar .button").removeClass("loading");
-      $(".editbar .save").off("click").on("click", this.saveEdit);
-      $(".editbar .delete").off("click").on("click", this.deletePost);
-      $(".editbar .cancel").off("click").on("click", this.cancelEdit);
-      if (this.getObject(this.elem).data("deletable")) {
-        $(".editbar .delete").css("display", "").html("Delete " + this.getObject(this.elem).data("object").split(":")[0]);
-      } else {
-        $(".editbar .delete").css("display", "none");
-      }
-      window.onbeforeunload = function() {
-        return 'Your unsaved blog changes will be lost!';
-      };
-      return false;
-    };
-
-    InlineEditor.prototype.stopEdit = function() {
-      this.editor.remove();
-      this.editor = null;
-      this.elem.css("display", "");
-      $(".editable-edit").css("display", "");
-      $(".editbar").cssLater("display", "none", 1000).removeClass("visible");
-      $(".publishbar").css("opacity", 1);
-      return window.onbeforeunload = null;
-    };
-
-    InlineEditor.prototype.saveEdit = function() {
-      var content;
-      content = this.editor.val();
-      $(".editbar .save").addClass("loading");
-      this.saveContent(this.elem, content, (function(_this) {
-        return function(content_html) {
-          if (content_html) {
-            $(".editbar .save").removeClass("loading");
-            _this.stopEdit();
-            _this.elem.html(content_html);
-            return $('pre code').each(function(i, block) {
-              return hljs.highlightBlock(block);
-            });
-          } else {
-            return $(".editbar .save").removeClass("loading");
-          }
-        };
-      })(this));
-      return false;
-    };
-
-    InlineEditor.prototype.deletePost = function() {
-      var object_type;
-      object_type = this.getObject(this.elem).data("object").split(":")[0];
-      Page.cmd("wrapperConfirm", ["Are you sure you sure to delete this " + object_type + "?", "Delete"], (function(_this) {
-        return function(confirmed) {
-          _this.stopEdit();
-          return _this.saveContent(_this.getObject(_this.elem), null);
-        };
-      })(this));
-      return false;
-    };
-
-    InlineEditor.prototype.cancelEdit = function() {
-      this.stopEdit();
-      this.elem.html(this.content_before);
-      $('pre code').each(function(i, block) {
-        return hljs.highlightBlock(block);
-      });
-      return false;
-    };
-
-    InlineEditor.prototype.copyStyle = function(elem_from, elem_to) {
-      var from_style;
-      elem_to.addClass(elem_from[0].className);
-      from_style = getComputedStyle(elem_from[0]);
-      return elem_to.css({
-        fontFamily: from_style.fontFamily,
-        fontSize: from_style.fontSize,
-        fontWeight: from_style.fontWeight,
-        marginTop: from_style.marginTop,
-        marginRight: from_style.marginRight,
-        marginBottom: from_style.marginBottom,
-        marginLeft: from_style.marginLeft,
-        paddingTop: from_style.paddingTop,
-        paddingRight: from_style.paddingRight,
-        paddingBottom: from_style.paddingBottom,
-        paddingLeft: from_style.paddingLeft,
-        lineHeight: from_style.lineHeight,
-        textAlign: from_style.textAlign,
-        color: from_style.color,
-        letterSpacing: from_style.letterSpacing,
-        minWidth: elem_from.innerWidth()
-      });
-    };
-
-    InlineEditor.prototype.autoExpand = function(elem) {
-      var editor;
-      editor = elem[0];
-      elem.height(1);
-      elem.on("input", function() {
-        if (editor.scrollHeight > elem.height()) {
-          return elem.height(1).height(editor.scrollHeight + parseFloat(elem.css("borderTopWidth")) + parseFloat(elem.css("borderBottomWidth")));
-        }
-      });
-      elem.trigger("input");
-      return elem.on('keydown', function(e) {
-        var s, val;
-        if (e.which === 9) {
-          e.preventDefault();
-          s = this.selectionStart;
-          val = elem.val();
-          elem.val(val.substring(0, this.selectionStart) + "\t" + val.substring(this.selectionEnd));
-          return this.selectionEnd = s + 1;
-        }
-      });
-    };
-
-    return InlineEditor;
-
-  })();
-
-  window.InlineEditor = InlineEditor;
-
-}).call(this);
-
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/ZeroBlog.coffee ---- */
 
@@ -1570,7 +1411,7 @@
               row = res[_i];
               _this.data[row.key] = row.value;
             }
-            $(".left h1 a").html(_this.data.title).data("content", _this.data.title);
+            $(".left h1 a:not(.editable-edit)").html(_this.data.title).data("content", _this.data.title);
             $(".left h2").html(Text.toMarked(_this.data.description)).data("content", _this.data.description);
             return $(".left .links").html(Text.toMarked(_this.data.links)).data("content", _this.data.links);
           }
@@ -1583,21 +1424,22 @@
       this.log("Routing url:", url);
       if (match = url.match(/Post:([0-9]+)/)) {
         $("body").addClass("page-post");
-        return this.pagePost(parseInt(match[1]));
+        this.post_id = parseInt(match[1]);
+        return this.pagePost();
       } else {
         $("body").addClass("page-main");
         return this.pageMain();
       }
     };
 
-    ZeroBlog.prototype.pagePost = function(post_id) {
+    ZeroBlog.prototype.pagePost = function() {
       var s;
       s = +(new Date);
-      return this.cmd("dbQuery", ["SELECT * FROM post WHERE post_id = " + post_id + " LIMIT 1"], (function(_this) {
+      return this.cmd("dbQuery", ["SELECT * FROM post WHERE post_id = " + this.post_id + " LIMIT 1"], (function(_this) {
         return function(res) {
           if (res.length) {
             _this.applyPostdata($(".post-full"), res[0], true);
-            Comments.pagePost(post_id);
+            Comments.pagePost(_this.post_id);
           } else {
             $(".post-full").html("<h1>Not found</h1>");
           }
@@ -1734,7 +1576,7 @@
     };
 
     ZeroBlog.prototype.getObject = function(elem) {
-      return elem.parents("[data-object]");
+      return elem.parents("[data-object]:first");
     };
 
     ZeroBlog.prototype.getContent = function(elem, raw) {
@@ -1761,22 +1603,30 @@
         cb = false;
       }
       if (elem.data("deletable") && content === null) {
-        return this.deleteObject(elem);
+        return this.deleteObject(elem, cb);
       }
       elem.data("content", content);
       _ref = this.getObject(elem).data("object").split(":"), type = _ref[0], id = _ref[1];
       id = parseInt(id);
+      if (type === "Post" || type === "Site") {
+        return this.saveSite(elem, type, id, content, cb);
+      } else if (type === "Comment") {
+        return this.saveComment(elem, type, id, content, cb);
+      }
+    };
+
+    ZeroBlog.prototype.saveSite = function(elem, type, id, content, cb) {
       return this.cmd("fileGet", ["data/data.json"], (function(_this) {
         return function(res) {
           var data, post;
           data = JSON.parse(res);
           if (type === "Post") {
             post = ((function() {
-              var _i, _len, _ref1, _results;
-              _ref1 = data.post;
+              var _i, _len, _ref, _results;
+              _ref = data.post;
               _results = [];
-              for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-                post = _ref1[_i];
+              for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+                post = _ref[_i];
                 if (post.post_id === id) {
                   _results.push(post);
                 }
@@ -1809,39 +1659,126 @@
       })(this));
     };
 
-    ZeroBlog.prototype.deleteObject = function(elem) {
-      var id, type, _ref;
+    ZeroBlog.prototype.saveComment = function(elem, type, id, content, cb) {
+      var inner_path;
+      this.log("Saving comment...", id);
+      this.getObject(elem).css("height", "auto");
+      inner_path = "data/users/" + Page.site_info.auth_address + "/data.json";
+      return Page.cmd("fileGet", {
+        "inner_path": inner_path,
+        "required": false
+      }, (function(_this) {
+        return function(data) {
+          var comment, json_raw;
+          data = JSON.parse(data);
+          comment = ((function() {
+            var _i, _len, _ref, _results;
+            _ref = data.comment;
+            _results = [];
+            for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+              comment = _ref[_i];
+              if (comment.comment_id === id) {
+                _results.push(comment);
+              }
+            }
+            return _results;
+          })())[0];
+          comment[elem.data("editable")] = content;
+          _this.log(data);
+          json_raw = unescape(encodeURIComponent(JSON.stringify(data, void 0, '\t')));
+          return _this.writePublish(inner_path, btoa(json_raw), function(res) {
+            if (res === true) {
+              Comments.checkCert("updaterules");
+              if (cb) {
+                return cb(Text.toMarked(content, {
+                  "sanitize": true
+                }));
+              }
+            } else {
+              _this.cmd("wrapperNotification", ["error", "File write error: " + res]);
+              if (cb) {
+                return cb(false);
+              }
+            }
+          });
+        };
+      })(this));
+    };
+
+    ZeroBlog.prototype.deleteObject = function(elem, cb) {
+      var id, inner_path, type, _ref;
+      if (cb == null) {
+        cb = False;
+      }
       _ref = elem.data("object").split(":"), type = _ref[0], id = _ref[1];
       id = parseInt(id);
-      return this.cmd("fileGet", ["data/data.json"], (function(_this) {
-        return function(res) {
-          var data, post;
-          data = JSON.parse(res);
-          if (type === "Post") {
-            post = ((function() {
+      if (type === "Post") {
+        return this.cmd("fileGet", ["data/data.json"], (function(_this) {
+          return function(res) {
+            var data, post;
+            data = JSON.parse(res);
+            if (type === "Post") {
+              post = ((function() {
+                var _i, _len, _ref1, _results;
+                _ref1 = data.post;
+                _results = [];
+                for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
+                  post = _ref1[_i];
+                  if (post.post_id === id) {
+                    _results.push(post);
+                  }
+                }
+                return _results;
+              })())[0];
+              if (!post) {
+                return false;
+              }
+              data.post.splice(data.post.indexOf(post), 1);
+              return _this.writeData(data, function(res) {
+                if (cb) {
+                  cb();
+                }
+                if (res === true) {
+                  return elem.slideUp();
+                }
+              });
+            }
+          };
+        })(this));
+      } else if (type === "Comment") {
+        inner_path = "data/users/" + Page.site_info.auth_address + "/data.json";
+        return this.cmd("fileGet", {
+          "inner_path": inner_path,
+          "required": false
+        }, (function(_this) {
+          return function(data) {
+            var comment, json_raw;
+            data = JSON.parse(data);
+            comment = ((function() {
               var _i, _len, _ref1, _results;
-              _ref1 = data.post;
+              _ref1 = data.comment;
               _results = [];
               for (_i = 0, _len = _ref1.length; _i < _len; _i++) {
-                post = _ref1[_i];
-                if (post.post_id === id) {
-                  _results.push(post);
+                comment = _ref1[_i];
+                if (comment.comment_id === id) {
+                  _results.push(comment);
                 }
               }
               return _results;
             })())[0];
-            if (!post) {
-              return false;
-            }
-            data.post.splice(data.post.indexOf(post), 1);
-            return _this.writeData(data, function(res) {
+            data.comment.splice(data.comment.indexOf(comment), 1);
+            json_raw = unescape(encodeURIComponent(JSON.stringify(data, void 0, '\t')));
+            return _this.writePublish(inner_path, btoa(json_raw), function(res) {
               if (res === true) {
-                return window.open("?Home", "_top");
+                elem.slideUp();
+              }
+              if (cb) {
+                return cb();
               }
             });
-          }
-        };
-      })(this));
+          };
+        })(this));
+      }
     };
 
     ZeroBlog.prototype.writeData = function(data, cb) {
@@ -1869,7 +1806,7 @@
           return _this.checkPublishbar();
         };
       })(this));
-      return $.get("content.json", ((function(_this) {
+      return this.cmd("fileGet", ["content.json"], (function(_this) {
         return function(content) {
           content = content.replace(/"title": ".*?"/, "\"title\": \"" + data.title + "\"");
           return _this.cmd("fileWrite", ["content.json", btoa(content)], function(res) {
@@ -1878,7 +1815,7 @@
             }
           });
         };
-      })(this)), "html");
+      })(this));
     };
 
     ZeroBlog.prototype.writePublish = function(inner_path, data, cb) {
@@ -1935,7 +1872,12 @@
         }
       } else if (((_ref1 = site_info.event) != null ? _ref1[0] : void 0) === "file_done" && site_info.event[1] === "data/data.json") {
         this.loadData();
-        return this.pageMain();
+        if ($("body").hasClass("page-main")) {
+          this.pageMain();
+        }
+        if ($("body").hasClass("page-post")) {
+          return this.pagePost();
+        }
       } else {
 
       }

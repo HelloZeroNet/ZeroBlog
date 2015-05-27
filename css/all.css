@@ -1,27 +1,30 @@
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
+/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/Comments.css ---- */
 
 
 .comments { margin-bottom: 60px }
 .comment { background-color: white; padding: 25px 0px; margin: 1px; border-top: 1px solid #EEE }
 .comment .user_name { font-size: 14px; font-weight: bold }
 .comment .added { color: #AAA }
-.comment .reply { color: #CCC; opacity: 0; -webkit-transition: opacity 0.3s ; -moz-transition: opacity 0.3s ; -o-transition: opacity 0.3s ; -ms-transition: opacity 0.3s ; transition: opacity 0.3s  }
+.comment .reply { color: #CCC; opacity: 0; -webkit-transition: opacity 0.3s; -moz-transition: opacity 0.3s; -o-transition: opacity 0.3s; -ms-transition: opacity 0.3s; transition: opacity 0.3s ; border: none }
 .comment:hover .reply { opacity: 1 }
 .comment .reply .icon { opacity: 0.3 }
 .comment .reply:hover { border-bottom: none; color: #666 }
 .comment .reply:hover .icon { opacity: 1 }
 .comment .info { font-size: 12px; color: #AAA; margin-bottom: 7px }
 .comment .info .score { margin-left: 5px }
-.comment .body { line-height: 1.5em }
-.comment .body p { margin-top: 0.5em; margin-bottom: 0.5em }
-.comment .body.editor { margin-top: 0.5em !important; margin-bottom: 0.5em !important }
-.comment .body h1, .comment .body h2, .comment .body h3 { font-size: 110% }
-.comment .body blockquote { padding: 1px 15px; border-left: 2px solid #E7E7E7; margin: 0px; margin-top: 30px }
-.comment .body blockquote:first-child { margin-top: 0px }
-.comment .body blockquote p { margin: 0px; color: #999; font-size: 90% }
-.comment .body blockquote a { color: #333 }
+.comment .comment-body { line-height: 1.5em; margin-top: 0.5em; margin-bottom: 0.5em }
+.comment .comment-body p { margin-bottom: 0px; margin-top: 0.5em; }
+.comment .comment-body p:first-child { margin: 0px; margin-top: 0px; }
+.comment .comment-body.editor { margin-top: 0.5em !important; margin-bottom: 0.5em !important }
+.comment .comment-body h1, .comment .body h2, .comment .body h3 { font-size: 110% }
+.comment .comment-body blockquote { padding: 1px 15px; border-left: 2px solid #E7E7E7; margin: 0px; margin-top: 30px }
+.comment .comment-body blockquote:first-child { margin-top: 0px }
+.comment .comment-body blockquote p { margin: 0px; color: #999; font-size: 90% }
+.comment .comment-body blockquote a { color: #333; font-weight: normal; border-bottom: 0px }
+.comment .comment-body blockquote a:hover { border-bottom: 1px solid #999 }
+.comment .editable-edit { margin-top: -5px }
 
 .comment-new { margin-bottom: 5px; border-top: 0px }
 .comment-new .button-submit { 
@@ -52,7 +55,8 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 .user-size-used { position: absolute; color: #B10DC9; overflow: hidden; width: 40px; white-space: nowrap } 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
+
+/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/ZeroBlog.css ---- */
 
 
 /* Design based on medium */
@@ -96,10 +100,11 @@ a:hover { color: #3498db }
 
 .template { display: none }
 
+/* Editable */
 .editable { outline: none }
-.editable-edit:hover { opacity: 1 }
+.editable-edit:hover { opacity: 1; border: none; color: #333 }
 .editable-edit { 
-	opacity: 0; float: left; margin-top: -6px; margin-left: -40px; padding: 8px 20px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; width: 0px;
+	opacity: 0; float: left; margin-top: 0px; margin-left: -40px; padding: 8px 20px; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; width: 0px; display: inline-block; padding-right: 0px;
 	color: rgba(100,100,100,0.5); text-decoration: none; font-size: 18px; font-weight: normal; border: none; 
 }
 /*.editing { white-space: pre-wrap; z-index: 1; position: relative; outline: 10000px solid rgba(255,255,255,0.9) !important; }
@@ -193,7 +198,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */
+/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/fonts.css ---- */
 
 
 /* Base64 encoder: http://www.motobit.com/util/base64-decoder-encoder.asp */
@@ -230,7 +235,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/github.css ---- */
+/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/github.css ---- */
 
 
 /*
@@ -360,11 +365,21 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
+/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/icons.css ---- */
 
 
+.icon { display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; }
 .icon-profile { font-size: 6px; top: 0em; -webkit-border-radius: 0.7em 0.7em 0 0; -moz-border-radius: 0.7em 0.7em 0 0; -o-border-radius: 0.7em 0.7em 0 0; -ms-border-radius: 0.7em 0.7em 0 0; border-radius: 0.7em 0.7em 0 0 ; background: #FFFFFF; width: 1.5em; height: 0.7em; position: relative; display: inline-block; margin-right: 4px }
 .icon-profile:before { position: absolute; content: ""; top: -1em; left: 0.38em; width: 0.8em; height: 0.85em; -webkit-border-radius: 50%; -moz-border-radius: 50%; -o-border-radius: 50%; -ms-border-radius: 50%; border-radius: 50% ; background: #FFFFFF; } 
 
 .icon-comment { width: 16px; height: 10px; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; background: #B10DC9; margin-top: 0px; display: inline-block; position: relative; top: -2px; }
 .icon-comment:after { left: 9px; border: 2px solid transparent; border-top-color: #B10DC9; border-left-color: #B10DC9; background: transparent; content: ""; display: block; margin-top: 10px; width: 0px; margin-left: 7px; }
+
+.icon-edit { 
+	width: 16px; height: 16px; background-repeat: no-repeat; background-position: 20px center;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAOVBMVEUAAAC9w8e9w8e9w8e9w8e/xMi9w8e9w8e+w8e9w8e9w8e9w8e9w8e9w8e9w8e+w8e/xMi9w8e9w8fvY4+KAAAAEnRSTlMASPv3WQbwOTCkt4/psX4YDMWr+RRCAAAAUUlEQVQY06XLORKAMAxDUTs7kA3d/7AYGju0UfffjIgoHkxm0vB5bZyxKHx9eX0FJw0Y4bcXKQ4/CTtS5yqp5GFFOjGpVGl00k1pNDIb3Nv9AHC7BOZC4ZjvAAAAAElFTkSuQmCC+d0ckOwyAMRVGHUOO0gUyd+P8f7WApz4Iki9wFmyOEATrXLZcFp5LrGogPOxKp6zfFf9fZ1/I/cY7YZSS3U6S3XFZJmGBwL+FuJX/F1K0wUUlZyZGlXgXESthTEs4B8fh7xoVUDPGYJnsfkCRarKAgz8cAKbpD6pqDPz3XB8K6HdUEeN9NAAAAAElFTkSuQmCC);
+}
+.icon-reply {
+	width: 16px; height: 16px;
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAIVBMVEUAAABmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmYs5FxxAAAAC3RSTlMAgBFwYExAMHgoCDJmUTYAAAA3SURBVAjXY8APGGEMQZgAjCEoKBwEEQCCAoiIh6AQVM1kMaguJhGYOSJQjexiUMbiAChDCclCAOHqBBdHpwQTAAAAAElFTkSuQmCC);
+}

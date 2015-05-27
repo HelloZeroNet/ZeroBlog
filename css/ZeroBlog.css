@@ -39,10 +39,11 @@ a:hover { color: #3498db }
 
 .template { display: none }
 
+/* Editable */
 .editable { outline: none }
-.editable-edit:hover { opacity: 1 }
+.editable-edit:hover { opacity: 1; border: none; color: #333 }
 .editable-edit { 
-	opacity: 0; float: left; margin-top: -6px; margin-left: -40px; padding: 8px 20px; transition: all 0.3s; width: 0px;
+	opacity: 0; float: left; margin-top: 0px; margin-left: -40px; padding: 8px 20px; transition: all 0.3s; width: 0px; display: inline-block; padding-right: 0px;
 	color: rgba(100,100,100,0.5); text-decoration: none; font-size: 18px; font-weight: normal; border: none; 
 }
 /*.editing { white-space: pre-wrap; z-index: 1; position: relative; outline: 10000px solid rgba(255,255,255,0.9) !important; }

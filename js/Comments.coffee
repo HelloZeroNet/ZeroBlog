@@ -35,8 +35,13 @@ class Comments extends Class
 					elem = $(".comment.template").clone().removeClass("template").attr("id", "comment_"+comment_address).data("post_id", @post_id)
 					if type != "noanim"
 						elem.cssSlideDown()
+					$(".reply", elem).on "click", (e) => # Reply link
+						return @buttonReply $(e.target).parents(".comment")
 				@applyCommentData(elem, comment)
 				elem.appendTo(".comments")
+			setTimeout (->
+				Page.addInlineEditors()
+			), 1000
 
 
 	applyCommentData: (elem, comment) ->
@@ -46,6 +51,24 @@ class Comments extends Class
 		$(".user_name", elem).text(user_name).css("color": Text.toColor(comment.cert_user_id)).attr("title", "#{user_name}@#{cert_domain}: #{user_address}")
 		$(".added", elem).text(Time.since(comment.date_added)).attr("title", Time.date(comment.date_added, "long"))
 		#$(".cert_domain", elem).html("@#{cert_domain}").css("display", "none")
+		# Add inline editor
+		if user_address == Page.site_info.auth_address
+			$(elem).attr("data-object", "Comment:#{comment.comment_id}").attr("data-deletable", "yes")
+			$(".comment-body", elem).attr("data-editable", "body").data("content", comment.body)
+
+
+	buttonReply: (elem) ->
+		@log "Reply to", elem
+		user_name = $(".user_name", elem).text()
+		post_id = elem.attr("id")
+		body_add = "> [#{user_name}](\##{post_id}): "
+		elem_quote = $(".comment-body", elem).clone()
+		$("blockquote", elem_quote).remove() # Remove other people's quotes
+		body_add+= elem_quote.text().trim("\n").replace(/\n/g, "\n> ")
+		body_add+= "\n\n"
+		$(".comment-new .comment-textarea").val( $(".comment-new .comment-textarea").val()+body_add )
+		$(".comment-new .comment-textarea").trigger("input").focus() # Autosize
+		return false 
 
 
 	submitComment: ->
