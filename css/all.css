@@ -1,6 +1,6 @@
 
 
-/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/Comments.css ---- */
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
 
 
 .comments { margin-bottom: 60px }
@@ -56,16 +56,16 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 
 
-/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/ZeroBlog.css ---- */
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
 
 
 /* Design based on medium */
 
-body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto', sans-serif; height: 15000px; overflow: hidden }
+body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto', sans-serif; height: 15000px; overflow: hidden; backface-visibility: hidden }
 body.loaded { height: auto; overflow: auto }
 h1, h2, h3, h4 { font-family: 'Roboto', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
-h2 { margin-top: 3em }
+h2 { margin-top: 2em }
 h3 { font-size: 24px; margin-top: 2em }
 h1 + h2, h2 + h3 { margin-top: inherit }
 
@@ -198,7 +198,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/fonts.css ---- */
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */
 
 
 /* Base64 encoder: http://www.motobit.com/util/base64-decoder-encoder.asp */
@@ -235,7 +235,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/github.css ---- */
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/github.css ---- */
 
 
 /*
@@ -365,7 +365,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 
 
-/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/icons.css ---- */
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
 
 
 .icon { display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; }

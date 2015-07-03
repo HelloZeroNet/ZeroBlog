@@ -37,8 +37,8 @@ class ZeroFrame extends Class
 			@onRequest cmd, message
 
 
-	route: (cmd, message) =>
-		@log "Unknown command", message
+	onRequest: (cmd, message) =>
+		@log "Unknown request", message
 
 
 	response: (to, result) ->

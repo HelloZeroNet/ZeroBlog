@@ -131,7 +131,7 @@ class ZeroBlog extends ZeroFrame
 
 	# Check if publishing is necessary
 	checkPublishbar: ->
-		if not @site_modified or @site_modified > @site_info.content.modified
+		if not @data["modified"] or @data["modified"] > @site_info.content.modified
 			$(".publishbar").addClass("visible")
 		else
 			$(".publishbar").removeClass("visible")
@@ -139,11 +139,15 @@ class ZeroBlog extends ZeroFrame
 
 	# Sign and Publish site
 	publish: =>
-		@cmd "wrapperPrompt", ["Enter your private key:", "password"], (privatekey) => # Prompt the private key
-			$(".publishbar .button").addClass("loading")
-			@cmd "sitePublish", [privatekey], (res) =>
-				$(".publishbar .button").removeClass("loading")
+		if @site_info.privatekey # Privatekey stored in users.json
+			@cmd "sitePublish", ["stored"], (res) =>
 				@log "Publish result:", res
+		else
+			@cmd "wrapperPrompt", ["Enter your private key:", "password"], (privatekey) => # Prompt the private key
+				$(".publishbar .button").addClass("loading")
+				@cmd "sitePublish", [privatekey], (res) =>
+					$(".publishbar .button").removeClass("loading")
+					@log "Publish result:", res
 
 		return false # Ignore link default event
 
@@ -243,6 +247,7 @@ class ZeroBlog extends ZeroFrame
 						cb(false)
 
 
+
 	saveComment: (elem, type, id, content, cb) ->
 		@log "Saving comment...", id
 		@getObject(elem).css "height", "auto"
@@ -251,7 +256,6 @@ class ZeroBlog extends ZeroFrame
 			data = JSON.parse(data)
 			comment = (comment for comment in data.comment when comment.comment_id == id)[0]
 			comment[elem.data("editable")] = content
-			@log data
 			json_raw = unescape(encodeURIComponent(JSON.stringify(data, undefined, '\t')))
 			@writePublish inner_path, btoa(json_raw), (res) =>
 				if res == true
@@ -312,6 +316,11 @@ class ZeroBlog extends ZeroFrame
 			@cmd "fileWrite", ["content.json", btoa(content)], (res) =>
 				if res != "ok"
 					@cmd "wrapperNotification", ["error", "Content.json write error: #{res}"]
+				
+				# If the privatekey is stored sign the new content
+				if @site_info["privatekey"]
+					@cmd "siteSign", ["stored", "content.json"], (res) =>
+						@log "Sign result", res
 
 
 	writePublish: (inner_path, data, cb) ->
@@ -358,9 +367,6 @@ class ZeroBlog extends ZeroFrame
 			@loadData()
 			if $("body").hasClass("page-main") then @pageMain()
 			if $("body").hasClass("page-post") then @pagePost()
-
-		else
-
 
 
 window.Page = new ZeroBlog()

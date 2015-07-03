@@ -1,10 +1,10 @@
 /* Design based on medium */
 
-body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto', sans-serif; height: 15000px; overflow: hidden }
+body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto', sans-serif; height: 15000px; overflow: hidden; backface-visibility: hidden }
 body.loaded { height: auto; overflow: auto }
 h1, h2, h3, h4 { font-family: 'Roboto', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
-h2 { margin-top: 3em }
+h2 { margin-top: 2em }
 h3 { font-size: 24px; margin-top: 2em }
 h1 + h2, h2 + h3 { margin-top: inherit }
 

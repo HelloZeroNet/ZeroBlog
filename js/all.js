@@ -183,7 +183,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/jquery.csslater.coffee ---- */
 
 
@@ -299,7 +298,6 @@
   };
 
 }).call(this);
-
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/marked.min.js ---- */
@@ -583,7 +581,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/InlineEditor.coffee ---- */
 
 
@@ -781,7 +778,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/RateLimit.coffee ---- */
 
 
@@ -809,7 +805,6 @@
   };
 
 }).call(this);
-
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Text.coffee ---- */
@@ -902,7 +897,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Time.coffee ---- */
 
 
@@ -975,7 +969,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/ZeroFrame.coffee ---- */
 
 
@@ -991,7 +984,7 @@
     function ZeroFrame(url) {
       this.onCloseWebsocket = __bind(this.onCloseWebsocket, this);
       this.onOpenWebsocket = __bind(this.onOpenWebsocket, this);
-      this.route = __bind(this.route, this);
+      this.onRequest = __bind(this.onRequest, this);
       this.onMessage = __bind(this.onMessage, this);
       this.url = url;
       this.waiting_cb = {};
@@ -1033,8 +1026,8 @@
       }
     };
 
-    ZeroFrame.prototype.route = function(cmd, message) {
-      return this.log("Unknown command", message);
+    ZeroFrame.prototype.onRequest = function(cmd, message) {
+      return this.log("Unknown request", message);
     };
 
     ZeroFrame.prototype.response = function(to, result) {
@@ -1335,7 +1328,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/ZeroBlog.coffee ---- */
 
 
@@ -1513,7 +1505,7 @@
     };
 
     ZeroBlog.prototype.checkPublishbar = function() {
-      if (!this.site_modified || this.site_modified > this.site_info.content.modified) {
+      if (!this.data["modified"] || this.data["modified"] > this.site_info.content.modified) {
         return $(".publishbar").addClass("visible");
       } else {
         return $(".publishbar").removeClass("visible");
@@ -1521,15 +1513,23 @@
     };
 
     ZeroBlog.prototype.publish = function() {
-      this.cmd("wrapperPrompt", ["Enter your private key:", "password"], (function(_this) {
-        return function(privatekey) {
-          $(".publishbar .button").addClass("loading");
-          return _this.cmd("sitePublish", [privatekey], function(res) {
-            $(".publishbar .button").removeClass("loading");
+      if (this.site_info.privatekey) {
+        this.cmd("sitePublish", ["stored"], (function(_this) {
+          return function(res) {
             return _this.log("Publish result:", res);
-          });
-        };
-      })(this));
+          };
+        })(this));
+      } else {
+        this.cmd("wrapperPrompt", ["Enter your private key:", "password"], (function(_this) {
+          return function(privatekey) {
+            $(".publishbar .button").addClass("loading");
+            return _this.cmd("sitePublish", [privatekey], function(res) {
+              $(".publishbar .button").removeClass("loading");
+              return _this.log("Publish result:", res);
+            });
+          };
+        })(this));
+      }
       return false;
     };
 
@@ -1684,7 +1684,6 @@
             return _results;
           })())[0];
           comment[elem.data("editable")] = content;
-          _this.log(data);
           json_raw = unescape(encodeURIComponent(JSON.stringify(data, void 0, '\t')));
           return _this.writePublish(inner_path, btoa(json_raw), function(res) {
             if (res === true) {
@@ -1811,7 +1810,12 @@
           content = content.replace(/"title": ".*?"/, "\"title\": \"" + data.title + "\"");
           return _this.cmd("fileWrite", ["content.json", btoa(content)], function(res) {
             if (res !== "ok") {
-              return _this.cmd("wrapperNotification", ["error", "Content.json write error: " + res]);
+              _this.cmd("wrapperNotification", ["error", "Content.json write error: " + res]);
+            }
+            if (_this.site_info["privatekey"]) {
+              return _this.cmd("siteSign", ["stored", "content.json"], function(res) {
+                return _this.log("Sign result", res);
+              });
             }
           });
         };
@@ -1878,8 +1882,6 @@
         if ($("body").hasClass("page-post")) {
           return this.pagePost();
         }
-      } else {
-
       }
     };
 
