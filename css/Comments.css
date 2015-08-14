@@ -2,7 +2,7 @@
 .comment { background-color: white; padding: 25px 0px; margin: 1px; border-top: 1px solid #EEE }
 .comment .user_name { font-size: 14px; font-weight: bold }
 .comment .added { color: #AAA }
-.comment .reply { color: #CCC; opacity: 0; transition: opacity 0.3s; border: none }
+.comment .reply { color: #CCC; opacity: 0; transition: opacity 0.3s; border: none; position: relative; }
 .comment:hover .reply { opacity: 1 }
 .comment .reply .icon { opacity: 0.3 }
 .comment .reply:hover { border-bottom: none; color: #666 }
@@ -22,14 +22,14 @@
 .comment .editable-edit { margin-top: -5px }
 
 .comment-new { margin-bottom: 5px; border-top: 0px }
-.comment-new .button-submit { 
+.comment-new .button-submit {
 	margin: 0px; font-weight: normal; padding: 5px 15px; display: inline-block;
 	background-color: #FFF85F; border-bottom: 2px solid #CDBD1E; font-size: 15px; line-height: 30px
 }
 .comment-new h2 { margin-bottom: 25px }
 
 /* Input */
-.comment-new textarea { 
+.comment-new textarea {
 	line-height: 1.5em; width: 100%; padding: 10px; font-family: 'Roboto', sans-serif; font-size: 16px;
 	transition: border 0.3s; border: 2px solid #eee; box-sizing: border-box; overflow-y: auto
 }
@@ -39,7 +39,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 .comment-nocert .info { opacity: 0.1; pointer-events: none }
 .comment-nocert .button-submit-comment { opacity: 0.1; pointer-events: none }
 .comment-nocert .button.button-certselect { display: inherit }
-.button.button-certselect { 
+.button.button-certselect {
 	position: absolute; left: 50%; white-space: nowrap; transform: translateX(-50%); z-index: 99;
 	margin-top: 13px; background-color: #007AFF; color: white; border-bottom-color: #3543F9; display: none
 }
@@ -47,4 +47,4 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 .button.button-certselect:active { position: absolute; transform: translateX(-50%) translateY(1px); top: auto; }
 
 .user-size { font-size: 11px; margin-top: 6px; box-sizing: border-box; text-transform: uppercase; display: inline-block; color: #AAA }
-.user-size-used { position: absolute; color: #B10DC9; overflow: hidden; width: 40px; white-space: nowrap } 
+.user-size-used { position: absolute; color: #B10DC9; overflow: hidden; width: 40px; white-space: nowrap }

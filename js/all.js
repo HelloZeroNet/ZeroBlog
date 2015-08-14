@@ -1080,7 +1080,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/Comments.coffee ---- */
 
 
@@ -1153,7 +1152,7 @@
             elem.appendTo(".comments");
           }
           return setTimeout((function() {
-            return Page.addInlineEditors();
+            return Page.addInlineEditors(".comments");
           }), 1000);
         };
       })(this));
@@ -1326,6 +1325,7 @@
   window.Comments = new Comments();
 
 }).call(this);
+
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/ZeroBlog.coffee ---- */

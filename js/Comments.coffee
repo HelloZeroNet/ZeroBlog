@@ -6,7 +6,7 @@ class Comments extends Class
 			@submitComment()
 			return false
 		@loadComments("noanim", cb)
-		@autoExpand $(".comment-textarea") 
+		@autoExpand $(".comment-textarea")
 
 		$(".certselect").on "click", =>
 			if Page.server_info.rev < 160
@@ -19,8 +19,8 @@ class Comments extends Class
 	loadComments: (type="show", cb=false) ->
 		query = "SELECT comment.*, json_content.json_id AS content_json_id, keyvalue.value AS cert_user_id, json.directory,
 			(SELECT COUNT(*) FROM comment_vote WHERE comment_vote.comment_uri = comment.comment_id || '@' || json.directory)+1 AS votes
-			FROM comment 
-			LEFT JOIN json USING (json_id) 
+			FROM comment
+			LEFT JOIN json USING (json_id)
 			LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json')
 			LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
 			WHERE post_id = #{@post_id} ORDER BY date_added DESC"
@@ -40,7 +40,7 @@ class Comments extends Class
 				@applyCommentData(elem, comment)
 				elem.appendTo(".comments")
 			setTimeout (->
-				Page.addInlineEditors()
+				Page.addInlineEditors(".comments")
 			), 1000
 
 
@@ -68,7 +68,7 @@ class Comments extends Class
 		body_add+= "\n\n"
 		$(".comment-new .comment-textarea").val( $(".comment-new .comment-textarea").val()+body_add )
 		$(".comment-new .comment-textarea").trigger("input").focus() # Autosize
-		return false 
+		return false
 
 
 	submitComment: ->
@@ -90,7 +90,7 @@ class Comments extends Class
 				data = {"next_comment_id": 1, "comment": [], "comment_vote": {} }
 
 			data.comment.push {
-				"comment_id": data.next_comment_id, 
+				"comment_id": data.next_comment_id,
 				"body": body,
 				"post_id": @post_id,
 				"date_added": Time.timestamp()

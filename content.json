@@ -6,8 +6,8 @@
   "domain": "Blog.ZeroNetwork.bit", 
   "files": {
     "css/all.css": {
-      "sha512": "a6b410cad32c9a1e0b61d11420b5213552730dcf730a090d11386bdf05d3e362", 
-      "size": 112710
+      "sha512": "9170b737d6ed8d3f606cd3b649af202f40c0d90141cf358164627f40028f83c3", 
+      "size": 112756
     }, 
     "data-default/data.json": {
       "sha512": "aff6accbac7e950ff567105666ddf29b70ca7c2dcd9d90f9a969509a42a9b195", 
@@ -18,8 +18,8 @@
       "size": 679
     }, 
     "data/data.json": {
-      "sha512": "82afe6624a08b2d045f88595466ba0eaf840d6654948e06eba05358dbb379e05", 
-      "size": 36887
+      "sha512": "2650ec3c79e3180fafc0e04990865bf198a84481a4a00ea58dd6e3e12265bf90", 
+      "size": 54272
     }, 
     "data/img/autoupdate.png": {
       "sha512": "d2b4dc8e0da2861ea051c0c13490a4eccf8933d77383a5b43de447c49d816e71", 
@@ -65,6 +65,10 @@
       "sha512": "885d322f4e189775cbacb6e7d4f9ee89554d5709077e3777f0d382b0e9d315f1", 
       "size": 18729
     }, 
+    "data/img/uipassword.png": {
+      "sha512": "2f7ddb406cb318da51c36dc4e30e79aca17ef6730b9ba1fa5a9768127d3d0f02", 
+      "size": 5383
+    }, 
     "data/img/zeroblog-comments.png": {
       "sha512": "efe4e815a260e555303e5c49e550a689d27a8361f64667bd4a91dbcccb83d2b4", 
       "size": 24001
@@ -98,12 +102,12 @@
       "size": 723
     }, 
     "index.html": {
-      "sha512": "4989c09b0f8ebcb84200bf39ac387d0cb8387846f44c993c553f5638472dc9c6", 
-      "size": 4665
+      "sha512": "0a8db2fd761d9b6192d841e5763c33f80dce646b9d289a367ba8af99f72e34de", 
+      "size": 4643
     }, 
     "js/all.js": {
-      "sha512": "4fd5fe9a77aec0148fb834fe2ce44546afb67142f72d737d16846002cd21f2f3", 
-      "size": 201636
+      "sha512": "c2a06fc33137e8d1a285513c381ae78c4c285f74f9b141eec2b371d8b3afbdd9", 
+      "size": 201621
     }
   }, 
   "ignore": "((js|css)/(?!all.(js|css))|data/.*db|data/users/.*/.*)", 
@@ -113,14 +117,14 @@
       "signers_required": 1
     }
   }, 
-  "modified": 1435270619.174, 
+  "modified": 1438815770.321, 
   "sign": [
-    35747818367132849695570416581103552969558580887249365019265151876795325525309, 
-    41608540994059393526233377070263873402678057485342022226456394323285366127122
+    110256115178284525706565442636490562453617991761595731102420529416264516316446, 
+    13485347502115536516285375329146331372195652223210495825472270466787601612047
   ], 
   "signers_sign": "G7W/oNvczE5nPTFYVOqv8+GOpQd23LS/Dc1Q6xQ1NRDDHlYzmoSE63UQ7Za05kD0rwIYXbuUSr8z8p6RhZmnUs8=", 
   "signs": {
-    "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "HPTSmXMM5Zot2LTuDjsRU7+LmpJ8sceSL5Xr8ZKSehIxrhS2gVWz4xWSj/zfd71+GXFOpLwqet+BvcdZEywrwy0="
+    "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "G1WpLw9E70zkJa4BxmZhy1UwED1KL88X1rIzRqiUXMv5SUsKc4euWAUwvcIQePxV62DUkv0PDlTsWZ8MDqwMy5g="
   }, 
   "signs_required": 1, 
   "title": "ZeroBlog", 
