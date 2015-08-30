@@ -1,5 +1,3 @@
-timers = {}
-
 jQuery.fn.readdClass = (class_name) ->
 	elem = @
 	elem.removeClass class_name
@@ -21,6 +19,9 @@ jQuery.fn.hideLater = (time = 500) ->
 
 jQuery.fn.addClassLater = (class_name, time=5, mode="clear") ->
 	elem = @
+	elem[0].timers ?= {}
+	timers = elem[0].timers
+
 	if timers[class_name] and mode == "clear" then clearInterval(timers[class_name])
 	timers[class_name] = setTimeout ( ->
 		elem.addClass(class_name)
@@ -29,6 +30,9 @@ jQuery.fn.addClassLater = (class_name, time=5, mode="clear") ->
 
 jQuery.fn.removeClassLater = (class_name, time=500, mode="clear") ->
 	elem = @
+	elem[0].timers ?= {}
+	timers = elem[0].timers
+
 	if timers[class_name] and mode == "clear" then clearInterval(timers[class_name])
 	timers[class_name] = setTimeout ( ->
 		elem.removeClass(class_name)
@@ -37,6 +41,9 @@ jQuery.fn.removeClassLater = (class_name, time=500, mode="clear") ->
 
 jQuery.fn.cssLater = (name, val, time=500, mode="clear") ->
 	elem = @
+	elem[0].timers ?= {}
+	timers = elem[0].timers
+
 	if timers[name] and mode == "clear" then clearInterval(timers[name])
 	if time == "now"
 		elem.css name, val
@@ -49,6 +56,9 @@ jQuery.fn.cssLater = (name, val, time=500, mode="clear") ->
 
 jQuery.fn.toggleClassLater = (name, val, time=10, mode="clear") ->
 	elem = @
+	elem[0].timers ?= {}
+	timers = elem[0].timers
+
 	if timers[name] and mode == "clear" then clearInterval(timers[name])
 	timers[name] = setTimeout ( ->
 		elem.toggleClass name, val

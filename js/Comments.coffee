@@ -100,6 +100,9 @@ class Comments extends Class
 			Page.writePublish inner_path, btoa(json_raw), (res) =>
 				$(".comment-new .button-submit").removeClass("loading")
 				@loadComments()
+				setTimeout (->
+					Page.loadLastcomments()
+				), 1000
 				@checkCert("updaterules")
 				@log "Writepublish result", res
 				if res != false

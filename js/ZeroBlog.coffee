@@ -45,6 +45,46 @@ class ZeroBlog extends ZeroFrame
 				$(".left .links").html(Text.toMarked(@data.links)).data("content", @data.links)
 
 
+	loadLastcomments: (type="show", cb=false) ->
+		query = "
+			SELECT comment.*, json_content.json_id AS content_json_id, keyvalue.value AS cert_user_id, json.directory, post.title AS post_title
+			FROM comment
+			LEFT JOIN json USING (json_id)
+			LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json')
+			LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
+			LEFT JOIN post ON (comment.post_id = post.post_id)
+			ORDER BY date_added DESC LIMIT 3"
+
+		@cmd "dbQuery", [query], (res) =>
+			if res.length
+				$(".lastcomments").css("display", "block")
+				res.reverse()
+			for lastcomment in res
+				elem = $("#lastcomment_#{lastcomment.json_id}_#{lastcomment.comment_id}")
+				if elem.length == 0 # Not exits yet
+					elem = $(".lastcomment.template").clone().removeClass("template").attr("id", "lastcomment_#{lastcomment.json_id}_#{lastcomment.comment_id}")
+					if type != "noanim"
+						elem.cssSlideDown()
+					elem.prependTo(".lastcomments ul")
+				@applyLastcommentdata(elem, lastcomment)
+			if cb then cb()
+
+	applyLastcommentdata: (elem, lastcomment) ->
+		elem.find(".user_name").text(lastcomment.cert_user_id.replace(/@.*/, "")+":")
+
+		body = Text.toMarked(lastcomment.body)
+		body = body.replace /[\r\n]/g, " "  # Remove whitespace
+		body = body.replace /\<blockquote\>.*?\<\/blockquote\>/g, " "  # Remove quotes
+		body = body.replace /\<.*?\>/g, " "  # Remove html codes
+		if body.length > 60  # Strip if too long
+			body = body[0..60].replace(/(.*) .*?$/, "$1") + " ..."  # Keep the last 60 character and strip back until last space
+		elem.find(".body").html(body)
+
+		title_hash = lastcomment.post_title.replace(/[#?& ]/g, "+").replace(/[+]+/g, "+")
+		elem.find(".postlink").text(lastcomment.post_title).attr("href", "?Post:#{lastcomment.post_id}:#{title_hash}#Comments")
+
+
+
 	routeUrl: (url) ->
 		@log "Routing url:", url
 		if match = url.match /Post:([0-9]+)/
@@ -120,7 +160,7 @@ class ZeroBlog extends ZeroFrame
 
 	addInlineEditors: (parent) ->
 		@logStart "Adding inline editors"
-		elems = $("[data-editable]:visible", parent) 
+		elems = $("[data-editable]:visible", parent)
 		for elem in elems
 			elem = $(elem)
 			if not elem.data("editor") and not elem.hasClass("editor")
@@ -170,7 +210,7 @@ class ZeroBlog extends ZeroFrame
 		else
 			$(".details .comments-num", elem).css("display", "none")
 
-		if full 
+		if full
 			body = post.body
 		else # On main page only show post until the first --- hr separator
 			body = post.body.replace(/^([\s\S]*?)\n---\n[\s\S]*$/, "$1")
@@ -187,6 +227,7 @@ class ZeroBlog extends ZeroFrame
 			@server_info = ret
 			if @server_info.rev < 160
 				@loadData("old")
+		@loadLastcomments("noanim")
 
 
 	# Returns the elem parent object
@@ -316,7 +357,7 @@ class ZeroBlog extends ZeroFrame
 			@cmd "fileWrite", ["content.json", btoa(content)], (res) =>
 				if res != "ok"
 					@cmd "wrapperNotification", ["error", "Content.json write error: #{res}"]
-				
+
 				# If the privatekey is stored sign the new content
 				if @site_info["privatekey"]
 					@cmd "siteSign", ["stored", "content.json"], (res) =>
@@ -358,11 +399,13 @@ class ZeroBlog extends ZeroFrame
 		if $("body").hasClass("page-post") then Comments.checkCert() # Update if username changed
 		# User commented
 		if site_info.event?[0] == "file_done" and site_info.event[1].match /.*users.*data.json$/
-			if $("body").hasClass("page-post") 
+			if $("body").hasClass("page-post")
 				Comments.loadComments() # Post page, reload comments
+				@loadLastcomments()
 			if $("body").hasClass("page-main")
 				RateLimit 500, =>
 					@pageMain()
+					@loadLastcomments()
 		else if site_info.event?[0] == "file_done" and site_info.event[1] == "data/data.json"
 			@loadData()
 			if $("body").hasClass("page-main") then @pageMain()

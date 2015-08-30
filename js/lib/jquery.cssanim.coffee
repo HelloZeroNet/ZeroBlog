@@ -1,6 +1,6 @@
 jQuery.fn.cssSlideDown = ->
 	elem = @
-	elem.css({"opacity": 0, "margin-bottom": 0, "margin-top": 0, "padding-bottom": 0, "padding-top": 0, "display": "none", "transform": "scale(0.8)"}) 
+	elem.css({"opacity": 0, "margin-bottom": 0, "margin-top": 0, "padding-bottom": 0, "padding-top": 0, "display": "none", "transform": "scale(0.8)"})
 	setTimeout (->
 		elem.css("display", "")
 		height = elem.outerHeight()
