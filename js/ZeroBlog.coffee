@@ -53,6 +53,7 @@ class ZeroBlog extends ZeroFrame
 			LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json')
 			LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
 			LEFT JOIN post ON (comment.post_id = post.post_id)
+			WHERE post.title IS NOT NULL
 			ORDER BY date_added DESC LIMIT 3"
 
 		@cmd "dbQuery", [query], (res) =>
