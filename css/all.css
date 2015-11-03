@@ -61,7 +61,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 /* Design based on medium */
 
-body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto', sans-serif; height: 15000px; overflow: hidden; backface-visibility: hidden }
+body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto', sans-serif; height: 15000px; overflow: hidden; -webkit-backface-visibility: hidden ; -moz-backface-visibility: hidden ; -o-backface-visibility: hidden ; -ms-backface-visibility: hidden ; backface-visibility: hidden  }
 body.loaded { height: auto; overflow: auto }
 h1, h2, h3, h4 { font-family: 'Roboto', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
@@ -203,6 +203,14 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 .post .more .readmore {  }
 .post .more:hover { color: white; -webkit-box-shadow: inset 150px 0px 0px 0px #333; -moz-box-shadow: inset 150px 0px 0px 0px #333; -o-box-shadow: inset 150px 0px 0px 0px #333; -ms-box-shadow: inset 150px 0px 0px 0px #333; box-shadow: inset 150px 0px 0px 0px #333 ; }
 .post .more:active { color: white; -webkit-box-shadow: inset 150px 0px 0px 0px #AF3BFF; -moz-box-shadow: inset 150px 0px 0px 0px #AF3BFF; -o-box-shadow: inset 150px 0px 0px 0px #AF3BFF; -ms-box-shadow: inset 150px 0px 0px 0px #AF3BFF; box-shadow: inset 150px 0px 0px 0px #AF3BFF ; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none ; border-color: #AF3BFF }
+
+.pager { margin-bottom: 200px }
+.pager a { border: 2px solid #333; padding: 10px 20px; font-size: 15px; display: none; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
+.pager a:hover { color: white; -webkit-box-shadow: inset 150px 0px 0px 0px #333; -moz-box-shadow: inset 150px 0px 0px 0px #333; -o-box-shadow: inset 150px 0px 0px 0px #333; -ms-box-shadow: inset 150px 0px 0px 0px #333; box-shadow: inset 150px 0px 0px 0px #333 ; }
+.pager a:active { color: white; -webkit-box-shadow: inset 150px 0px 0px 0px #AF3BFF; -moz-box-shadow: inset 150px 0px 0px 0px #AF3BFF; -o-box-shadow: inset 150px 0px 0px 0px #AF3BFF; -ms-box-shadow: inset 150px 0px 0px 0px #AF3BFF; box-shadow: inset 150px 0px 0px 0px #AF3BFF ; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none ; border-color: #AF3BFF }
+.pager .next { float: right }
+.pager .prev:hover { -webkit-box-shadow: inset -150px 0px 0px 0px #333; -moz-box-shadow: inset -150px 0px 0px 0px #333; -o-box-shadow: inset -150px 0px 0px 0px #333; -ms-box-shadow: inset -150px 0px 0px 0px #333; box-shadow: inset -150px 0px 0px 0px #333 ; }
+.pager .prev:active { -webkit-box-shadow: inset -150px 0px 0px 0px #AF3BFF; -moz-box-shadow: inset -150px 0px 0px 0px #AF3BFF; -o-box-shadow: inset -150px 0px 0px 0px #AF3BFF; -ms-box-shadow: inset -150px 0px 0px 0px #AF3BFF; box-shadow: inset -150px 0px 0px 0px #AF3BFF ; }
 
 
 

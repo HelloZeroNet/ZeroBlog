@@ -183,7 +183,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/jquery.csslater.coffee ---- */
 
 
@@ -311,7 +310,6 @@
   };
 
 }).call(this);
-
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/marked.min.js ---- */
@@ -595,7 +593,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/InlineEditor.coffee ---- */
 
 
@@ -793,7 +790,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/RateLimit.coffee ---- */
 
 
@@ -821,7 +817,6 @@
   };
 
 }).call(this);
-
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Text.coffee ---- */
@@ -914,7 +909,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Time.coffee ---- */
 
 
@@ -985,7 +979,6 @@
   window.Time = new Time;
 
 }).call(this);
-
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/ZeroFrame.coffee ---- */
@@ -1097,7 +1090,6 @@
   window.ZeroFrame = ZeroFrame;
 
 }).call(this);
-
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/Comments.coffee ---- */
@@ -1350,7 +1342,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/ZeroBlog.coffee ---- */
 
 
@@ -1484,6 +1475,18 @@
       return elem.find(".postlink").text(lastcomment.post_title).attr("href", "?Post:" + lastcomment.post_id + ":" + title_hash + "#Comments");
     };
 
+    ZeroBlog.prototype.applyPagerdata = function(page, limit, has_next) {
+      var pager;
+      pager = $(".pager");
+      console.log(page, limit, has_next);
+      if (page > 1) {
+        pager.find(".prev").css("display", "inline-block").attr("href", "?page=" + (page - 1));
+      }
+      if (has_next) {
+        return pager.find(".next").css("display", "inline-block").attr("href", "?page=" + (page + 1));
+      }
+    };
+
     ZeroBlog.prototype.routeUrl = function(url) {
       var match;
       this.log("Routing url:", url);
@@ -1493,7 +1496,11 @@
         return this.pagePost();
       } else {
         $("body").addClass("page-main");
-        return this.pageMain();
+        if (match = url.match(/page=([0-9]+)/)) {
+          return this.pageMain(parseInt(match[1]));
+        } else {
+          return this.pageMain();
+        }
       }
     };
 
@@ -1513,11 +1520,23 @@
       })(this));
     };
 
-    ZeroBlog.prototype.pageMain = function() {
-      return this.cmd("dbQuery", ["SELECT post.*, COUNT(comment_id) AS comments FROM post LEFT JOIN comment USING (post_id) GROUP BY post_id ORDER BY date_published"], (function(_this) {
+    ZeroBlog.prototype.pageMain = function(page) {
+      var limit;
+      if (page == null) {
+        page = 1;
+      }
+      limit = 15;
+      return this.cmd("dbQuery", ["SELECT post.*, COUNT(comment_id) AS comments FROM post LEFT JOIN comment USING (post_id) GROUP BY post_id ORDER BY date_published DESC LIMIT " + ((page - 1) * limit) + ", " + (limit + 1)], (function(_this) {
         return function(res) {
           var elem, post, s, _i, _len;
           s = +(new Date);
+          if (res.length > limit) {
+            res.pop();
+            _this.applyPagerdata(page, limit, true);
+          } else {
+            _this.applyPagerdata(page, limit, false);
+          }
+          res.reverse();
           for (_i = 0, _len = res.length; _i < _len; _i++) {
             post = res[_i];
             elem = $("#post_" + post.post_id);

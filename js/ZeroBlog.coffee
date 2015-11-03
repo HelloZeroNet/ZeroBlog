@@ -3,6 +3,7 @@ class ZeroBlog extends ZeroFrame
 		@data = null
 		@site_info = null
 		@server_info = null
+		@page = 1
 
 		@event_page_load = $.Deferred()
 		@event_site_info = $.Deferred()
@@ -84,7 +85,13 @@ class ZeroBlog extends ZeroFrame
 		title_hash = lastcomment.post_title.replace(/[#?& ]/g, "+").replace(/[+]+/g, "+")
 		elem.find(".postlink").text(lastcomment.post_title).attr("href", "?Post:#{lastcomment.post_id}:#{title_hash}#Comments")
 
-
+	applyPagerdata: (page, limit, has_next) ->
+		pager = $(".pager")
+		console.log page, limit, has_next
+		if page > 1
+			pager.find(".prev").css("display", "inline-block").attr("href", "?page=#{page-1}")
+		if has_next
+			pager.find(".next").css("display", "inline-block").attr("href", "?page=#{page+1}")
 
 	routeUrl: (url) ->
 		@log "Routing url:", url
@@ -94,11 +101,11 @@ class ZeroBlog extends ZeroFrame
 			@pagePost()
 		else
 			$("body").addClass("page-main")
+			if match = url.match /page=([0-9]+)/
+				@page = parseInt(match[1])
 			@pageMain()
 
-
 	# - Pages -
-
 
 	pagePost: () ->
 		s = (+ new Date)
@@ -111,11 +118,17 @@ class ZeroBlog extends ZeroFrame
 			@pageLoaded()
 
 
-
-
 	pageMain: ->
-		@cmd "dbQuery", ["SELECT post.*, COUNT(comment_id) AS comments FROM post LEFT JOIN comment USING (post_id) GROUP BY post_id ORDER BY date_published"], (res) =>
+		limit = 15
+		@cmd "dbQuery", ["SELECT post.*, COUNT(comment_id) AS comments FROM post LEFT JOIN comment USING (post_id) GROUP BY post_id ORDER BY date_published DESC LIMIT #{(@page-1)*limit}, #{limit+1}"], (res) =>
 			s = (+ new Date)
+			if res.length > limit # Has next page
+				res.pop()
+				@applyPagerdata(@page, limit, true)
+			else
+				@applyPagerdata(@page, limit, false)
+
+			res.reverse()
 			for post in res
 				elem = $("#post_#{post.post_id}")
 				if elem.length == 0 # Not exits yet
