@@ -47,7 +47,7 @@ class Comments extends Class
 	applyCommentData: (elem, comment) ->
 		[user_name, cert_domain] = comment.cert_user_id.split("@")
 		user_address = comment.directory.replace("users/", "")
-		$(".comment-body", elem).html Text.toMarked(comment.body, {"sanitize": true})
+		$(".comment-body", elem).html Text.renderMarked(comment.body, {"sanitize": true})
 		$(".user_name", elem).text(user_name).css("color": Text.toColor(comment.cert_user_id)).attr("title", "#{user_name}@#{cert_domain}: #{user_address}")
 		$(".added", elem).text(Time.since(comment.date_added)).attr("title", Time.date(comment.date_added, "long"))
 		#$(".cert_domain", elem).html("@#{cert_domain}").css("display", "none")
@@ -87,7 +87,7 @@ class Comments extends Class
 			if data
 				data = JSON.parse(data)
 			else # Default data
-				data = {"next_comment_id": 1, "comment": [], "comment_vote": {} }
+				data = {"next_comment_id": 1, "comment": [], "comment_vote": {}, "topic_vote": {} }
 
 			data.comment.push {
 				"comment_id": data.next_comment_id,

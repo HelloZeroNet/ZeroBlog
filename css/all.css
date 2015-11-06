@@ -1,6 +1,6 @@
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
+/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/Comments.css ---- */
 
 
 .comments { margin-bottom: 60px }
@@ -56,7 +56,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
+/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/ZeroBlog.css ---- */
 
 
 /* Design based on medium */
@@ -174,6 +174,16 @@ a:hover { color: #3498db }
 .post .details .comments-num { border: none; color: #BBB; font-weight: normal; }
 .post .details .comments-num .num { border-bottom: 1px solid #eee; color: #000; }
 .post .details .comments-num:hover .num { border-bottom: 1px solid #D6A1DE; }
+.post .details .like { display: inline-block; padding: 5px 5px; margin-top: -6px; -webkit-border-radius: 7px; -moz-border-radius: 7px; -o-border-radius: 7px; -ms-border-radius: 7px; border-radius: 7px ; border: none; font-weight: normal; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
+.post .details .like .icon-heart:before, .post .details .like .icon-heart:after { background-color: #CCC; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
+.post .details .like .icon-heart { transform-style: preserve-3d; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
+.post .details .like:hover .icon-heart { -webkit-transform: scale(1.1) ; -moz-transform: scale(1.1) ; -o-transform: scale(1.1) ; -ms-transform: scale(1.1) ; transform: scale(1.1)  }
+.post .details .like:hover .icon-heart:before, .post .details .like:hover .icon-heart:after { background-color: #FF5442 }
+.post .details .like.active .icon-heart:before, .post .details .like.active .icon-heart:after { background-color: #FF5442 }
+.post .details .like.active .icon-heart-anim { -webkit-transform: scale(1.8); -moz-transform: scale(1.8); -o-transform: scale(1.8); -ms-transform: scale(1.8); transform: scale(1.8) ; opacity: 0; -webkit-transition: all 1s ease-in-out ; -moz-transition: all 1s ease-in-out ; -o-transition: all 1s ease-in-out ; -ms-transition: all 1s ease-in-out ; transition: all 1s ease-in-out  }
+.post .details .like .num { margin-left: 21px; color: #CCC; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
+.post .details .like:hover .num { color: #FA6C8D }
+.post .details .like.loading { pointer-events: none; -webkit-animation: bounce .3s infinite alternate ease-out; -moz-animation: bounce .3s infinite alternate ease-out; -o-animation: bounce .3s infinite alternate ease-out; -ms-animation: bounce .3s infinite alternate ease-out; animation: bounce .3s infinite alternate ease-out ; -webkit-animation-delay: 1s; -moz-animation-delay: 1s; -o-animation-delay: 1s; -ms-animation-delay: 1s; animation-delay: 1s ; }
 .post .body { font-size: 21.5px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
 
 .post .body h1 { text-align: center; margin-top: 50px }
@@ -212,9 +222,47 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 .pager .prev:hover { -webkit-box-shadow: inset -150px 0px 0px 0px #333; -moz-box-shadow: inset -150px 0px 0px 0px #333; -o-box-shadow: inset -150px 0px 0px 0px #333; -ms-box-shadow: inset -150px 0px 0px 0px #333; box-shadow: inset -150px 0px 0px 0px #333 ; }
 .pager .prev:active { -webkit-box-shadow: inset -150px 0px 0px 0px #AF3BFF; -moz-box-shadow: inset -150px 0px 0px 0px #AF3BFF; -o-box-shadow: inset -150px 0px 0px 0px #AF3BFF; -ms-box-shadow: inset -150px 0px 0px 0px #AF3BFF; box-shadow: inset -150px 0px 0px 0px #AF3BFF ; }
 
+/* Score */
+/*
+.score {
+	border: 1px solid #eee; margin-right: 5px; margin-left: 5px; padding: 2px 7px; -webkit-border-radius: 10px; -moz-border-radius: 10px; -o-border-radius: 10px; -ms-border-radius: 10px; border-radius: 10px ; color: #AAA; background-position: left center; font-weight: bold; font-size: 12px;
+	display: inline-block; height: 1.2em; overflow: hidden; vertical-align: -0.5em; line-height: 7px; -webkit-transition: background-color 0.3s; -moz-transition: background-color 0.3s; -o-transition: background-color 0.3s; -ms-transition: background-color 0.3s; transition: background-color 0.3s ; height: 20px; box-sizing: border-box
+}
+.score-active, .score-inactive { -webkit-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); -moz-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); -o-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); -ms-transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) ; display: inline-block; margin-top: 3px }
+.score-active { display: block; margin-top: 5px }
+.score.active { background-color: #2ecc71; color: white }
+.score.loading {
+	color: rgba(255,255,255,0) !important; background: #2ecc71 url(../img/loading.gif) no-repeat center center;
+	-webkit-transition: background 0.5s ease-out; -moz-transition: background 0.5s ease-out; -o-transition: background 0.5s ease-out; -ms-transition: background 0.5s ease-out; transition: background 0.5s ease-out ; pointer-events: none; border: 1px solid #2ecc71
+}
+
+.score.active .score-inactive, .score:hover .score-inactive { -webkit-transform: translateY(-14px); -moz-transform: translateY(-14px); -o-transform: translateY(-14px); -ms-transform: translateY(-14px); transform: translateY(-14px) ; opacity: 0.5 }
+.score.active .score-active, .score:hover .score-active { -webkit-transform: translateY(-14px) ; -moz-transform: translateY(-14px) ; -o-transform: translateY(-14px) ; -ms-transform: translateY(-14px) ; transform: translateY(-14px)  }
+.score:hover, .score.active { border: 1px solid #2ecc71; color: #AAA; }
+
+.score:active {  border: 1px solid #AAA !important; -webkit-transform: translateY(1px) ; -moz-transform: translateY(1px) ; -o-transform: translateY(1px) ; -ms-transform: translateY(1px) ; transform: translateY(1px)  }
+
+.noscore .score-inactive .icon-up { margin-left: 6px }
+.noscore .score-inactive .score-num { display: none }
+*/
+
+@keyframes bounce {
+	  0% { -webkit-transform: translateY(0); -moz-transform: translateY(0); -o-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0) ; }
+	100% { -webkit-transform: translateY(-3px); -moz-transform: translateY(-3px); -o-transform: translateY(-3px); -ms-transform: translateY(-3px); transform: translateY(-3px) ; }
+}
+@-webkit-keyframes bounce {
+	  0% { -webkit-transform: translateY(0); -moz-transform: translateY(0); -o-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0) ; }
+	100% { -webkit-transform: translateY(-3px); -moz-transform: translateY(-3px); -o-transform: translateY(-3px); -ms-transform: translateY(-3px); transform: translateY(-3px) ; }
+}
+@-moz-keyframes bounce {
+	  0% { -webkit-transform: translateY(0); -moz-transform: translateY(0); -o-transform: translateY(0); -ms-transform: translateY(0); transform: translateY(0) ; }
+	100% { -webkit-transform: translateY(-3px); -moz-transform: translateY(-3px); -o-transform: translateY(-3px); -ms-transform: translateY(-3px); transform: translateY(-3px) ; }
+}
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */
+
+
+/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/fonts.css ---- */
 
 
 /* Base64 encoder: http://www.motobit.com/util/base64-decoder-encoder.asp */
@@ -251,7 +299,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/github.css ---- */
+/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/github.css ---- */
 
 
 /*
@@ -381,17 +429,17 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
+/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/icons.css ---- */
 
 
 .icon { display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; }
 .icon-profile { font-size: 6px; top: 0em; -webkit-border-radius: 0.7em 0.7em 0 0; -moz-border-radius: 0.7em 0.7em 0 0; -o-border-radius: 0.7em 0.7em 0 0; -ms-border-radius: 0.7em 0.7em 0 0; border-radius: 0.7em 0.7em 0 0 ; background: #FFFFFF; width: 1.5em; height: 0.7em; position: relative; display: inline-block; margin-right: 4px }
-.icon-profile:before { position: absolute; content: ""; top: -1em; left: 0.38em; width: 0.8em; height: 0.85em; -webkit-border-radius: 50%; -moz-border-radius: 50%; -o-border-radius: 50%; -ms-border-radius: 50%; border-radius: 50% ; background: #FFFFFF; } 
+.icon-profile:before { position: absolute; content: ""; top: -1em; left: 0.38em; width: 0.8em; height: 0.85em; -webkit-border-radius: 50%; -moz-border-radius: 50%; -o-border-radius: 50%; -ms-border-radius: 50%; border-radius: 50% ; background: #FFFFFF; }
 
 .icon-comment { width: 16px; height: 10px; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; background: #B10DC9; margin-top: 0px; display: inline-block; position: relative; top: -2px; }
 .icon-comment:after { left: 9px; border: 2px solid transparent; border-top-color: #B10DC9; border-left-color: #B10DC9; background: transparent; content: ""; display: block; margin-top: 10px; width: 0px; margin-left: 7px; }
 
-.icon-edit { 
+.icon-edit {
 	width: 16px; height: 16px; background-repeat: no-repeat; background-position: 20px center;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAOVBMVEUAAAC9w8e9w8e9w8e9w8e/xMi9w8e9w8e+w8e9w8e9w8e9w8e9w8e9w8e9w8e+w8e/xMi9w8e9w8fvY4+KAAAAEnRSTlMASPv3WQbwOTCkt4/psX4YDMWr+RRCAAAAUUlEQVQY06XLORKAMAxDUTs7kA3d/7AYGju0UfffjIgoHkxm0vB5bZyxKHx9eX0FJw0Y4bcXKQ4/CTtS5yqp5GFFOjGpVGl00k1pNDIb3Nv9AHC7BOZC4ZjvAAAAAElFTkSuQmCC+d0ckOwyAMRVGHUOO0gUyd+P8f7WApz4Iki9wFmyOEATrXLZcFp5LrGogPOxKp6zfFf9fZ1/I/cY7YZSS3U6S3XFZJmGBwL+FuJX/F1K0wUUlZyZGlXgXESthTEs4B8fh7xoVUDPGYJnsfkCRarKAgz8cAKbpD6pqDPz3XB8K6HdUEeN9NAAAAAElFTkSuQmCC);
 }
@@ -399,3 +447,10 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 	width: 16px; height: 16px;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAIVBMVEUAAABmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmYs5FxxAAAAC3RSTlMAgBFwYExAMHgoCDJmUTYAAAA3SURBVAjXY8APGGEMQZgAjCEoKBwEEQCCAoiIh6AQVM1kMaguJhGYOSJQjexiUMbiAChDCclCAOHqBBdHpwQTAAAAAElFTkSuQmCC);
 }
+.icon-heart { position: absolute; width: 17px; height: 13px; margin-top: 5px }
+.icon-heart:before, .icon-heart:after {
+	position: absolute; content: ""; left: 8px; top: 0; width: 8px; height: 13px;
+	background: #FA6C8D; /*border-radius: 25px 25px 0 0;*/ -webkit-transform: rotate(-45deg); -moz-transform: rotate(-45deg); -o-transform: rotate(-45deg); -ms-transform: rotate(-45deg); transform: rotate(-45deg) ; transform-origin: 0 100%
+}
+.icon-heart:after { left: 0; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -o-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg) ; transform-origin :100% 100% }
+.icon-up { font-weight: normal !important; font-size: 15px; font-family: Tahoma; vertical-align: -4px; padding-right: 5px; display: inline; height: 1px; }

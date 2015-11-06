@@ -4,6 +4,7 @@ class ZeroBlog extends ZeroFrame
 		@site_info = null
 		@server_info = null
 		@page = 1
+		@my_post_votes = {}
 
 		@event_page_load = $.Deferred()
 		@event_site_info = $.Deferred()
@@ -42,9 +43,8 @@ class ZeroBlog extends ZeroFrame
 				for row in res
 					@data[row.key] = row.value
 				$(".left h1 a:not(.editable-edit)").html(@data.title).data("content", @data.title)
-				$(".left h2").html(Text.toMarked(@data.description)).data("content", @data.description)
-				$(".left .links").html(Text.toMarked(@data.links)).data("content", @data.links)
-
+				$(".left h2").html(Text.renderMarked(@data.description)).data("content", @data.description)
+				$(".left .links").html(Text.renderMarked(@data.links)).data("content", @data.links)
 
 	loadLastcomments: (type="show", cb=false) ->
 		query = "
@@ -74,7 +74,7 @@ class ZeroBlog extends ZeroFrame
 	applyLastcommentdata: (elem, lastcomment) ->
 		elem.find(".user_name").text(lastcomment.cert_user_id.replace(/@.*/, "")+":")
 
-		body = Text.toMarked(lastcomment.body)
+		body = Text.renderMarked(lastcomment.body)
 		body = body.replace /[\r\n]/g, " "  # Remove whitespace
 		body = body.replace /\<blockquote\>.*?\<\/blockquote\>/g, " "  # Remove quotes
 		body = body.replace /\<.*?\>/g, " "  # Remove html codes
@@ -87,7 +87,6 @@ class ZeroBlog extends ZeroFrame
 
 	applyPagerdata: (page, limit, has_next) ->
 		pager = $(".pager")
-		console.log page, limit, has_next
 		if page > 1
 			pager.find(".prev").css("display", "inline-block").attr("href", "?page=#{page-1}")
 		if has_next
@@ -109,55 +108,94 @@ class ZeroBlog extends ZeroFrame
 
 	pagePost: () ->
 		s = (+ new Date)
-		@cmd "dbQuery", ["SELECT * FROM post WHERE post_id = #{@post_id} LIMIT 1"], (res) =>
-			if res.length
-				@applyPostdata($(".post-full"), res[0], true)
-				Comments.pagePost(@post_id)
+		@cmd "dbQuery", ["SELECT *, (SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes FROM post WHERE post_id = #{@post_id} LIMIT 1"], (res) =>
+			parse_res = (res) =>
+				if res.length
+					post = res[0]
+					@applyPostdata($(".post-full"), post, true)
+					$(".post-full .like").attr("id", "post_like_#{post.post_id}").on "click", @submitPostVote
+					Comments.pagePost(@post_id)
+				else
+					$(".post-full").html("<h1>Not found</h1>")
+				@pageLoaded()
+				Comments.checkCert()
+
+			# Temporary dbschema bug workaround
+			if res.error
+				@cmd "dbQuery", ["SELECT *, -1 AS votes FROM post WHERE post_id = #{@post_id} LIMIT 1"], parse_res
 			else
-				$(".post-full").html("<h1>Not found</h1>")
-			@pageLoaded()
+				parse_res(res)
 
 
 	pageMain: ->
 		limit = 15
-		@cmd "dbQuery", ["SELECT post.*, COUNT(comment_id) AS comments FROM post LEFT JOIN comment USING (post_id) GROUP BY post_id ORDER BY date_published DESC LIMIT #{(@page-1)*limit}, #{limit+1}"], (res) =>
-			s = (+ new Date)
-			if res.length > limit # Has next page
-				res.pop()
-				@applyPagerdata(@page, limit, true)
+		query = """
+			SELECT
+				post.*, COUNT(comment_id) AS comments,
+				(SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes
+			FROM post
+			LEFT JOIN comment USING (post_id)
+			GROUP BY post_id
+			ORDER BY date_published DESC
+			LIMIT #{(@page-1)*limit}, #{limit+1}
+		"""
+		@cmd "dbQuery", [query], (res) =>
+			parse_res = (res) =>
+				s = (+ new Date)
+				if res.length > limit # Has next page
+					res.pop()
+					@applyPagerdata(@page, limit, true)
+				else
+					@applyPagerdata(@page, limit, false)
+
+				res.reverse()
+				for post in res
+					elem = $("#post_#{post.post_id}")
+					if elem.length == 0 # Not exits yet
+						elem = $(".post.template").clone().removeClass("template").attr("id", "post_#{post.post_id}")
+						elem.prependTo(".posts")
+						# elem.find(".score").attr("id", "post_score_#{post.post_id}").on "click", @submitPostVote # Submit vote
+						elem.find(".like").attr("id", "post_like_#{post.post_id}").on "click", @submitPostVote
+					@applyPostdata(elem, post)
+				@pageLoaded()
+				@log "Posts loaded in", ((+ new Date)-s),"ms"
+
+				$(".posts .new").on "click", => # Create new blog post
+					@cmd "fileGet", ["data/data.json"], (res) =>
+						data = JSON.parse(res)
+						# Add to data
+						data.post.unshift
+							post_id: data.next_post_id
+							title: "New blog post"
+							date_published: (+ new Date)/1000
+							body: "Blog post body"
+						data.next_post_id += 1
+
+						# Create html elements
+						elem = $(".post.template").clone().removeClass("template")
+						@applyPostdata(elem, data.post[0])
+						elem.hide()
+						elem.prependTo(".posts").slideDown()
+						@addInlineEditors(elem)
+
+						@writeData(data)
+					return false
+
+			# Temporary dbschema bug workaround
+			if res.error
+				query = """
+					SELECT
+						post.*, COUNT(comment_id) AS comments,
+						-1 AS votes
+					FROM post
+					LEFT JOIN comment USING (post_id)
+					GROUP BY post_id
+					ORDER BY date_published DESC
+					LIMIT #{(@page-1)*limit}, #{limit+1}
+				"""
+				@cmd "dbQuery", [query], parse_res
 			else
-				@applyPagerdata(@page, limit, false)
-
-			res.reverse()
-			for post in res
-				elem = $("#post_#{post.post_id}")
-				if elem.length == 0 # Not exits yet
-					elem = $(".post.template").clone().removeClass("template").attr("id", "post_#{post.post_id}")
-					elem.prependTo(".posts")
-				@applyPostdata(elem, post)
-			@pageLoaded()
-			@log "Posts loaded in", ((+ new Date)-s),"ms"
-
-			$(".posts .new").on "click", => # Create new blog post
-				@cmd "fileGet", ["data/data.json"], (res) =>
-					data = JSON.parse(res)
-					# Add to data
-					data.post.unshift
-						post_id: data.next_post_id
-						title: "New blog post"
-						date_published: (+ new Date)/1000
-						body: "Blog post body"
-					data.next_post_id += 1
-
-					# Create html elements
-					elem = $(".post.template").clone().removeClass("template")
-					@applyPostdata(elem, data.post[0])
-					elem.hide()
-					elem.prependTo(".posts").slideDown()
-					@addInlineEditors(elem)
-
-					@writeData(data)
-				return false
+				parse_res(res)
 
 
 	# - EOF Pages -
@@ -224,24 +262,63 @@ class ZeroBlog extends ZeroFrame
 		else
 			$(".details .comments-num", elem).css("display", "none")
 
+		###
+		if @my_post_votes[post.post_id] # Voted on it
+			$(".score-inactive .score-num", elem).text post.votes-1
+			$(".score-active .score-num", elem).text post.votes
+			$(".score", elem).addClass("active")
+		else # Not voted on it
+			$(".score-inactive .score-num", elem).text post.votes
+			$(".score-active .score-num", elem).text post.votes+1
+
+		if post.votes == 0
+			$(".score", elem).addClass("noscore")
+		else
+			$(".score", elem).removeClass("noscore")
+		###
+		if post.votes > 0
+			$(".like .num", elem).text post.votes
+		else if post.votes == -1  # DB bug
+			$(".like", elem).css("display", "none")
+		else
+			$(".like .num", elem).text ""
+
+		if @my_post_votes[post.post_id] # Voted on it
+			$(".like", elem).addClass("active")
+
+
 		if full
 			body = post.body
 		else # On main page only show post until the first --- hr separator
 			body = post.body.replace(/^([\s\S]*?)\n---\n[\s\S]*$/, "$1")
 
-		$(".body", elem).html(Text.toMarked(body)).data("content", post.body)
+		if $(".body", elem).data("content") != post.body
+			$(".body", elem).html(Text.renderMarked(body)).data("content", post.body)
 
 
 	# Wrapper websocket connection ready
 	onOpenWebsocket: (e) =>
 		@loadData()
-		@routeUrl(window.location.search.substring(1))
-		@cmd "siteInfo", {}, @setSiteinfo
-		@cmd "serverInfo", {}, (ret) => # Get server info
-			@server_info = ret
-			if @server_info.rev < 160
-				@loadData("old")
-		@loadLastcomments("noanim")
+		@cmd "siteInfo", {}, (site_info) =>
+			@setSiteinfo(site_info)
+			query_my_votes = """
+				SELECT
+					'post_vote' AS type,
+					post_id AS uri
+				FROM json
+				LEFT JOIN post_vote USING (json_id)
+				WHERE directory = 'users/#{@site_info.auth_address}' AND file_name = 'data.json'
+			"""
+			@cmd "dbQuery", [query_my_votes], (res) =>
+				for row in res
+					@my_post_votes[row["uri"]] = 1
+				@routeUrl(window.location.search.substring(1))
+
+			@cmd "serverInfo", {}, (ret) => # Get server info
+				@server_info = ret
+				if @server_info.rev < 160
+					@loadData("old")
+			@loadLastcomments("noanim")
 
 
 	# Returns the elem parent object
@@ -260,7 +337,7 @@ class ZeroBlog extends ZeroFrame
 		if elem.data("editable-mode") == "simple" or raw # No markdown
 			return content
 		else
-			return Text.toMarked(content)
+			return Text.renderMarked(content)
 
 
 	# Save content to data.json
@@ -297,7 +374,7 @@ class ZeroBlog extends ZeroFrame
 						else if elem.data("editable-mode") == "timestamp" # Format timestamp
 							cb(Time.since(content))
 						else
-							cb(Text.toMarked(content))
+							cb(Text.renderMarked(content))
 					else # Error
 						cb(false)
 
@@ -315,7 +392,7 @@ class ZeroBlog extends ZeroFrame
 			@writePublish inner_path, btoa(json_raw), (res) =>
 				if res == true
 					Comments.checkCert("updaterules")
-					if cb then cb(Text.toMarked(content, {"sanitize": true}))
+					if cb then cb(Text.renderMarked(content, {"sanitize": true}))
 				else
 					@cmd "wrapperNotification", ["error", "File write error: #{res}"]
 					if cb then cb(false)
@@ -391,7 +468,43 @@ class ZeroBlog extends ZeroFrame
 				else
 					cb(res)
 
+	submitPostVote: (e) =>
+		if not Page.site_info.cert_user_id # No selected cert
+			Page.cmd "certSelect", [["zeroid.bit"]]
+			return false
 
+		elem = $(e.currentTarget)
+		elem.toggleClass("active").addClass("loading")
+		inner_path = "data/users/#{@site_info.auth_address}/data.json"
+		Page.cmd "fileGet", {"inner_path": inner_path, "required": false}, (data) =>
+			if data
+				data = JSON.parse(data)
+			else # Default data
+				data = {"next_comment_id": 1, "comment": [], "comment_vote": {}, "post_vote": {} }
+
+			if not data.post_vote
+				data.post_vote = {}
+			post_id = elem.attr("id").match("_([0-9]+)$")[1]
+
+			if elem.hasClass("active")
+				data.post_vote[post_id] = 1
+			else
+				delete data.post_vote[post_id]
+			json_raw = unescape(encodeURIComponent(JSON.stringify(data, undefined, '\t')))
+
+			current_num = parseInt elem.find(".num").text()
+			if not current_num
+				current_num = 0
+			if elem.hasClass("active")
+				elem.find(".num").text(current_num+1)
+			else
+				elem.find(".num").text(current_num-1)
+
+			Page.writePublish inner_path, btoa(json_raw), (res) =>
+				elem.removeClass("loading")
+				@log "Writepublish result", res
+
+		return false
 
 	# Parse incoming requests
 	onRequest: (cmd, message) ->
@@ -414,6 +527,7 @@ class ZeroBlog extends ZeroFrame
 		# User commented
 		if site_info.event?[0] == "file_done" and site_info.event[1].match /.*users.*data.json$/
 			if $("body").hasClass("page-post")
+				@pagePost()
 				Comments.loadComments() # Post page, reload comments
 				@loadLastcomments()
 			if $("body").hasClass("page-main")

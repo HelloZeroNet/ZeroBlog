@@ -1,15 +1,16 @@
 {
-	"db_name": "ZeroID",
+	"db_name": "ZeroBlog",
 	"db_file": "data/zeroblog.db",
 	"version": 2,
 	"maps": {
 		"users/.+/data.json": {
-			"to_table": [ 
+			"to_table": [
 				"comment",
-				{"node": "comment_vote", "table": "comment_vote", "key_col": "comment_uri", "val_col": "vote"} 
+				{"node": "comment_vote", "table": "comment_vote", "key_col": "comment_uri", "val_col": "vote"},
+				{"node": "post_vote", "table": "post_vote", "key_col": "post_id", "val_col": "vote"}
 			]
 		},
-		"users/.+/content.json": { 
+		"users/.+/content.json": {
 			"to_keyvalue": [ "cert_user_id" ]
 		},
 		"data.json": {
@@ -21,7 +22,7 @@
 	"tables": {
 		"comment": {
 			"cols": [
-				["comment_id", "INTEGER"], 
+				["comment_id", "INTEGER"],
 				["post_id", "INTEGER"],
 				["body", "TEXT"],
 				["date_added", "INTEGER"],
@@ -49,6 +50,15 @@
 			],
 			"indexes": ["CREATE UNIQUE INDEX post_uri ON post(json_id, post_id)", "CREATE INDEX post_id ON post(post_id)"],
 			"schema_changed": 1426195823
+		},
+		"post_vote": {
+			"cols": [
+				["post_id", "INTEGER"],
+				["vote", "INTEGER"],
+				["json_id", "INTEGER REFERENCES json (json_id)"]
+			],
+			"indexes": ["CREATE INDEX post_vote_post_id ON post_vote(post_id)", "CREATE INDEX post_vote_json_id ON post_vote(post_id)"],
+			"schema_changed": 1426195826
 		}
 	}
 }

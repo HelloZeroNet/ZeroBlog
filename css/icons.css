@@ -1,11 +1,11 @@
 .icon { display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; }
 .icon-profile { font-size: 6px; top: 0em; border-radius: 0.7em 0.7em 0 0; background: #FFFFFF; width: 1.5em; height: 0.7em; position: relative; display: inline-block; margin-right: 4px }
-.icon-profile:before { position: absolute; content: ""; top: -1em; left: 0.38em; width: 0.8em; height: 0.85em; border-radius: 50%; background: #FFFFFF; } 
+.icon-profile:before { position: absolute; content: ""; top: -1em; left: 0.38em; width: 0.8em; height: 0.85em; border-radius: 50%; background: #FFFFFF; }
 
 .icon-comment { width: 16px; height: 10px; border-radius: 2px; background: #B10DC9; margin-top: 0px; display: inline-block; position: relative; top: -2px; }
 .icon-comment:after { left: 9px; border: 2px solid transparent; border-top-color: #B10DC9; border-left-color: #B10DC9; background: transparent; content: ""; display: block; margin-top: 10px; width: 0px; margin-left: 7px; }
 
-.icon-edit { 
+.icon-edit {
 	width: 16px; height: 16px; background-repeat: no-repeat; background-position: 20px center;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAOVBMVEUAAAC9w8e9w8e9w8e9w8e/xMi9w8e9w8e+w8e9w8e9w8e9w8e9w8e9w8e9w8e+w8e/xMi9w8e9w8fvY4+KAAAAEnRSTlMASPv3WQbwOTCkt4/psX4YDMWr+RRCAAAAUUlEQVQY06XLORKAMAxDUTs7kA3d/7AYGju0UfffjIgoHkxm0vB5bZyxKHx9eX0FJw0Y4bcXKQ4/CTtS5yqp5GFFOjGpVGl00k1pNDIb3Nv9AHC7BOZC4ZjvAAAAAElFTkSuQmCC+d0ckOwyAMRVGHUOO0gUyd+P8f7WApz4Iki9wFmyOEATrXLZcFp5LrGogPOxKp6zfFf9fZ1/I/cY7YZSS3U6S3XFZJmGBwL+FuJX/F1K0wUUlZyZGlXgXESthTEs4B8fh7xoVUDPGYJnsfkCRarKAgz8cAKbpD6pqDPz3XB8K6HdUEeN9NAAAAAElFTkSuQmCC);
 }
@@ -13,3 +13,10 @@
 	width: 16px; height: 16px;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQBAMAAADt3eJSAAAAIVBMVEUAAABmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmYs5FxxAAAAC3RSTlMAgBFwYExAMHgoCDJmUTYAAAA3SURBVAjXY8APGGEMQZgAjCEoKBwEEQCCAoiIh6AQVM1kMaguJhGYOSJQjexiUMbiAChDCclCAOHqBBdHpwQTAAAAAElFTkSuQmCC);
 }
+.icon-heart { position: absolute; width: 17px; height: 13px; margin-top: 5px }
+.icon-heart:before, .icon-heart:after {
+	position: absolute; content: ""; left: 8px; top: 0; width: 8px; height: 13px;
+	background: #FA6C8D; /*border-radius: 25px 25px 0 0;*/ transform: rotate(-45deg); transform-origin: 0 100%
+}
+.icon-heart:after { left: 0; transform: rotate(45deg); transform-origin :100% 100% }
+.icon-up { font-weight: normal !important; font-size: 15px; font-family: Tahoma; vertical-align: -4px; padding-right: 5px; display: inline; height: 1px; }

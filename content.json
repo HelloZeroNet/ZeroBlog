@@ -6,8 +6,8 @@
  "domain": "Blog.ZeroNetwork.bit", 
  "files": {
   "css/all.css": {
-   "sha512": "ccdbbce8efef58f5259b97d7e79b35b3270bed909a2232e4bd09c2be7c387c83", 
-   "size": 113347
+   "sha512": "14db0f16dbaf910888666b2936cbd42fd5bb2c81dcf37c72d6127f45bd5de1d1", 
+   "size": 121643
   }, 
   "data-default/data.json": {
    "sha512": "aff6accbac7e950ff567105666ddf29b70ca7c2dcd9d90f9a969509a42a9b195", 
@@ -106,20 +106,20 @@
    "size": 477911
   }, 
   "dbschema.json": {
-   "sha512": "7b756e8e475d4d6b345a24e2ae14254f5c6f4aa67391a94491a026550fe00df8", 
-   "size": 1529
+   "sha512": "b387d0a1f93c159d0c89534e1c08115355b3b65262ab85ff79ec65768a514bde", 
+   "size": 1924
   }, 
   "img/loading.gif": {
    "sha512": "8a42b98962faea74618113166886be488c09dad10ca47fe97005edc5fb40cc00", 
    "size": 723
   }, 
   "index.html": {
-   "sha512": "ecaabb6d144dcbb84f1754b92110df1a834551309500d2e4421df9baca47a7ad", 
-   "size": 5081
+   "sha512": "ae881f5a52b36faac97fa06ac140a3a85e5fb9494482cc48de0405c6a890f9b8", 
+   "size": 5901
   }, 
   "js/all.js": {
-   "sha512": "57c730d07735b1a39c8a62bcb9447c506f518ccae079fccf862d1f4ce1d8ea5d", 
-   "size": 204752
+   "sha512": "f809256e3ab91c4bdd76c60e6cbaa469afeeee30cc18a56af1f03f6048aa26a5", 
+   "size": 210450
   }
  }, 
  "ignore": "((js|css)/(?!all.(js|css))|data/.*db|data/users/.*/.*)", 
@@ -129,14 +129,14 @@
    "signers_required": 1
   }
  }, 
- "modified": 1446168994.624, 
+ "modified": 1446775276.26, 
  "sign": [
-  96030868191800162957176973774699323652832370569335334056060165593728652091118, 
-  46783872076653677099073354530208373704913656113742582268614963747636587368554
+  57991881946952167454322340555223230381605467895626737690363212960004734314484, 
+  49307891265351103514194691191925165083176262395509091042088174280588230507122
  ], 
  "signers_sign": "G7W/oNvczE5nPTFYVOqv8+GOpQd23LS/Dc1Q6xQ1NRDDHlYzmoSE63UQ7Za05kD0rwIYXbuUSr8z8p6RhZmnUs8=", 
  "signs": {
-  "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "Gxi4vVB8ZW+RAnSP33s8eohudGR2BP/2QAtvFVJ9EEV6ic6EMxxLIb1kzZIHK/zBrHlL3Std9KPI/SHSuIOQrCE="
+  "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "G507Q9Vv1Nks2M/27cUbms2vIkA1hB0i76jhslJSw8t5Rpst5ZRxFX61iCRymkIr+rgti/Zo/kUZKSNw+CvQXqA="
  }, 
  "signs_required": 1, 
  "title": "ZeroBlog", 

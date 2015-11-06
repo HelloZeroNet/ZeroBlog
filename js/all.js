@@ -863,7 +863,7 @@
       return color;
     };
 
-    Text.prototype.toMarked = function(text, options) {
+    Text.prototype.renderMarked = function(text, options) {
       if (options == null) {
         options = {};
       }
@@ -1174,7 +1174,7 @@
       var cert_domain, user_address, user_name, _ref;
       _ref = comment.cert_user_id.split("@"), user_name = _ref[0], cert_domain = _ref[1];
       user_address = comment.directory.replace("users/", "");
-      $(".comment-body", elem).html(Text.toMarked(comment.body, {
+      $(".comment-body", elem).html(Text.renderMarked(comment.body, {
         "sanitize": true
       }));
       $(".user_name", elem).text(user_name).css({
@@ -1227,7 +1227,8 @@
             data = {
               "next_comment_id": 1,
               "comment": [],
-              "comment_vote": {}
+              "comment_vote": {},
+              "topic_vote": {}
             };
           }
           data.comment.push({
@@ -1357,6 +1358,7 @@
     function ZeroBlog() {
       this.setSiteinfo = __bind(this.setSiteinfo, this);
       this.actionSetSiteInfo = __bind(this.actionSetSiteInfo, this);
+      this.submitPostVote = __bind(this.submitPostVote, this);
       this.saveContent = __bind(this.saveContent, this);
       this.getContent = __bind(this.getContent, this);
       this.getObject = __bind(this.getObject, this);
@@ -1370,6 +1372,8 @@
       this.data = null;
       this.site_info = null;
       this.server_info = null;
+      this.page = 1;
+      this.my_post_votes = {};
       this.event_page_load = $.Deferred();
       this.event_site_info = $.Deferred();
       $.when(this.event_page_load, this.event_site_info).done((function(_this) {
@@ -1418,8 +1422,8 @@
               _this.data[row.key] = row.value;
             }
             $(".left h1 a:not(.editable-edit)").html(_this.data.title).data("content", _this.data.title);
-            $(".left h2").html(Text.toMarked(_this.data.description)).data("content", _this.data.description);
-            return $(".left .links").html(Text.toMarked(_this.data.links)).data("content", _this.data.links);
+            $(".left h2").html(Text.renderMarked(_this.data.description)).data("content", _this.data.description);
+            return $(".left .links").html(Text.renderMarked(_this.data.links)).data("content", _this.data.links);
           }
         };
       })(this));
@@ -1463,7 +1467,7 @@
     ZeroBlog.prototype.applyLastcommentdata = function(elem, lastcomment) {
       var body, title_hash;
       elem.find(".user_name").text(lastcomment.cert_user_id.replace(/@.*/, "") + ":");
-      body = Text.toMarked(lastcomment.body);
+      body = Text.renderMarked(lastcomment.body);
       body = body.replace(/[\r\n]/g, " ");
       body = body.replace(/\<blockquote\>.*?\<\/blockquote\>/g, " ");
       body = body.replace(/\<.*?\>/g, " ");
@@ -1478,7 +1482,6 @@
     ZeroBlog.prototype.applyPagerdata = function(page, limit, has_next) {
       var pager;
       pager = $(".pager");
-      console.log(page, limit, has_next);
       if (page > 1) {
         pager.find(".prev").css("display", "inline-block").attr("href", "?page=" + (page - 1));
       }
@@ -1497,77 +1500,96 @@
       } else {
         $("body").addClass("page-main");
         if (match = url.match(/page=([0-9]+)/)) {
-          return this.pageMain(parseInt(match[1]));
-        } else {
-          return this.pageMain();
+          this.page = parseInt(match[1]);
         }
+        return this.pageMain();
       }
     };
 
     ZeroBlog.prototype.pagePost = function() {
       var s;
       s = +(new Date);
-      return this.cmd("dbQuery", ["SELECT * FROM post WHERE post_id = " + this.post_id + " LIMIT 1"], (function(_this) {
+      return this.cmd("dbQuery", ["SELECT *, (SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes FROM post WHERE post_id = " + this.post_id + " LIMIT 1"], (function(_this) {
         return function(res) {
-          if (res.length) {
-            _this.applyPostdata($(".post-full"), res[0], true);
-            Comments.pagePost(_this.post_id);
+          var parse_res;
+          parse_res = function(res) {
+            var post;
+            if (res.length) {
+              post = res[0];
+              _this.applyPostdata($(".post-full"), post, true);
+              $(".post-full .like").attr("id", "post_like_" + post.post_id).on("click", _this.submitPostVote);
+              Comments.pagePost(_this.post_id);
+            } else {
+              $(".post-full").html("<h1>Not found</h1>");
+            }
+            _this.pageLoaded();
+            return Comments.checkCert();
+          };
+          if (res.error) {
+            return _this.cmd("dbQuery", ["SELECT *, -1 AS votes FROM post WHERE post_id = " + _this.post_id + " LIMIT 1"], parse_res);
           } else {
-            $(".post-full").html("<h1>Not found</h1>");
+            return parse_res(res);
           }
-          return _this.pageLoaded();
         };
       })(this));
     };
 
-    ZeroBlog.prototype.pageMain = function(page) {
-      var limit;
-      if (page == null) {
-        page = 1;
-      }
+    ZeroBlog.prototype.pageMain = function() {
+      var limit, query;
       limit = 15;
-      return this.cmd("dbQuery", ["SELECT post.*, COUNT(comment_id) AS comments FROM post LEFT JOIN comment USING (post_id) GROUP BY post_id ORDER BY date_published DESC LIMIT " + ((page - 1) * limit) + ", " + (limit + 1)], (function(_this) {
+      query = "SELECT\n	post.*, COUNT(comment_id) AS comments,\n	(SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes\nFROM post\nLEFT JOIN comment USING (post_id)\nGROUP BY post_id\nORDER BY date_published DESC\nLIMIT " + ((this.page - 1) * limit) + ", " + (limit + 1);
+      return this.cmd("dbQuery", [query], (function(_this) {
         return function(res) {
-          var elem, post, s, _i, _len;
-          s = +(new Date);
-          if (res.length > limit) {
-            res.pop();
-            _this.applyPagerdata(page, limit, true);
-          } else {
-            _this.applyPagerdata(page, limit, false);
-          }
-          res.reverse();
-          for (_i = 0, _len = res.length; _i < _len; _i++) {
-            post = res[_i];
-            elem = $("#post_" + post.post_id);
-            if (elem.length === 0) {
-              elem = $(".post.template").clone().removeClass("template").attr("id", "post_" + post.post_id);
-              elem.prependTo(".posts");
+          var parse_res;
+          parse_res = function(res) {
+            var elem, post, s, _i, _len;
+            s = +(new Date);
+            if (res.length > limit) {
+              res.pop();
+              _this.applyPagerdata(_this.page, limit, true);
+            } else {
+              _this.applyPagerdata(_this.page, limit, false);
             }
-            _this.applyPostdata(elem, post);
-          }
-          _this.pageLoaded();
-          _this.log("Posts loaded in", (+(new Date)) - s, "ms");
-          return $(".posts .new").on("click", function() {
-            _this.cmd("fileGet", ["data/data.json"], function(res) {
-              var data;
-              data = JSON.parse(res);
-              data.post.unshift({
-                post_id: data.next_post_id,
-                title: "New blog post",
-                date_published: (+(new Date)) / 1000,
-                body: "Blog post body"
+            res.reverse();
+            for (_i = 0, _len = res.length; _i < _len; _i++) {
+              post = res[_i];
+              elem = $("#post_" + post.post_id);
+              if (elem.length === 0) {
+                elem = $(".post.template").clone().removeClass("template").attr("id", "post_" + post.post_id);
+                elem.prependTo(".posts");
+                elem.find(".like").attr("id", "post_like_" + post.post_id).on("click", _this.submitPostVote);
+              }
+              _this.applyPostdata(elem, post);
+            }
+            _this.pageLoaded();
+            _this.log("Posts loaded in", (+(new Date)) - s, "ms");
+            return $(".posts .new").on("click", function() {
+              _this.cmd("fileGet", ["data/data.json"], function(res) {
+                var data;
+                data = JSON.parse(res);
+                data.post.unshift({
+                  post_id: data.next_post_id,
+                  title: "New blog post",
+                  date_published: (+(new Date)) / 1000,
+                  body: "Blog post body"
+                });
+                data.next_post_id += 1;
+                elem = $(".post.template").clone().removeClass("template");
+                _this.applyPostdata(elem, data.post[0]);
+                elem.hide();
+                elem.prependTo(".posts").slideDown();
+                _this.addInlineEditors(elem);
+                return _this.writeData(data);
               });
-              data.next_post_id += 1;
-              elem = $(".post.template").clone().removeClass("template");
-              _this.applyPostdata(elem, data.post[0]);
-              elem.hide();
-              elem.prependTo(".posts").slideDown();
-              _this.addInlineEditors(elem);
-              return _this.writeData(data);
+              return false;
             });
-            return false;
-          });
+          };
+          if (res.error) {
+            query = "SELECT\n	post.*, COUNT(comment_id) AS comments,\n	-1 AS votes\nFROM post\nLEFT JOIN comment USING (post_id)\nGROUP BY post_id\nORDER BY date_published DESC\nLIMIT " + ((_this.page - 1) * limit) + ", " + (limit + 1);
+            return _this.cmd("dbQuery", [query], parse_res);
+          } else {
+            return parse_res(res);
+          }
         };
       })(this));
     };
@@ -1645,27 +1667,65 @@
       } else {
         $(".details .comments-num", elem).css("display", "none");
       }
+
+      /*
+      		if @my_post_votes[post.post_id] # Voted on it
+      			$(".score-inactive .score-num", elem).text post.votes-1
+      			$(".score-active .score-num", elem).text post.votes
+      			$(".score", elem).addClass("active")
+      		else # Not voted on it
+      			$(".score-inactive .score-num", elem).text post.votes
+      			$(".score-active .score-num", elem).text post.votes+1
+      
+      		if post.votes == 0
+      			$(".score", elem).addClass("noscore")
+      		else
+      			$(".score", elem).removeClass("noscore")
+       */
+      if (post.votes > 0) {
+        $(".like .num", elem).text(post.votes);
+      } else if (post.votes === -1) {
+        $(".like", elem).css("display", "none");
+      } else {
+        $(".like .num", elem).text("");
+      }
+      if (this.my_post_votes[post.post_id]) {
+        $(".like", elem).addClass("active");
+      }
       if (full) {
         body = post.body;
       } else {
         body = post.body.replace(/^([\s\S]*?)\n---\n[\s\S]*$/, "$1");
       }
-      return $(".body", elem).html(Text.toMarked(body)).data("content", post.body);
+      if ($(".body", elem).data("content") !== post.body) {
+        return $(".body", elem).html(Text.renderMarked(body)).data("content", post.body);
+      }
     };
 
     ZeroBlog.prototype.onOpenWebsocket = function(e) {
       this.loadData();
-      this.routeUrl(window.location.search.substring(1));
-      this.cmd("siteInfo", {}, this.setSiteinfo);
-      this.cmd("serverInfo", {}, (function(_this) {
-        return function(ret) {
-          _this.server_info = ret;
-          if (_this.server_info.rev < 160) {
-            return _this.loadData("old");
-          }
+      return this.cmd("siteInfo", {}, (function(_this) {
+        return function(site_info) {
+          var query_my_votes;
+          _this.setSiteinfo(site_info);
+          query_my_votes = "SELECT\n	'post_vote' AS type,\n	post_id AS uri\nFROM json\nLEFT JOIN post_vote USING (json_id)\nWHERE directory = 'users/" + _this.site_info.auth_address + "' AND file_name = 'data.json'";
+          _this.cmd("dbQuery", [query_my_votes], function(res) {
+            var row, _i, _len;
+            for (_i = 0, _len = res.length; _i < _len; _i++) {
+              row = res[_i];
+              _this.my_post_votes[row["uri"]] = 1;
+            }
+            return _this.routeUrl(window.location.search.substring(1));
+          });
+          _this.cmd("serverInfo", {}, function(ret) {
+            _this.server_info = ret;
+            if (_this.server_info.rev < 160) {
+              return _this.loadData("old");
+            }
+          });
+          return _this.loadLastcomments("noanim");
         };
       })(this));
-      return this.loadLastcomments("noanim");
     };
 
     ZeroBlog.prototype.getObject = function(elem) {
@@ -1686,7 +1746,7 @@
       if (elem.data("editable-mode") === "simple" || raw) {
         return content;
       } else {
-        return Text.toMarked(content);
+        return Text.renderMarked(content);
       }
     };
 
@@ -1741,7 +1801,7 @@
                 } else if (elem.data("editable-mode") === "timestamp") {
                   return cb(Time.since(content));
                 } else {
-                  return cb(Text.toMarked(content));
+                  return cb(Text.renderMarked(content));
                 }
               } else {
                 return cb(false);
@@ -1782,7 +1842,7 @@
             if (res === true) {
               Comments.checkCert("updaterules");
               if (cb) {
-                return cb(Text.toMarked(content, {
+                return cb(Text.renderMarked(content, {
                   "sanitize": true
                 }));
               }
@@ -1936,6 +1996,59 @@
       })(this));
     };
 
+    ZeroBlog.prototype.submitPostVote = function(e) {
+      var elem, inner_path;
+      if (!Page.site_info.cert_user_id) {
+        Page.cmd("certSelect", [["zeroid.bit"]]);
+        return false;
+      }
+      elem = $(e.currentTarget);
+      elem.toggleClass("active").addClass("loading");
+      inner_path = "data/users/" + this.site_info.auth_address + "/data.json";
+      Page.cmd("fileGet", {
+        "inner_path": inner_path,
+        "required": false
+      }, (function(_this) {
+        return function(data) {
+          var current_num, json_raw, post_id;
+          if (data) {
+            data = JSON.parse(data);
+          } else {
+            data = {
+              "next_comment_id": 1,
+              "comment": [],
+              "comment_vote": {},
+              "post_vote": {}
+            };
+          }
+          if (!data.post_vote) {
+            data.post_vote = {};
+          }
+          post_id = elem.attr("id").match("_([0-9]+)$")[1];
+          if (elem.hasClass("active")) {
+            data.post_vote[post_id] = 1;
+          } else {
+            delete data.post_vote[post_id];
+          }
+          json_raw = unescape(encodeURIComponent(JSON.stringify(data, void 0, '\t')));
+          current_num = parseInt(elem.find(".num").text());
+          if (!current_num) {
+            current_num = 0;
+          }
+          if (elem.hasClass("active")) {
+            elem.find(".num").text(current_num + 1);
+          } else {
+            elem.find(".num").text(current_num - 1);
+          }
+          return Page.writePublish(inner_path, btoa(json_raw), function(res) {
+            elem.removeClass("loading");
+            return _this.log("Writepublish result", res);
+          });
+        };
+      })(this));
+      return false;
+    };
+
     ZeroBlog.prototype.onRequest = function(cmd, message) {
       if (cmd === "setSiteInfo") {
         return this.actionSetSiteInfo(message);
@@ -1958,6 +2071,7 @@
       }
       if (((_ref = site_info.event) != null ? _ref[0] : void 0) === "file_done" && site_info.event[1].match(/.*users.*data.json$/)) {
         if ($("body").hasClass("page-post")) {
+          this.pagePost();
           Comments.loadComments();
           this.loadLastcomments();
         }

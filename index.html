@@ -7,7 +7,7 @@
  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
  <link rel="stylesheet" href="css/all.css" />
  <base href="" target="_top" id="base">
- <script>base.href = document.location.href.replace("/media", "").replace("index.html", "").replace(/[&?]wrapper=False/, "")</script>
+ <script>base.href = document.location.href.replace("/media", "").replace("index.html", "").replace(/[&?]wrapper=False/, "").replace(/[&?]wrapper_nonce=[A-Za-z0-9]+/, "")</script>
 
 </head>
 <body>
@@ -84,7 +84,12 @@
    <h1 class="title"><a href="?Post:23:Title" data-editable="title" data-editable-mode="simple" class="editable">Title</a></h1>
    <div class="details">
     <span class="published" data-editable="date_published" data-editable-mode="timestamp">21 hours ago &middot; 2 min read</span>
-    <a href="?Post:23:title" class="comments-num">&middot; <div class='icon-comment'></div> <span class="num">3 comments</span></a>
+    <a href="?Post:23:title" class="comments-num">&middot; <div class="icon-comment"></div> <span class="num">3 comments</span></a>
+    <a href="#Like" class="like" title="Like this post"><div class="icon-heart"></div><div class="icon-heart icon-heart-anim"></div> <span class="num"></span></a>
+    <!--<a class="score" href="#Upvote">
+     <span class="score-inactive"> <span class="icon-up">^</span><span class="score-num">0</span> </span>
+     <span class="score-active"> <span class="icon-up">^</span><span class="score-num">1</span> </span>
+    </a>-->
    </div>
    <div class="body" data-editable="body">Body</div>
    <a class="more" href="#"><span class='readmore'>Read more</span> →</a>
@@ -97,7 +102,11 @@
  <!-- Single Post show -->
  <div class="post post-full" data-object="Post:23" data-deletable="True">
   <h1 class="title"><a href="?Post:23:Title" data-editable="title" data-editable-mode="simple" class="editable">Title</a></h1>
-  <div class="details"> <span class="published" data-editable="date_published" data-editable-mode="timestamp">21 hours ago &middot; 2 min read</span> </div>
+  <div class="details">
+   <span class="published" data-editable="date_published" data-editable-mode="timestamp">21 hours ago &middot; 2 min read</span>
+   <a href="#Like" class="like" title="Like this post"><div class="icon-heart"></div><div class="icon-heart icon-heart-anim"></div> <span class="num"></span></a>
+  </div>
+
   <div class="body" data-editable="body"></div>
 
   <h2 id="Comments"><span class="comments-num">0</span> Comments:</h2>

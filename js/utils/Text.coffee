@@ -15,7 +15,7 @@ class Text
 		return color
 
 
-	toMarked: (text, options={}) ->
+	renderMarked: (text, options={}) ->
 		options["gfm"] = true
 		options["breaks"] = true
 		if options.sanitize
