@@ -1,0 +1,28 @@
+.icon-feed {
+	width: 3px; height: 3px; display: inline-block; border-radius: 10px; background-color: #333;
+	position: relative; margin-right: 10px; margin-top: 10px; margin-left: 5px; transition: all 0.3s
+}
+.icon-feed:after {
+	content: ""; width: 5px; height: 5px; border-top: 2px solid #333; border-right: 2px solid #333; border-radius: 0px 6px 0px 0px;
+	display: block; border-right: 2px solid #333; bottom: 0px; position: absolute; transition: all 0.3s
+}
+.icon-feed:before{
+	content: ""; width: 9px; height: 9px; border-top: 2px solid #333; border-right: 2px solid #333; border-radius: 0px 10px 0px 0px;
+	display: block; bottom: 0px; position: absolute; transition: all 0.3s
+}
+
+.feed-follow {
+	font-size: 14px; display: inline-block; padding: 7px 14px; font-weight: normal; display: none;
+	border-radius: 4px; border: 1px solid #EEE; border-bottom: 1px solid #DDD; transition: all 0.3s
+}
+.feed-follow .text-follow, .feed-follow .text-following {
+	max-width: 0px; opacity: 0; overflow: hidden; display: inline-block; vertical-align: bottom; transition: all 0.3s; white-space: nowrap;
+}
+.feed-follow .text-follow { max-width: 120px; opacity: 1 }
+.feed-follow.following .text-following { max-width: 60px; opacity: 1; color: #7A26E2; }
+.feed-follow.following .text-follow { max-width: 0px; opacity: 0 }
+
+.feed-follow:hover { background-color: #FEFEFE; transition: none; border-color: #C392FF; color: black }
+.feed-follow:active { border-color: #7A26E2 }
+.feed-follow.following .icon-feed { background-color: #7A26E2; transition: none }
+.feed-follow.following .icon-feed:after, .feed-follow.following .icon-feed:before { border-color: #7A26E2; transition: none }

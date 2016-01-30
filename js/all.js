@@ -593,6 +593,158 @@
 }).call(this);
 
 
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Follow.coffee ---- */
+
+
+(function() {
+  var Follow,
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+    __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+    __hasProp = {}.hasOwnProperty,
+    __indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
+
+  Follow = (function(_super) {
+    __extends(Follow, _super);
+
+    function Follow(_at_elem) {
+      this.elem = _at_elem;
+      this.handleMenuClick = __bind(this.handleMenuClick, this);
+      this.init = __bind(this.init, this);
+      this.menu = new Menu(this.elem);
+      this.feeds = {};
+      this.follows = {};
+      this.elem.on("click", (function(_this) {
+        return function() {
+          if (Page.server_info.rev > 900) {
+            if (_this.elem.hasClass("following")) {
+              _this.showFeeds();
+            } else {
+              _this.followDefaultFeeds();
+            }
+          } else {
+            Page.cmd("wrapperNotification", ["info", "Please update your ZeroNet client to use this feature"]);
+          }
+          return false;
+        };
+      })(this));
+    }
+
+    Follow.prototype.init = function() {
+      if (!this.feeds) {
+        return;
+      }
+      return Page.cmd("feedListFollow", [], (function(_this) {
+        return function(_at_follows) {
+          var is_default_feed, menu_item, param, query, title, _ref, _ref1;
+          _this.follows = _at_follows;
+          _ref = _this.feeds;
+          for (title in _ref) {
+            _ref1 = _ref[title], query = _ref1[0], menu_item = _ref1[1], is_default_feed = _ref1[2], param = _ref1[3];
+            if (_this.follows[title] && __indexOf.call(_this.follows[title][1], param) >= 0) {
+              menu_item.addClass("selected");
+            } else {
+              menu_item.removeClass("selected");
+            }
+          }
+          _this.updateListitems();
+          return _this.elem.css("display", "inline-block");
+        };
+      })(this));
+    };
+
+    Follow.prototype.addFeed = function(title, query, is_default_feed, param) {
+      var menu_item;
+      if (is_default_feed == null) {
+        is_default_feed = false;
+      }
+      if (param == null) {
+        param = "";
+      }
+      menu_item = this.menu.addItem(title, this.handleMenuClick);
+      return this.feeds[title] = [query, menu_item, is_default_feed, param];
+    };
+
+    Follow.prototype.handleMenuClick = function(item) {
+      item.toggleClass("selected");
+      this.updateListitems();
+      this.saveFeeds();
+      return true;
+    };
+
+    Follow.prototype.showFeeds = function() {
+      return this.menu.show();
+    };
+
+    Follow.prototype.followDefaultFeeds = function() {
+      var is_default_feed, menu_item, param, query, title, _ref, _ref1;
+      _ref = this.feeds;
+      for (title in _ref) {
+        _ref1 = _ref[title], query = _ref1[0], menu_item = _ref1[1], is_default_feed = _ref1[2], param = _ref1[3];
+        if (is_default_feed) {
+          menu_item.addClass("selected");
+          this.log("Following", title);
+        }
+      }
+      this.updateListitems();
+      return this.saveFeeds();
+    };
+
+    Follow.prototype.updateListitems = function() {
+      if (this.menu.elem.find(".selected").length > 0) {
+        return this.elem.addClass("following");
+      } else {
+        return this.elem.removeClass("following");
+      }
+    };
+
+    Follow.prototype.saveFeeds = function() {
+      return Page.cmd("feedListFollow", [], (function(_this) {
+        return function(follows) {
+          var is_default_feed, item, menu_item, param, params, query, title, _ref, _ref1;
+          _this.follows = follows;
+          _ref = _this.feeds;
+          for (title in _ref) {
+            _ref1 = _ref[title], query = _ref1[0], menu_item = _ref1[1], is_default_feed = _ref1[2], param = _ref1[3];
+            if (follows[title]) {
+              params = (function() {
+                var _i, _len, _ref2, _results;
+                _ref2 = follows[title][1];
+                _results = [];
+                for (_i = 0, _len = _ref2.length; _i < _len; _i++) {
+                  item = _ref2[_i];
+                  if (item !== param) {
+                    _results.push(item);
+                  }
+                }
+                return _results;
+              })();
+            } else {
+              params = [];
+            }
+            if (menu_item.hasClass("selected")) {
+              params.push(param);
+            }
+            if (params.length === 0) {
+              delete follows[title];
+            } else {
+              follows[title] = [query, params];
+            }
+          }
+          return Page.cmd("feedFollow", [follows]);
+        };
+      })(this));
+    };
+
+    return Follow;
+
+  })(Class);
+
+  window.Follow = Follow;
+
+}).call(this);
+
+
+
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/InlineEditor.coffee ---- */
 
 
@@ -786,6 +938,85 @@
   })();
 
   window.InlineEditor = InlineEditor;
+
+}).call(this);
+
+
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Menu.coffee ---- */
+
+
+(function() {
+  var Menu,
+    __slice = [].slice;
+
+  Menu = (function() {
+    function Menu(_at_button) {
+      this.button = _at_button;
+      this.elem = $(".menu.template").clone().removeClass("template");
+      this.elem.appendTo("body");
+      this.items = [];
+    }
+
+    Menu.prototype.show = function() {
+      var button_pos;
+      if (window.visible_menu && window.visible_menu.button[0] === this.button[0]) {
+        window.visible_menu.hide();
+        return this.hide();
+      } else {
+        button_pos = this.button.offset();
+        this.elem.css({
+          "top": button_pos.top + this.button.outerHeight(),
+          "left": button_pos.left
+        });
+        this.button.addClass("menu-active");
+        this.elem.addClass("visible");
+        if (window.visible_menu) {
+          window.visible_menu.hide();
+        }
+        return window.visible_menu = this;
+      }
+    };
+
+    Menu.prototype.hide = function() {
+      this.elem.removeClass("visible");
+      this.button.removeClass("menu-active");
+      return window.visible_menu = null;
+    };
+
+    Menu.prototype.addItem = function(title, cb) {
+      var item;
+      item = $(".menu-item.template", this.elem).clone().removeClass("template");
+      item.html(title);
+      item.on("click", (function(_this) {
+        return function() {
+          if (!cb(item)) {
+            _this.hide();
+          }
+          return false;
+        };
+      })(this));
+      item.appendTo(this.elem);
+      this.items.push(item);
+      return item;
+    };
+
+    Menu.prototype.log = function() {
+      var args;
+      args = 1 <= arguments.length ? __slice.call(arguments, 0) : [];
+      return console.log.apply(console, ["[Menu]"].concat(__slice.call(args)));
+    };
+
+    return Menu;
+
+  })();
+
+  window.Menu = Menu;
+
+  $("body").on("click", function(e) {
+    if (window.visible_menu && e.target !== window.visible_menu.button[0] && $(e.target).parent()[0] !== window.visible_menu.elem[0]) {
+      return window.visible_menu.hide();
+    }
+  });
 
 }).call(this);
 
@@ -1397,10 +1628,18 @@
           var imagedata;
           _this.log("event site info");
           imagedata = new Identicon(_this.site_info.address, 70).toString();
-          return $("body").append("<style>.avatar { background-image: url(data:image/png;base64," + imagedata + ") }</style>");
+          $("body").append("<style>.avatar { background-image: url(data:image/png;base64," + imagedata + ") }</style>");
+          return _this.initFollowButton();
         };
       })(this));
       return this.log("inited!");
+    };
+
+    ZeroBlog.prototype.initFollowButton = function() {
+      this.follow = new Follow($(".feed-follow"));
+      this.follow.addFeed("Posts", "SELECT post_id AS event_uri, 'post' AS type, date_published AS date_added, title AS title, body AS body, '?Post:' || post_id AS url FROM post", true);
+      this.follow.addFeed("Comments", "SELECT 'comment' AS type, date_added, post.title AS title, keyvalue.value || ': ' || comment.body AS body, '?Post:' || comment.post_id || '#Comments' AS url FROM comment LEFT JOIN json USING (json_id) LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json') LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id') LEFT JOIN post ON (comment.post_id = post.post_id)");
+      return this.follow.init();
     };
 
     ZeroBlog.prototype.loadData = function(query) {

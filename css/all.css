@@ -1,6 +1,6 @@
 
 
-/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/Comments.css ---- */
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
 
 
 .comments { margin-bottom: 60px }
@@ -56,7 +56,61 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 
 
-/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/ZeroBlog.css ---- */
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Follow.css ---- */
+
+
+.icon-feed {
+	width: 3px; height: 3px; display: inline-block; -webkit-border-radius: 10px; -moz-border-radius: 10px; -o-border-radius: 10px; -ms-border-radius: 10px; border-radius: 10px ; background-color: #333;
+	position: relative; margin-right: 10px; margin-top: 10px; margin-left: 5px; transition: all 0.3s
+}
+.icon-feed:after {
+	content: ""; width: 5px; height: 5px; border-top: 2px solid #333; border-right: 2px solid #333; -webkit-border-radius: 0px 6px 0px 0px; -moz-border-radius: 0px 6px 0px 0px; -o-border-radius: 0px 6px 0px 0px; -ms-border-radius: 0px 6px 0px 0px; border-radius: 0px 6px 0px 0px ;
+	display: block; border-right: 2px solid #333; bottom: 0px; position: absolute; transition: all 0.3s
+}
+.icon-feed:before{
+	content: ""; width: 9px; height: 9px; border-top: 2px solid #333; border-right: 2px solid #333; -webkit-border-radius: 0px 10px 0px 0px; -moz-border-radius: 0px 10px 0px 0px; -o-border-radius: 0px 10px 0px 0px; -ms-border-radius: 0px 10px 0px 0px; border-radius: 0px 10px 0px 0px ;
+	display: block; bottom: 0px; position: absolute; transition: all 0.3s
+}
+
+.feed-follow {
+	font-size: 14px; display: inline-block; padding: 7px 14px; font-weight: normal; display: none;
+	-webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; -ms-border-radius: 4px; border-radius: 4px ; border: 1px solid #EEE; border-bottom: 1px solid #DDD; transition: all 0.3s
+}
+.feed-follow .text-follow, .feed-follow .text-following {
+	max-width: 0px; opacity: 0; overflow: hidden; display: inline-block; vertical-align: bottom; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; white-space: nowrap;
+}
+.feed-follow .text-follow { max-width: 120px; opacity: 1 }
+.feed-follow.following .text-following { max-width: 60px; opacity: 1; color: #7A26E2; }
+.feed-follow.following .text-follow { max-width: 0px; opacity: 0 }
+
+.feed-follow:hover { background-color: #FEFEFE; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none ; border-color: #C392FF; color: black }
+.feed-follow:active { border-color: #7A26E2 }
+.feed-follow.following .icon-feed { background-color: #7A26E2; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
+.feed-follow.following .icon-feed:after, .feed-follow.following .icon-feed:before { border-color: #7A26E2; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
+
+
+
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Menu.css ---- */
+
+
+.menu {
+	background-color: white; padding: 10px 0px; position: absolute; top: 0px; left: 0px; max-height: 0px; overflow: hidden; -webkit-transform: translate(0px, -30px); -moz-transform: translate(0px, -30px); -o-transform: translate(0px, -30px); -ms-transform: translate(0px, -30px); transform: translate(0px, -30px) ; pointer-events: none;
+	-webkit-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -moz-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -o-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -ms-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); box-shadow: 0px 2px 8px rgba(0,0,0,0.3) ; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; opacity: 0; -webkit-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -moz-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -o-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -ms-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out ;
+}
+.menu.visible { opacity: 1; max-height: 350px; -webkit-transform: translate(0px, 0px); -moz-transform: translate(0px, 0px); -o-transform: translate(0px, 0px); -ms-transform: translate(0px, 0px); transform: translate(0px, 0px) ; -webkit-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -moz-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -o-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -ms-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out ; pointer-events: all }
+
+.menu-item { display: block; text-decoration: none; color: black; padding: 6px 24px; -webkit-transition: all 0.2s; -moz-transition: all 0.2s; -o-transition: all 0.2s; -ms-transition: all 0.2s; transition: all 0.2s ; border-bottom: none; font-weight: normal; padding-left: 30px; }
+.menu-item-separator { margin-top: 5px; border-top: 1px solid #eee }
+
+.menu-item:hover { background-color: #F6F6F6; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none ; color: inherit; }
+.menu-item:active, .menu-item:focus { background-color: #AF3BFF; color: white; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
+.menu-item.selected:before {
+	content: "L"; display: inline-block; -webkit-transform: rotateZ(45deg) scaleX(-1); -moz-transform: rotateZ(45deg) scaleX(-1); -o-transform: rotateZ(45deg) scaleX(-1); -ms-transform: rotateZ(45deg) scaleX(-1); transform: rotateZ(45deg) scaleX(-1) ;
+	font-weight: bold; position: absolute; margin-left: -17px; font-size: 12px; margin-top: 2px;
+}
+
+
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
 
 
 /* Design based on medium */
@@ -152,7 +206,7 @@ a:hover { color: #3498db }
 
 .lastcomments { background-color: #FAFAFA; margin-left: -25px; padding-right: 15px; padding-bottom: 5px; padding-top: 3px; margin-top: 40px; margin-right: -15px; display: none }
 .lastcomments h3 { margin-top: 20px; }
-.lastcomments .lastcomment { font-size: 85%; margin-top: 20px; margin-bottom: 30px; margin-left: 20px; }
+.lastcomments .lastcomment { font-size: 85%; margin-top: 20px; margin-bottom: 30px; margin-left: 20px; overflow: hidden }
 .lastcomments .lastcomment .user_name { font-weight: bold; }
 .lastcomments .lastcomment .details { font-size: 90%; }
 .lastcomments .lastcomment .details .at { color: #999 }
@@ -262,7 +316,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/fonts.css ---- */
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */
 
 
 /* Base64 encoder: http://www.motobit.com/util/base64-decoder-encoder.asp */
@@ -299,7 +353,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/github.css ---- */
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/github.css ---- */
 
 
 /*
@@ -429,7 +483,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 
 
-/* ---- data/1Hb9rY98TNnA6TYeozJv4w36bqEiBn6x8Y/css/icons.css ---- */
+/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
 
 
 .icon { display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; }

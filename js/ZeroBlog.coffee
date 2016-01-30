@@ -27,8 +27,35 @@ class ZeroBlog extends ZeroFrame
 			# Set avatar
 			imagedata = new Identicon(@site_info.address, 70).toString();
 			$("body").append("<style>.avatar { background-image: url(data:image/png;base64,#{imagedata}) }</style>")
-
+			@initFollowButton()
 		@log "inited!"
+
+
+	initFollowButton: ->
+		@follow = new Follow($(".feed-follow"))
+		@follow.addFeed("Posts", "
+			SELECT
+			 post_id AS event_uri,
+			 'post' AS type,
+			 date_published AS date_added,
+			 title AS title,
+			 body AS body,
+			 '?Post:' || post_id AS url
+			FROM post", true)
+		# follow.addFeed("Username mentions", "SELECT ...", true)
+		@follow.addFeed("Comments", "
+			SELECT
+			'comment' AS type,
+			 date_added,
+			 post.title AS title,
+			 keyvalue.value || ': ' || comment.body AS body,
+			 '?Post:' || comment.post_id || '#Comments' AS url
+			FROM comment
+			LEFT JOIN json USING (json_id)
+			LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json')
+			LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
+			LEFT JOIN post ON (comment.post_id = post.post_id)")
+		@follow.init()
 
 
 	loadData: (query="new") ->
