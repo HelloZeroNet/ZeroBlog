@@ -615,11 +615,20 @@
       this.follows = {};
       this.elem.on("click", (function(_this) {
         return function() {
-          if (Page.server_info.rev > 900) {
+          var is_default_feed, menu_item, param, query, title, _ref, _ref1;
+          if (Page.server_info.rev > 850) {
             if (_this.elem.hasClass("following")) {
               _this.showFeeds();
             } else {
               _this.followDefaultFeeds();
+              _ref = _this.feeds;
+              for (title in _ref) {
+                _ref1 = _ref[title], query = _ref1[0], menu_item = _ref1[1], is_default_feed = _ref1[2], param = _ref1[3];
+                if (!menu_item.hasClass("selected")) {
+                  _this.showFeeds();
+                  break;
+                }
+              }
             }
           } else {
             Page.cmd("wrapperNotification", ["info", "Please update your ZeroNet client to use this feature"]);
@@ -742,7 +751,6 @@
   window.Follow = Follow;
 
 }).call(this);
-
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/InlineEditor.coffee ---- */
@@ -966,7 +974,7 @@
         button_pos = this.button.offset();
         this.elem.css({
           "top": button_pos.top + this.button.outerHeight(),
-          "left": button_pos.left
+          "left": button_pos.left + this.button.outerWidth() - this.elem.outerWidth()
         });
         this.button.addClass("menu-active");
         this.elem.addClass("visible");
@@ -1019,6 +1027,7 @@
   });
 
 }).call(this);
+
 
 
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/RateLimit.coffee ---- */
@@ -1231,6 +1240,7 @@
       this.onMessage = __bind(this.onMessage, this);
       this.url = url;
       this.waiting_cb = {};
+      this.wrapper_nonce = document.location.href.replace(/.*wrapper_nonce=([A-Za-z0-9]+).*/, "$1");
       this.connect();
       this.next_message_id = 1;
       this.init();
@@ -1298,6 +1308,7 @@
       if (cb == null) {
         cb = null;
       }
+      message.wrapper_nonce = this.wrapper_nonce;
       message.id = this.next_message_id;
       this.next_message_id += 1;
       this.target.postMessage(message, "*");
@@ -1636,8 +1647,13 @@
     };
 
     ZeroBlog.prototype.initFollowButton = function() {
+      var username;
       this.follow = new Follow($(".feed-follow"));
       this.follow.addFeed("Posts", "SELECT post_id AS event_uri, 'post' AS type, date_published AS date_added, title AS title, body AS body, '?Post:' || post_id AS url FROM post", true);
+      if (Page.site_info.cert_user_id) {
+        username = Page.site_info.cert_user_id.replace(/@.*/, "");
+        this.follow.addFeed("Username mentions", "SELECT 'comment' AS type, date_added, post.title AS title, keyvalue.value || ': ' || comment.body AS body, '?Post:' || comment.post_id || '#Comments' AS url FROM comment LEFT JOIN json USING (json_id) LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json') LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id') LEFT JOIN post ON (comment.post_id = post.post_id) WHERE comment.body LIKE '%[" + username + "%' OR comment.body LIKE '%@" + username + "%'", true);
+      }
       this.follow.addFeed("Comments", "SELECT 'comment' AS type, date_added, post.title AS title, keyvalue.value || ': ' || comment.body AS body, '?Post:' || comment.post_id || '#Comments' AS url FROM comment LEFT JOIN json USING (json_id) LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json') LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id') LEFT JOIN post ON (comment.post_id = post.post_id)");
       return this.follow.init();
     };

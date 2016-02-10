@@ -4,11 +4,15 @@ class Follow extends Class
 		@feeds = {}
 		@follows = {}
 		@elem.on "click", =>
-			if Page.server_info.rev > 900
+			if Page.server_info.rev > 850
 				if @elem.hasClass "following"
 					@showFeeds()
 				else
 					@followDefaultFeeds()
+					for title, [query, menu_item, is_default_feed, param] of @feeds
+						if not menu_item.hasClass "selected"
+							@showFeeds()
+							break
 			else
 				Page.cmd "wrapperNotification", ["info", "Please update your ZeroNet client to use this feature"]
 			return false

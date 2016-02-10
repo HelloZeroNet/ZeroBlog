@@ -2,6 +2,7 @@ class ZeroFrame extends Class
 	constructor: (url) ->
 		@url = url
 		@waiting_cb = {}
+		@wrapper_nonce = document.location.href.replace(/.*wrapper_nonce=([A-Za-z0-9]+).*/, "$1")
 		@connect()
 		@next_message_id = 1
 		@init()
@@ -13,7 +14,7 @@ class ZeroFrame extends Class
 
 	connect: ->
 		@target = window.parent
-		window.addEventListener("message", @onMessage, false) 
+		window.addEventListener("message", @onMessage, false)
 		@cmd("innerReady")
 
 
@@ -50,12 +51,13 @@ class ZeroFrame extends Class
 
 
 	send: (message, cb=null) ->
+		message.wrapper_nonce = @wrapper_nonce
 		message.id = @next_message_id
 		@next_message_id += 1
 		@target.postMessage(message, "*")
 		if cb
 			@waiting_cb[message.id] = cb
-			
+
 
 	onOpenWebsocket: =>
 		@log "Websocket open"

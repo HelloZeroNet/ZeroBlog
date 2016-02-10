@@ -42,7 +42,25 @@ class ZeroBlog extends ZeroFrame
 			 body AS body,
 			 '?Post:' || post_id AS url
 			FROM post", true)
-		# follow.addFeed("Username mentions", "SELECT ...", true)
+
+		if Page.site_info.cert_user_id
+			username = Page.site_info.cert_user_id.replace /@.*/, ""
+			@follow.addFeed("Username mentions", "
+				SELECT
+				'comment' AS type,
+				 date_added,
+				 post.title AS title,
+				 keyvalue.value || ': ' || comment.body AS body,
+				 '?Post:' || comment.post_id || '#Comments' AS url
+				FROM comment
+				LEFT JOIN json USING (json_id)
+				LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json')
+				LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
+				LEFT JOIN post ON (comment.post_id = post.post_id)
+				WHERE
+				 comment.body LIKE '%[#{username}%' OR comment.body LIKE '%@#{username}%'
+			", true)
+
 		@follow.addFeed("Comments", "
 			SELECT
 			'comment' AS type,

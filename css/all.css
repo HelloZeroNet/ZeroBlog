@@ -14,7 +14,7 @@
 .comment .reply:hover .icon { opacity: 1 }
 .comment .info { font-size: 12px; color: #AAA; margin-bottom: 7px }
 .comment .info .score { margin-left: 5px }
-.comment .comment-body { line-height: 1.5em; margin-top: 0.5em; margin-bottom: 0.5em }
+.comment .comment-body { line-height: 1.5em; margin-top: 0.5em; margin-bottom: 0.5em; word-wrap: break-word; }
 .comment .comment-body p { margin-bottom: 0px; margin-top: 0.5em; }
 .comment .comment-body p:first-child { margin: 0px; margin-top: 0px; }
 .comment .comment-body.editor { margin-top: 0.5em !important; margin-bottom: 0.5em !important }
@@ -190,7 +190,7 @@ a:hover { color: #3498db }
 /* -- Left -- */
 
 .left { float: left; position: absolute; width: 220px; padding-left: 20px; padding-right: 20px; margin-top: 60px; text-align: right }
-.right { float: left; padding-left: 60px; margin-left: 240px; max-width: 650px; padding-right: 60px; padding-top: 60px }
+.right { float: left; padding-left: 60px; margin-left: 240px; max-width: 700px; padding-right: 60px; padding-top: 60px }
 
 .left .avatar {
 	background-color: #F0F0F0; width: 60px; height: 60px; -webkit-border-radius: 100%; -moz-border-radius: 100%; -o-border-radius: 100%; -ms-border-radius: 100%; border-radius: 100% ; margin-bottom: 10px;

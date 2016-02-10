@@ -10,7 +10,7 @@ class Menu
 			@hide()
 		else
 			button_pos = @button.offset()
-			@elem.css({"top": button_pos.top+@button.outerHeight(), "left": button_pos.left})
+			@elem.css({"top": button_pos.top+@button.outerHeight(), "left": button_pos.left + @button.outerWidth() - @elem.outerWidth()})
 			@button.addClass("menu-active")
 			@elem.addClass("visible")
 			if window.visible_menu then window.visible_menu.hide()
