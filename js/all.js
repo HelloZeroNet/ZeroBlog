@@ -1029,7 +1029,6 @@
 }).call(this);
 
 
-
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/RateLimit.coffee ---- */
 
 
@@ -1355,7 +1354,7 @@
       }
       this.post_id = post_id;
       this.rules = {};
-      $(".button-submit-comment").on("click", (function(_this) {
+      $(".button-submit-comment").off("click").on("click", (function(_this) {
         return function() {
           _this.submitComment();
           return false;
@@ -1363,7 +1362,7 @@
       })(this));
       this.loadComments("noanim", cb);
       this.autoExpand($(".comment-textarea"));
-      return $(".certselect").on("click", (function(_this) {
+      return $(".certselect").off("click").on("click", (function(_this) {
         return function() {
           if (Page.server_info.rev < 160) {
             Page.cmd("wrapperNotification", ["error", "Comments requires at least ZeroNet 0.3.0 Please upgade!"]);
@@ -1398,7 +1397,7 @@
               if (type !== "noanim") {
                 elem.cssSlideDown();
               }
-              $(".reply", elem).on("click", function(e) {
+              $(".reply", elem).off("click").on("click", function(e) {
                 return _this.buttonReply($(e.target).parents(".comment"));
               });
             }
@@ -1542,7 +1541,7 @@
       if (elem.height() > 0) {
         elem.height(1);
       }
-      elem.on("input", (function(_this) {
+      elem.off("input").on("input", (function(_this) {
         return function() {
           var current_size, min_height, new_height, old_height;
           if (editor.scrollHeight > elem.height()) {
@@ -1585,6 +1584,7 @@
 }).call(this);
 
 
+
 /* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/ZeroBlog.coffee ---- */
 
 
@@ -1623,9 +1623,9 @@
           if (_this.site_info.settings.own || _this.data.demo) {
             _this.addInlineEditors();
             _this.checkPublishbar();
-            $(".publishbar").on("click", _this.publish);
+            $(".publishbar").off("click").on("click", _this.publish);
             $(".posts .button.new").css("display", "inline-block");
-            return $(".editbar .icon-help").on("click", function() {
+            return $(".editbar .icon-help").off("click").on("click", function() {
               $(".editbar .markdown-help").css("display", "block");
               $(".editbar .markdown-help").toggleClassLater("visible", 10);
               $(".editbar .icon-help").toggleClass("active");
@@ -1772,7 +1772,7 @@
             if (res.length) {
               post = res[0];
               _this.applyPostdata($(".post-full"), post, true);
-              $(".post-full .like").attr("id", "post_like_" + post.post_id).on("click", _this.submitPostVote);
+              $(".post-full .like").attr("id", "post_like_" + post.post_id).off("click").off("click").on("click", _this.submitPostVote);
               Comments.pagePost(_this.post_id);
             } else {
               $(".post-full").html("<h1>Not found</h1>");
@@ -1812,13 +1812,13 @@
               if (elem.length === 0) {
                 elem = $(".post.template").clone().removeClass("template").attr("id", "post_" + post.post_id);
                 elem.prependTo(".posts");
-                elem.find(".like").attr("id", "post_like_" + post.post_id).on("click", _this.submitPostVote);
+                elem.find(".like").attr("id", "post_like_" + post.post_id).off("click").on("click", _this.submitPostVote);
               }
               _this.applyPostdata(elem, post);
             }
             _this.pageLoaded();
             _this.log("Posts loaded in", (+(new Date)) - s, "ms");
-            return $(".posts .new").on("click", function() {
+            return $(".posts .new").off("click").on("click", function() {
               _this.cmd("fileGet", ["data/data.json"], function(res) {
                 var data;
                 data = JSON.parse(res);

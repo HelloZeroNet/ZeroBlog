@@ -14,9 +14,9 @@ class ZeroBlog extends ZeroFrame
 			if @site_info.settings.own or @data.demo
 				@addInlineEditors()
 				@checkPublishbar()
-				$(".publishbar").on "click", @publish
+				$(".publishbar").off("click").on "click", @publish
 				$(".posts .button.new").css("display", "inline-block")
-				$(".editbar .icon-help").on "click", =>
+				$(".editbar .icon-help").off("click").on "click", =>
 					$(".editbar .markdown-help").css("display", "block")
 					$(".editbar .markdown-help").toggleClassLater("visible", 10)
 					$(".editbar .icon-help").toggleClass("active")
@@ -158,7 +158,7 @@ class ZeroBlog extends ZeroFrame
 				if res.length
 					post = res[0]
 					@applyPostdata($(".post-full"), post, true)
-					$(".post-full .like").attr("id", "post_like_#{post.post_id}").on "click", @submitPostVote
+					$(".post-full .like").attr("id", "post_like_#{post.post_id}").off("click").off("click").on "click", @submitPostVote
 					Comments.pagePost(@post_id)
 				else
 					$(".post-full").html("<h1>Not found</h1>")
@@ -200,12 +200,12 @@ class ZeroBlog extends ZeroFrame
 						elem = $(".post.template").clone().removeClass("template").attr("id", "post_#{post.post_id}")
 						elem.prependTo(".posts")
 						# elem.find(".score").attr("id", "post_score_#{post.post_id}").on "click", @submitPostVote # Submit vote
-						elem.find(".like").attr("id", "post_like_#{post.post_id}").on "click", @submitPostVote
+						elem.find(".like").attr("id", "post_like_#{post.post_id}").off("click").on "click", @submitPostVote
 					@applyPostdata(elem, post)
 				@pageLoaded()
 				@log "Posts loaded in", ((+ new Date)-s),"ms"
 
-				$(".posts .new").on "click", => # Create new blog post
+				$(".posts .new").off("click").on "click", => # Create new blog post
 					@cmd "fileGet", ["data/data.json"], (res) =>
 						data = JSON.parse(res)
 						# Add to data
