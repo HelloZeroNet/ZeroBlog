@@ -1,3 +1,5 @@
+window.h = maquette.h
+
 class ZeroBlog extends ZeroFrame
 	init: ->
 		@data = null
@@ -30,6 +32,13 @@ class ZeroBlog extends ZeroFrame
 			@initFollowButton()
 		@log "inited!"
 
+	createProjector: ->
+		@projector = maquette.createProjector()
+
+		# Update every minute to keep time since fields up-to date
+		setInterval ( ->
+			Page.projector.scheduleRender()
+		), 60*1000
 
 	initFollowButton: ->
 		@follow = new Follow($(".feed-follow"))
@@ -212,7 +221,7 @@ class ZeroBlog extends ZeroFrame
 						data.post.unshift
 							post_id: data.next_post_id
 							title: "New blog post"
-							date_published: (+ new Date)/1000
+							date_published: (+ new Date)/ 1000
 							body: "Blog post body"
 						data.next_post_id += 1
 
@@ -586,3 +595,4 @@ class ZeroBlog extends ZeroFrame
 
 
 window.Page = new ZeroBlog()
+window.Page.createProjector()

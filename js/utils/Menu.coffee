@@ -1,39 +1,34 @@
 class Menu
-	constructor: (@button) ->
-		@elem = $(".menu.template").clone().removeClass("template")
-		@elem.appendTo("body")
+	constructor: (menu_id, offset) ->
+		@menu_id = menu_id
+		@offset = offset
 		@items = []
+		Page.projector.append(document.body, @render)
 
-	show: ->
-		if window.visible_menu and window.visible_menu.button[0] == @button[0] # Same menu visible then hide it
-			window.visible_menu.hide()
-			@hide()
-		else
-			button_pos = @button.offset()
-			@elem.css({"top": button_pos.top+@button.outerHeight(), "left": button_pos.left + @button.outerWidth() - @elem.outerWidth()})
-			@button.addClass("menu-active")
-			@elem.addClass("visible")
-			if window.visible_menu then window.visible_menu.hide()
-			window.visible_menu = @
+	render: =>
+		h("div.menu", {menu_id: @menu_id, classes: {visible: window.visible_menu == @}, styles: {top: @offset().top, left: @offset().left}},
+			@items.map((value, index) => h("a.menu-item", {
+				key: index,
+				item_num: index,
+				classes: {selected: value.selected},
+				onclick: value.cb
+			}, value.title))
+		)
 
+	show: =>
+		window.visible_menu = @
+		Page.projector.scheduleRender()
 
-	hide: ->
-		@elem.removeClass("visible")
-		@button.removeClass("menu-active")
-		window.visible_menu = null
+	hide: =>
+		if window.visible_menu == @
+			window.visible_menu = null
+		Page.projector.scheduleRender()
 
-
-	addItem: (title, cb) ->
-		item = $(".menu-item.template", @elem).clone().removeClass("template")
-		item.html(title)
-		item.on "click", =>
-			if not cb(item)
-				@hide()
-			return false
-		item.appendTo(@elem)
+	addItem: (title, cb) =>
+		item = {title: title, cb: cb}
 		@items.push item
-		return item
-
+		Page.projector.scheduleRender()
+		@items.length - 1
 
 	log: (args...) ->
 		console.log "[Menu]", args...
@@ -42,5 +37,5 @@ window.Menu = Menu
 
 # Hide menu on outside click
 $("body").on "click", (e) ->
-	if window.visible_menu and e.target != window.visible_menu.button[0] and $(e.target).parent()[0] != window.visible_menu.elem[0]
+	if e.target != $(".menu.visible") and window.visible_menu
 		window.visible_menu.hide()
