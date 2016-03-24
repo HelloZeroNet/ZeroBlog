@@ -26,7 +26,7 @@ class Comments extends Class
 			WHERE post_id = #{@post_id} ORDER BY date_added DESC"
 
 		Page.cmd "dbQuery", query, (comments) =>
-			$(".comments-num").text(comments.length)
+			$("#Comments").text('<span class="comments-num">'+comments.length+'</span>' + if comments.length > 1 then " Comments:" else " Comment:")
 			for comment in comments
 				user_address = comment.directory.replace("users/", "")
 				comment_address = "#{comment.comment_id}_#{user_address}"
