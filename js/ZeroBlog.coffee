@@ -303,7 +303,10 @@ class ZeroBlog extends ZeroFrame
 		# Comments num
 		if post.comments > 0
 			$(".details .comments-num", elem).css("display", "inline").attr("href", "?Post:#{post.post_id}:#{title_hash}#Comments")
-			$(".details .comments-num .num", elem).text("#{post.comments} comments")
+			if post.comments > 1
+				$(".details .comments-num .num", elem).text("#{post.comments} comments")
+			else
+				$(".details .comments-num .num", elem).text("#{post.comments} comment")
 		else
 			$(".details .comments-num", elem).css("display", "none")
 
