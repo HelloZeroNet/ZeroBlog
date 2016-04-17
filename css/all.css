@@ -1,6 +1,6 @@
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
+/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
 
 
 .comments { margin-bottom: 60px }
@@ -56,7 +56,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Follow.css ---- */
+/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Follow.css ---- */
 
 
 .icon-feed {
@@ -90,7 +90,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Menu.css ---- */
+/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Menu.css ---- */
 
 
 .menu {
@@ -110,7 +110,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 }
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
+/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
 
 
 /* Design based on medium */
@@ -148,6 +148,8 @@ a:hover { color: #3498db }
 	color: rgba(0,0,0,0); background: #999 url(../img/loading.gif) no-repeat center center;
 	-webkit-transition: all 0.5s ease-out; -moz-transition: all 0.5s ease-out; -o-transition: all 0.5s ease-out; -ms-transition: all 0.5s ease-out; transition: all 0.5s ease-out ; pointer-events: none; border-bottom: 2px solid #666
 }
+.button.publish { background-color: #2ecc71; border-color: #2ecc71; color: white }
+.button.publish:hover { background-color: #35D679; border-color: #35D679 }
 
 .cancel { margin-left: 10px; font-size: 80%; color: #999; }
 
@@ -316,7 +318,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */
+/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */
 
 
 /* Base64 encoder: http://www.motobit.com/util/base64-decoder-encoder.asp */
@@ -353,7 +355,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/github.css ---- */
+/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/github.css ---- */
 
 
 /*
@@ -483,7 +485,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 
 
-/* ---- data/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
+/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
 
 
 .icon { display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; }

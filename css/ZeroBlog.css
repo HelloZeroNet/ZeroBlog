@@ -33,6 +33,8 @@ a:hover { color: #3498db }
 	color: rgba(0,0,0,0); background: #999 url(../img/loading.gif) no-repeat center center;
 	transition: all 0.5s ease-out; pointer-events: none; border-bottom: 2px solid #666
 }
+.button.publish { background-color: #2ecc71; border-color: #2ecc71; color: white }
+.button.publish:hover { background-color: #35D679; border-color: #35D679 }
 
 .cancel { margin-left: 10px; font-size: 80%; color: #999; }
 
