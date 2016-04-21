@@ -156,12 +156,12 @@ class ZeroBlog extends ZeroFrame
     elem.find(".postlink").text(lastcomment.post_title)
         .attr("href", "?Post:#{lastcomment.post_id}:#{title_hash}#Comments")
 
-  applyPagerdata: (page, limit, has_next) ->
+  applyPagerdata: (page, limit, total) ->
     pager = $(".pager")
     if page > 1
       pager.find(".prev").css("display", "inline-block")
           .attr("href", "?page=#{page-1}")
-    if has_next
+    if page * limit < total
       pager.find(".next").css("display", "inline-block")
           .attr("href", "?page=#{page+1}")
 
@@ -207,6 +207,12 @@ class ZeroBlog extends ZeroFrame
   pageMain: ->
     limit = 15
     query = """
+      SELECT COUNT(*) as post_id,
+        NULL as title,NULL as body,NULL as date_published,
+        NULL as json_id, NULL as comments,NULL as votes
+      FROM post
+      UNION ALL
+      SELECT * FROM (
       SELECT
         post.*, COUNT(comment_id) AS comments,
         (SELECT COUNT(*) FROM post_vote
@@ -215,16 +221,16 @@ class ZeroBlog extends ZeroFrame
       LEFT JOIN comment USING (post_id)
       GROUP BY post_id
       ORDER BY date_published DESC
-      LIMIT #{(@page-1)*limit}, #{limit+1}
+      LIMIT #{(@page-1)*limit}, #{limit}
+      )
     """
     @cmd "dbQuery", [query], (res) =>
       parse_res = (res) =>
+        total = res[0].post_id
+        res = res[1..]
         s = (+ new Date)
-        if res.length > limit # Has next page
-          res.pop()
-          @applyPagerdata(@page, limit, true)
-        else
-          @applyPagerdata(@page, limit, false)
+        
+        @applyPagerdata(@page, limit, total)
 
         res.reverse()
         for post in res
