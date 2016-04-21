@@ -16,7 +16,7 @@ class ZeroBlog extends ZeroFrame
         @checkPublishbar()
         $(".publishbar").off("click").on "click", @publish
         $(".posts .button.new").css("display", "inline-block")
-        $(".editbar .icon-help").off("click").on "click", =>
+        $(".editbar .icon-help").off("click").on "click", ->
           $(".editbar .markdown-help").css("display", "block")
           $(".editbar .markdown-help").toggleClassLater("visible", 10)
           $(".editbar .icon-help").toggleClass("active")
@@ -25,8 +25,9 @@ class ZeroBlog extends ZeroFrame
     $.when(@event_site_info).done =>
       @log "event site info"
       # Set avatar
-      imagedata = new Identicon(@site_info.address, 70).toString();
-      $("body").append("<style>.avatar { background-image: url(data:image/png;base64,#{imagedata}) }</style>")
+      imagedata = new Identicon(@site_info.address, 70).toString()
+      $("body").append("<style>.avatar { background-image: \
+          url(data:image/png;base64,#{imagedata}) }</style>")
       @initFollowButton()
     @log "inited!"
 
@@ -54,11 +55,15 @@ class ZeroBlog extends ZeroFrame
          '?Post:' || comment.post_id || '#Comments' AS url
         FROM comment
         LEFT JOIN json USING (json_id)
-        LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json')
-        LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
+        LEFT JOIN json AS json_content ON
+        (json_content.directory = json.directory
+        AND json_content.file_name='content.json')
+        LEFT JOIN keyvalue ON
+        (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
         LEFT JOIN post ON (comment.post_id = post.post_id)
         WHERE
-         comment.body LIKE '%[#{username}%' OR comment.body LIKE '%@#{username}%'
+         comment.body LIKE '%[#{username}%' OR
+         comment.body LIKE '%@#{username}%'
       ", true)
 
     @follow.addFeed("Comments", "
@@ -70,8 +75,11 @@ class ZeroBlog extends ZeroFrame
        '?Post:' || comment.post_id || '#Comments' AS url
       FROM comment
       LEFT JOIN json USING (json_id)
-      LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json')
-      LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
+      LEFT JOIN json AS json_content ON
+      (json_content.directory = json.directory AND
+      json_content.file_name='content.json')
+      LEFT JOIN keyvalue ON
+      (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
       LEFT JOIN post ON (comment.post_id = post.post_id)")
     @follow.init()
 
@@ -79,25 +87,35 @@ class ZeroBlog extends ZeroFrame
   loadData: (query="new") ->
     # Get blog parameters
     if query == "old" # Old type query for pre 0.3.0
-      query = "SELECT key, value FROM json LEFT JOIN keyvalue USING (json_id) WHERE path = 'data.json'"
+      query = "SELECT key, value FROM json LEFT JOIN keyvalue USING (json_id)
+      WHERE path = 'data.json'"
     else
-      query = "SELECT key, value FROM json LEFT JOIN keyvalue USING (json_id) WHERE directory = '' AND file_name = 'data.json'"
+      query = "SELECT key, value FROM json LEFT JOIN keyvalue USING (json_id)
+      WHERE directory = '' AND file_name = 'data.json'"
     @cmd "dbQuery", [query], (res) =>
       @data = {}
       if res
         for row in res
           @data[row.key] = row.value
-        $(".left h1 a:not(.editable-edit)").html(@data.title).data("content", @data.title)
-        $(".left h2").html(Text.renderMarked(@data.description)).data("content", @data.description)
-        $(".left .links").html(Text.renderMarked(@data.links)).data("content", @data.links)
+        $(".left h1 a:not(.editable-edit)").html(@data.title)
+            .data("content", @data.title)
+        $(".left h2").html(Text.renderMarked(@data.description))
+            .data("content", @data.description)
+        $(".left .links").html(Text.renderMarked(@data.links))
+            .data("content", @data.links)
 
   loadLastcomments: (type="show", cb=false) ->
     query = "
-      SELECT comment.*, json_content.json_id AS content_json_id, keyvalue.value AS cert_user_id, json.directory, post.title AS post_title
+      SELECT
+      comment.*, json_content.json_id AS content_json_id,
+      keyvalue.value AS cert_user_id, json.directory, post.title AS post_title
       FROM comment
       LEFT JOIN json USING (json_id)
-      LEFT JOIN json AS json_content ON (json_content.directory = json.directory AND json_content.file_name='content.json')
-      LEFT JOIN keyvalue ON (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
+      LEFT JOIN json AS json_content ON
+      (json_content.directory = json.directory AND
+      json_content.file_name='content.json')
+      LEFT JOIN keyvalue ON
+      (keyvalue.json_id = json_content.json_id AND key = 'cert_user_id')
       LEFT JOIN post ON (comment.post_id = post.post_id)
       WHERE post.title IS NOT NULL
       ORDER BY date_added DESC LIMIT 3"
@@ -107,9 +125,12 @@ class ZeroBlog extends ZeroFrame
         $(".lastcomments").css("display", "block")
         res.reverse()
       for lastcomment in res
-        elem = $("#lastcomment_#{lastcomment.json_id}_#{lastcomment.comment_id}")
+        elem =
+            $("#lastcomment_#{lastcomment.json_id}_#{lastcomment.comment_id}")
         if elem.length == 0 # Not exits yet
-          elem = $(".lastcomment.template").clone().removeClass("template").attr("id", "lastcomment_#{lastcomment.json_id}_#{lastcomment.comment_id}")
+          elem = $(".lastcomment.template").clone().
+          removeClass("template").attr("id",
+          "lastcomment_#{lastcomment.json_id}_#{lastcomment.comment_id}")
           if type != "noanim"
             elem.cssSlideDown()
           elem.prependTo(".lastcomments ul")
@@ -117,25 +138,32 @@ class ZeroBlog extends ZeroFrame
       if cb then cb()
 
   applyLastcommentdata: (elem, lastcomment) ->
-    elem.find(".user_name").text(lastcomment.cert_user_id.replace(/@.*/, "")+":")
+    elem.find(".user_name")
+        .text(lastcomment.cert_user_id.replace(/@.*/, "")+":")
 
     body = Text.renderMarked(lastcomment.body)
     body = body.replace /[\r\n]/g, " "  # Remove whitespace
-    body = body.replace /\<blockquote\>.*?\<\/blockquote\>/g, " "  # Remove quotes
+    #Remove quotes
+    body = body.replace /\<blockquote\>.*?\<\/blockquote\>/g, " "
     body = body.replace /\<.*?\>/g, " "  # Remove html codes
     if body.length > 60  # Strip if too long
-      body = body[0..60].replace(/(.*) .*?$/, "$1") + " ..."  # Keep the last 60 character and strip back until last space
+      #Keep the last 60 character and strip back until last space
+      body = body[0..60].replace(/(.*) .*?$/, "$1") + " ..."
     elem.find(".body").html(body)
 
-    title_hash = lastcomment.post_title.replace(/[#?& ]/g, "+").replace(/[+]+/g, "+")
-    elem.find(".postlink").text(lastcomment.post_title).attr("href", "?Post:#{lastcomment.post_id}:#{title_hash}#Comments")
+    title_hash = lastcomment.post_title.replace(/[#?& ]/g, "+")
+        .replace(/[+]+/g, "+")
+    elem.find(".postlink").text(lastcomment.post_title)
+        .attr("href", "?Post:#{lastcomment.post_id}:#{title_hash}#Comments")
 
   applyPagerdata: (page, limit, has_next) ->
     pager = $(".pager")
     if page > 1
-      pager.find(".prev").css("display", "inline-block").attr("href", "?page=#{page-1}")
+      pager.find(".prev").css("display", "inline-block")
+          .attr("href", "?page=#{page-1}")
     if has_next
-      pager.find(".next").css("display", "inline-block").attr("href", "?page=#{page+1}")
+      pager.find(".next").css("display", "inline-block")
+          .attr("href", "?page=#{page+1}")
 
   routeUrl: (url) ->
     @log "Routing url:", url
@@ -153,12 +181,15 @@ class ZeroBlog extends ZeroFrame
 
   pagePost: () ->
     s = (+ new Date)
-    @cmd "dbQuery", ["SELECT *, (SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes FROM post WHERE post_id = #{@post_id} LIMIT 1"], (res) =>
+    @cmd "dbQuery", ["SELECT *, (SELECT COUNT(*) FROM post_vote WHERE
+        post_vote.post_id = post.post_id) AS votes FROM post
+        WHERE post_id = #{@post_id} LIMIT 1"], (res) =>
       parse_res = (res) =>
         if res.length
           post = res[0]
           @applyPostdata($(".post-full"), post, true)
-          $(".post-full .like").attr("id", "post_like_#{post.post_id}").off("click").off("click").on "click", @submitPostVote
+          $(".post-full .like").attr("id", "post_like_#{post.post_id}")
+              .off("click").off("click").on "click", @submitPostVote
           Comments.pagePost(@post_id)
         else
           $(".post-full").html("<h1>Not found</h1>")
@@ -167,7 +198,8 @@ class ZeroBlog extends ZeroFrame
 
       # Temporary dbschema bug workaround
       if res.error
-        @cmd "dbQuery", ["SELECT *, -1 AS votes FROM post WHERE post_id = #{@post_id} LIMIT 1"], parse_res
+        @cmd "dbQuery", ["SELECT *, -1 AS votes FROM post
+            WHERE post_id = #{@post_id} LIMIT 1"], parse_res
       else
         parse_res(res)
 
@@ -177,7 +209,8 @@ class ZeroBlog extends ZeroFrame
     query = """
       SELECT
         post.*, COUNT(comment_id) AS comments,
-        (SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes
+        (SELECT COUNT(*) FROM post_vote
+        WHERE post_vote.post_id = post.post_id) AS votes
       FROM post
       LEFT JOIN comment USING (post_id)
       GROUP BY post_id
@@ -197,10 +230,13 @@ class ZeroBlog extends ZeroFrame
         for post in res
           elem = $("#post_#{post.post_id}")
           if elem.length == 0 # Not exits yet
-            elem = $(".post.template").clone().removeClass("template").attr("id", "post_#{post.post_id}")
+            elem = $(".post.template").clone().removeClass("template")
+                .attr("id", "post_#{post.post_id}")
             elem.prependTo(".posts")
-            # elem.find(".score").attr("id", "post_score_#{post.post_id}").on "click", @submitPostVote # Submit vote
-            elem.find(".like").attr("id", "post_like_#{post.post_id}").off("click").on "click", @submitPostVote
+            # elem.find(".score").attr("id", "post_score_#{post.post_id}")
+            # .on "click", @submitPostVote # Submit vote
+            elem.find(".like").attr("id", "post_like_#{post.post_id}")
+                .off("click").on "click", @submitPostVote
           @applyPostdata(elem, post)
         @pageLoaded()
         @log "Posts loaded in", ((+ new Date)-s),"ms"
@@ -280,7 +316,8 @@ class ZeroBlog extends ZeroFrame
       @cmd "sitePublish", ["stored"], (res) =>
         @log "Publish result:", res
     else
-      @cmd "wrapperPrompt", ["Enter your private key:", "password"], (privatekey) => # Prompt the private key
+      @cmd "wrapperPrompt", ["Enter your private key:", "password"],
+      (privatekey) => # Prompt the private key
         $(".publishbar .button").addClass("loading")
         @cmd "sitePublish", [privatekey], (res) =>
           $(".publishbar .button").removeClass("loading")
@@ -293,16 +330,22 @@ class ZeroBlog extends ZeroFrame
   applyPostdata: (elem, post, full=false) ->
     title_hash = post.title.replace(/[#?& ]/g, "+").replace(/[+]+/g, "+")
     elem.data("object", "Post:"+post.post_id)
-    $(".title .editable", elem).html(post.title).attr("href", "?Post:#{post.post_id}:#{title_hash}").data("content", post.title)
+    $(".title .editable", elem).html(post.title)
+        .attr("href", "?Post:#{post.post_id}:#{title_hash}")
+        .data("content", post.title)
     date_published = Time.since(post.date_published)
     # Published date
     if post.body.match /^---/m # Has more over fold
-      date_published += " &middot; #{Time.readtime(post.body)}" # If has break add readtime
-      $(".more", elem).css("display", "inline-block").attr("href", "?Post:#{post.post_id}:#{title_hash}")
-    $(".details .published", elem).html(date_published).data("content", post.date_published)
+      # If has break add readtime
+      date_published += " &middot; #{Time.readtime(post.body)}"
+      $(".more", elem).css("display", "inline-block")
+          .attr("href", "?Post:#{post.post_id}:#{title_hash}")
+    $(".details .published", elem).html(date_published)
+        .data("content", post.date_published)
     # Comments num
     if post.comments > 0
-      $(".details .comments-num", elem).css("display", "inline").attr("href", "?Post:#{post.post_id}:#{title_hash}#Comments")
+      $(".details .comments-num", elem).css("display", "inline")
+          .attr("href", "?Post:#{post.post_id}:#{title_hash}#Comments")
       if post.comments > 1
         $(".details .comments-num .num", elem).text("#{post.comments} comments")
       else
@@ -355,7 +398,8 @@ class ZeroBlog extends ZeroFrame
           post_id AS uri
         FROM json
         LEFT JOIN post_vote USING (json_id)
-        WHERE directory = 'users/#{@site_info.auth_address}' AND file_name = 'data.json'
+        WHERE directory = 'users/#{@site_info.auth_address}'
+        AND file_name = 'data.json'
       """
       @cmd "dbQuery", [query_my_votes], (res) =>
         for row in res
@@ -390,7 +434,8 @@ class ZeroBlog extends ZeroFrame
 
   # Save content to data.json
   saveContent: (elem, content, cb=false) =>
-    if elem.data("deletable") and content == null then return @deleteObject(elem, cb) # Its a delete request
+    if elem.data("deletable") and content == null
+    then return @deleteObject(elem, cb) # Its a delete request
     elem.data("content", content)
     [type, id] = @getObject(elem).data("object").split(":")
     id = parseInt(id)
@@ -414,7 +459,7 @@ class ZeroBlog extends ZeroFrame
       else if type == "Site"
         data[elem.data("editable")] = content
 
-      @writeData data, (res) =>
+      @writeData data, (res) ->
         if cb
           if res == true # OK
             if elem.data("editable-mode") == "simple" # No markdown
@@ -434,9 +479,11 @@ class ZeroBlog extends ZeroFrame
     inner_path = "data/users/#{Page.site_info.auth_address}/data.json"
     Page.cmd "fileGet", {"inner_path": inner_path, "required": false}, (data) =>
       data = JSON.parse(data)
-      comment = (comment for comment in data.comment when comment.comment_id == id)[0]
+      comment = (
+        comment for comment in data.comment when comment.comment_id == id)[0]
       comment[elem.data("editable")] = content
-      json_raw = unescape(encodeURIComponent(JSON.stringify(data, undefined, '\t')))
+      json_raw = unescape(encodeURIComponent(
+        JSON.stringify(data, undefined, '\t')))
       @writePublish inner_path, btoa(json_raw), (res) =>
         if res == true
           Comments.checkCert("updaterules")
@@ -460,17 +507,19 @@ class ZeroBlog extends ZeroFrame
           if not post then return false # No post found for this id
           data.post.splice(data.post.indexOf(post), 1) # Remove from data
 
-          @writeData data, (res) =>
+          @writeData data, (res) ->
             if cb then cb()
             if res == true then elem.slideUp()
     else if type == "Comment"
       inner_path = "data/users/#{Page.site_info.auth_address}/data.json"
       @cmd "fileGet", {"inner_path": inner_path, "required": false}, (data) =>
         data = JSON.parse(data)
-        comment = (comment for comment in data.comment when comment.comment_id == id)[0]
+        comment = (
+          comment for comment in data.comment when comment.comment_id == id)[0]
         data.comment.splice(data.comment.indexOf(comment), 1)
-        json_raw = unescape(encodeURIComponent(JSON.stringify(data, undefined, '\t')))
-        @writePublish inner_path, btoa(json_raw), (res) =>
+        json_raw = unescape(encodeURIComponent(
+          JSON.stringify(data, undefined, '\t')))
+        @writePublish inner_path, btoa(json_raw), (res) ->
           if res == true
             elem.slideUp()
           if cb then cb()
@@ -481,8 +530,11 @@ class ZeroBlog extends ZeroFrame
     if not data
       return @log "Data missing"
     @data["modified"] = data.modified = Time.timestamp()
-    json_raw = unescape(encodeURIComponent(JSON.stringify(data, undefined, '\t'))) # Encode to json, encode utf8
-    @cmd "fileWrite", ["data/data.json", btoa(json_raw)], (res) => # Convert to to base64 and send
+    json_raw = unescape(
+       # Encode to json, encode utf8
+      encodeURIComponent(JSON.stringify(data, undefined, '\t')))
+    # Convert to to base64 and send
+    @cmd "fileWrite", ["data/data.json", btoa(json_raw)], (res) =>
       if res == "ok"
         if cb then cb(true)
       else
@@ -492,10 +544,12 @@ class ZeroBlog extends ZeroFrame
 
     # Updating title in content.json
     @cmd "fileGet", ["content.json"], (content) =>
-      content = content.replace /"title": ".*?"/, "\"title\": \"#{data.title}\"" # Load as raw html to prevent js bignumber problems
+      # Load as raw html to prevent js bignumber problems
+      content = content.replace /"title": ".*?"/,"\"title\": \"#{data.title}\""
       @cmd "fileWrite", ["content.json", btoa(content)], (res) =>
         if res != "ok"
-          @cmd "wrapperNotification", ["error", "Content.json write error: #{res}"]
+          @cmd "wrapperNotification",
+          ["error", "Content.json write error: #{res}"]
 
         # If the privatekey is stored sign the new content
         if @site_info["privatekey"]
@@ -510,7 +564,7 @@ class ZeroBlog extends ZeroFrame
         cb(false)
         return false
 
-      @cmd "sitePublish", {"inner_path": inner_path}, (res) =>
+      @cmd "sitePublish", {"inner_path": inner_path}, (res) ->
         if res == "ok"
           cb(true)
         else
@@ -528,7 +582,8 @@ class ZeroBlog extends ZeroFrame
       if data
         data = JSON.parse(data)
       else # Default data
-        data = {"next_comment_id": 1, "comment": [], "comment_vote": {}, "post_vote": {} }
+        data = {"next_comment_id": 1, "comment": [], "comment_vote": {},
+        "post_vote": {} }
 
       if not data.post_vote
         data.post_vote = {}
@@ -538,7 +593,8 @@ class ZeroBlog extends ZeroFrame
         data.post_vote[post_id] = 1
       else
         delete data.post_vote[post_id]
-      json_raw = unescape(encodeURIComponent(JSON.stringify(data, undefined, '\t')))
+      json_raw = unescape(encodeURIComponent(
+        JSON.stringify(data, undefined, '\t')))
 
       current_num = parseInt elem.find(".num").text()
       if not current_num
@@ -571,9 +627,11 @@ class ZeroBlog extends ZeroFrame
   setSiteinfo: (site_info) =>
     @site_info = site_info
     @event_site_info.resolve(site_info)
-    if $("body").hasClass("page-post") then Comments.checkCert() # Update if username changed
+     # Update if username changed
+    if $("body").hasClass("page-post") then Comments.checkCert()
     # User commented
-    if site_info.event?[0] == "file_done" and site_info.event[1].match /.*users.*data.json$/
+    if site_info.event?[0] == "file_done" and
+    site_info.event[1].match /.*users.*data.json$/
       if $("body").hasClass("page-post")
         @pagePost()
         Comments.loadComments() # Post page, reload comments
@@ -582,7 +640,8 @@ class ZeroBlog extends ZeroFrame
         RateLimit 500, =>
           @pageMain()
           @loadLastcomments()
-    else if site_info.event?[0] == "file_done" and site_info.event[1] == "data/data.json"
+    else if site_info.event?[0] == "file_done" and
+    site_info.event[1] == "data/data.json"
       @loadData()
       if $("body").hasClass("page-main") then @pageMain()
       if $("body").hasClass("page-post") then @pagePost()
