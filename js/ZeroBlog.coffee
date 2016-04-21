@@ -158,12 +158,73 @@ class ZeroBlog extends ZeroFrame
 
   applyPagerdata: (page, limit, total) ->
     pager = $(".pager")
+
+    total_page = (total+limit-1)//limit
+    if total_page <1
+      return
+
+    current_page =pager.find(".currentpage")
+    current_page.text(page).css("display","inline-block")
+    has_first = 0
     if page > 1
-      pager.find(".prev").css("display", "inline-block")
-          .attr("href", "?page=#{page-1}")
-    if page * limit < total
-      pager.find(".next").css("display", "inline-block")
-          .attr("href", "?page=#{page+1}")
+      pager.find(".first").css("display", "inline-block")
+      has_first = 1
+
+		
+    has_last = 0
+    if page != total_page
+      pager.find(".last").css("display", "inline-block")
+          .attr("href", "?page=#{total_page}")
+      has_last = 1
+
+    if total_page<4
+      return
+
+    #margin , or number larger
+    element_width = current_page.width() + 7
+    # how many buttons we can insert ?
+    number = pager.width() // element_width - has_first - has_last - 1
+
+    half = number//2
+    # exclude left pages
+    # but not underflow 1
+    left_pages_max = Math.min(page-1,
+      #half of insertable, or page near last
+      Math.max(half, number-(total_page-page)))
+
+    right_pages_max = Math.min(total_page-page,
+      Math.max(half, total_page-page))
+
+    left_pages = 0
+    right_pages = 0
+
+    if left_pages_max < half
+      left_pages = left_pages_max
+      right_pages = Math.min(number - left_pages,right_pages_max)
+    else if right_pages_max < half
+      right_pages = right_pages_max
+      left_pages = Math.min(number - right_pages,left_pages_max)
+    else
+      left_pages = half
+      right_pages = number-half
+
+    i=0
+
+    while i<left_pages
+      #this only enter when current page > 1 so first button always show
+      n = page - left_pages+i
+      current_page.before("<a class='pagershow' href='?page=#{n}'>#{n}</a>")
+      ++i
+
+    i=0
+    while i<right_pages
+      n = page+right_pages-i
+      text = n
+      if i is 0 && n!=total_page
+        text = n+"..."
+        
+      current_page.after("<a class='pagershow' href='?page=#{n}'>#{text}</a>")
+      ++i
 
   routeUrl: (url) ->
     @log "Routing url:", url

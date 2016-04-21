@@ -159,10 +159,10 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 .pager a { border: 2px solid #333; padding: 10px 20px; font-size: 15px; display: none; transition: all 0.3s }
 .pager a:hover { color: white; box-shadow: inset 150px 0px 0px 0px #333; }
 .pager a:active { color: white; box-shadow: inset 150px 0px 0px 0px #AF3BFF; transition: none; border-color: #AF3BFF }
-.pager .next { float: right }
-.pager .prev:hover { box-shadow: inset -150px 0px 0px 0px #333; }
-.pager .prev:active { box-shadow: inset -150px 0px 0px 0px #AF3BFF; }
 
+.pager .currentpage:hover{}
+.pager .currentpage { color: white; box-shadow: inset 150px 0px 0px 0px #AF3BFF; transition: none; border-color: #AF3BFF }
+.pager .pagershow {display:inline-block; margin:1px}
 /* Score */
 /*
 .score {
