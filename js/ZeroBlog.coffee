@@ -232,6 +232,9 @@ class ZeroBlog extends ZeroFrame
       $("body").addClass("page-post")
       @post_id = parseInt(match[1])
       @pagePost()
+    else if match = url.match /Toc=(\w+)/
+      $("body").addClass("page-post")
+      @pageToc(match[1])
     else
       $("body").addClass("page-main")
       if match = url.match /page=([0-9]+)/
@@ -239,6 +242,70 @@ class ZeroBlog extends ZeroFrame
       @pageMain()
 
   # - Pages -
+  pageToc: (type) ->
+    @log "Toc by:", type
+    if type != "dateDesc"
+      return
+    @cmd "dbQuery", ["SELECT post_id,date_published,title FROM post
+        ORDER BY date_published DESC"], (res) =>
+      parse_res = (res) =>
+
+        
+        post_id = 99999999999
+        #id is needed when applyPostdata
+
+        if res.length is 0
+
+          @applyPostdata($(".post-full"),
+            title:"no post"
+            post_id:post_id
+            votes:-1
+            comments:-1
+            body:"no post at all"
+            ,true)
+          return
+
+        # makes next month
+        month = new Date(new Date().getTime()+31*24*60*60*1000)
+        markdown = ""
+
+        for post in res
+          #in current range
+          post_date = new Date(post.date_published*1000)
+          if post_date<month
+            #new range
+            month = new Date(post_date)
+            month.setDate(1)
+            month.setHours(0)
+            month.setMinutes(0)
+            month.setSeconds(0)
+            #month begin with 0 should add 1
+            markdown+="\n"+month.getFullYear()+" "+(month.getMonth()+1)+"\n"
+
+          markdown+="- ["+post_date.getDate()+" \
+            :"+post.title+"](?Post:#{post.post_id})\n"
+
+        @applyPostdata($(".post-full"),
+          title:"index by date"
+          post_id:post_id
+          votes:-1
+          comments:-1
+          body:markdown
+          ,true)
+
+      if res.error
+        @applyPostdata($(".post-full"),
+            title:"error when getting index"
+            post_id:post_id
+            votes:-1
+            comments:-1
+            body:"error happened"
+            ,true)
+      else
+        parse_res(res)
+      @pageLoaded()
+      Comments.hide()
+
 
   pagePost: () ->
     s = (+ new Date)
