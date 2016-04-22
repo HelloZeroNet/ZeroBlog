@@ -190,6 +190,12 @@ class Comments extends Class
         @setCurrentSize(current_size)
     if elem.height() > 0 then elem.trigger "input"
     else elem.height("48px")
+ 
+    
+
+  hide: () ->
+    $(".comment").hide()
+    $("#Comments").hide()
 
 
 window.Comments = new Comments()
