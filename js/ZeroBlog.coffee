@@ -232,8 +232,7 @@ class ZeroBlog extends ZeroFrame
       $("body").addClass("page-post")
       @post_id = parseInt(match[1])
       @pagePost()
-    else if match = url.match /Toc=(\w+)/
-      $("body").addClass("page-post")
+    else if match = url.match /Toc=(.*)/
       @pageToc(match[1])
     else
       $("body").addClass("page-main")
@@ -241,11 +240,137 @@ class ZeroBlog extends ZeroFrame
         @page = parseInt(match[1])
       @pageMain()
 
+  pageToc:(tocType) ->
+    $("body").addClass("page-post")
+
+    if tocType.match /^dateDesc/
+      @pageTocDateDesc()
+    else if tocType.match /^tagAll/
+      @pageTocTagAll()
+    else if tocType.match /^tag/
+      @pageTocByTag(tocType.split("&")[0].substring(3))
+
+    @pageLoaded()
+    #TOC page didn't show details row nor allow edit,comments
+    $(".post .details").hide()
+    $(".editable-edit").hide()
+    Comments.hide()
+
+  emptyTocPage: (title,body) ->
+    @applyPostdata($(".post-full"),
+       title:title
+       post_id:9999999
+       votes:-1
+       comments:-1
+       body:body
+       ,true)
+
+  pageTocByTag:(tagType) ->
+    queryString = ""
+    tag =""
+    #query untagged
+    if tagType.match /^None/
+      tag="all untagged"
+      queryString = """SELECT date_published,title,post_id FROM post
+      WHERE post_id NOT IN (SELECT DISTINCT (post_id) FROM tag)
+      ORDER BY date_published DESC"""
+    else
+
+      tag = decodeURIComponent(tagType.substring(1))
+      @log "Toc by tag:", tag
+      #by tag
+      queryString = """SELECT post.date_published AS date_published,
+        post_id,post.title AS title FROM tag
+        JOIN (SELECT date_published,title,post_id FROM post) AS post
+        USING (post_id) WHERE value="#{tag}"
+        ORDER BY date_published DESC
+        """
+    @cmd "dbQuery", [queryString], (res) =>
+      parse_res = (res) =>
+        if res.length is 0
+          @emptyTocPage("#{tag}","no posts found")
+          return
+
+        markdown=""
+        for i in res
+          date = new Date(i.date_published*1000)
+          markdown += "- [#{date.getFullYear()}-\
+            #{date.getMonth()+1}-#{date.getDate()}:#{i.title}](?Post:#{i.post_id})\n"
+
+        post_id = 99999999
+
+        @applyPostdata($(".post-full"),
+          title:"posts of tag:"+tag
+          post_id:post_id
+          votes:-1
+          comments:-1
+          body:markdown
+         ,true)
+      if res.error
+        @emptyTocPage("error when getting index","error when getting index")
+      else
+        parse_res(res)
+
+  
+
+
+  pageTocTagAll: () ->
+    #list all tags only. to avoid too many duplicate post with different tag
+    #first row is total post number
+    #second row is tagged number
+    #follow rows is tagged value,count
+    @cmd "dbQuery", ["""SELECT "all" AS value,COUNT(*) AS count FROM post
+           UNION ALL
+           SELECT "tagged" AS value,COUNT(DISTINCT post_id) AS count
+           FROM tag
+           UNION ALL
+           SELECT value, COUNT(post_id)
+           FROM tag  GROUP BY value"""], (res) =>
+      parse_res = (res) =>
+
+        total_post = res[0].count
+        if total_post is 0
+          emptyTocPage("no post","no post at all")
+          return
+      
+        markdown = ""
+        tagged = res[2..]
+
+        if tagged.length > 0
+          markdown += "tagged:\n\n"
+
+        for one in tagged
+          escaped = encodeURIComponent(one.value)
+          markdown += "[#{one.value}:#{one.count} post(s)]\
+            (?Toc=tag:#{escaped})\n"
+
+        untagged=total_post - res[1].count
+
+        if untagged != 0
+          markdown += "\n[untagged:#{untagged} post(s)]\
+            (?Toc=tagNone)"
+
+        post_id = 99999999
+
+        @applyPostdata($(".post-full"),
+          title:"index by tag"
+          post_id:post_id
+          votes:-1
+          comments:-1
+          body:markdown
+         ,true)
+      if res.error
+        @emptyTocPage("error when getting index","sorry, error happened")
+      else
+        parse_res(res)
+      
+
+
+    
+
   # - Pages -
-  pageToc: (type) ->
-    @log "Toc by:", type
-    if type != "dateDesc"
-      return
+  pageTocDateDesc: () ->
+    @log "Toc by date desc"
     @cmd "dbQuery", ["SELECT post_id,date_published,title FROM post
         ORDER BY date_published DESC"], (res) =>
       parse_res = (res) =>
@@ -256,13 +381,7 @@ class ZeroBlog extends ZeroFrame
 
         if res.length is 0
 
-          @applyPostdata($(".post-full"),
-            title:"no post"
-            post_id:post_id
-            votes:-1
-            comments:-1
-            body:"no post at all"
-            ,true)
+          @emptyTocPage("no post","no post at all")
           return
 
         # makes next month
@@ -294,17 +413,9 @@ class ZeroBlog extends ZeroFrame
           ,true)
 
       if res.error
-        @applyPostdata($(".post-full"),
-            title:"error when getting index"
-            post_id:post_id
-            votes:-1
-            comments:-1
-            body:"error happened"
-            ,true)
+        @emptyTocPage("error","error while getting index")
       else
         parse_res(res)
-      @pageLoaded()
-      Comments.hide()
 
 
   pagePost: () ->
@@ -673,6 +784,8 @@ class ZeroBlog extends ZeroFrame
             dedup.push(k)
             
 
+          if not data.tag
+            data.tag = []
           #exclude old tag
           tag_index = (tag for tag in data.tag when tag.post_id != id)
           data["tag"] = tag_index
