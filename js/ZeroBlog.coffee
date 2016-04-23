@@ -334,6 +334,13 @@ class ZeroBlog extends ZeroFrame
 
   pageMain: ->
     limit = 15
+
+    order_limit_closure = """
+      ORDER BY date_published DESC
+      LIMIT #{(@page-1)*limit}, #{limit} """
+
+
+
     query = """
       SELECT COUNT(*) as post_id,
         NULL as title,NULL as body,NULL as date_published,
@@ -348,8 +355,7 @@ class ZeroBlog extends ZeroFrame
       FROM post
       LEFT JOIN comment USING (post_id)
       GROUP BY post_id
-      ORDER BY date_published DESC
-      LIMIT #{(@page-1)*limit}, #{limit}
+      #{order_limit_closure}
       )
     """
     @cmd "dbQuery", [query], (res) =>
