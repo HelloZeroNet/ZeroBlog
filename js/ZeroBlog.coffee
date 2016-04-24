@@ -259,7 +259,7 @@ class ZeroBlog extends ZeroFrame
   emptyTocPage: (title,body) ->
     @applyPostdata($(".post-full"),
        title:title
-       post_id:9999999
+       post_id:-1
        votes:-1
        comments:-1
        body:body
@@ -297,11 +297,10 @@ class ZeroBlog extends ZeroFrame
           markdown += "- [#{date.getFullYear()}-\
             #{date.getMonth()+1}-#{date.getDate()}:#{i.title}](?Post:#{i.post_id})\n"
 
-        post_id = 99999999
 
         @applyPostdata($(".post-full"),
           title:"posts of tag:"+tag
-          post_id:post_id
+          post_id:-1
           votes:-1
           comments:-1
           body:markdown
@@ -350,11 +349,10 @@ class ZeroBlog extends ZeroFrame
           markdown += "\n[untagged:#{untagged} post(s)]\
             (?Toc=tagNone)"
 
-        post_id = 99999999
 
         @applyPostdata($(".post-full"),
           title:"index by tag"
-          post_id:post_id
+          post_id:-1
           votes:-1
           comments:-1
           body:markdown
@@ -376,7 +374,6 @@ class ZeroBlog extends ZeroFrame
       parse_res = (res) =>
 
         
-        post_id = 99999999999
         #id is needed when applyPostdata
 
         if res.length is 0
@@ -406,7 +403,7 @@ class ZeroBlog extends ZeroFrame
 
         @applyPostdata($(".post-full"),
           title:"index by date"
-          post_id:post_id
+          post_id:-1
           votes:-1
           comments:-1
           body:markdown
@@ -633,8 +630,11 @@ class ZeroBlog extends ZeroFrame
     title_hash = post.title.replace(/[#?& ]/g, "+").replace(/[+]+/g, "+")
     elem.data("object", "Post:"+post.post_id)
     $(".title .editable", elem).html(post.title)
-        .attr("href", "?Post:#{post.post_id}:#{title_hash}")
         .data("content", post.title)
+    #valid post_id
+    if post.post_id > 0
+        $(".title .editable", elem).attr("href", "?Post:#{post.post_id}:#{title_hash}")
+
     date_published = Time.since(post.date_published)
     # Published date
     if post.body.match /^---/m # Has more over fold
