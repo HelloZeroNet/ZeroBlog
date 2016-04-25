@@ -642,6 +642,12 @@ class ZeroBlog extends ZeroFrame
       date_published += " &middot; #{Time.readtime(post.body)}"
       $(".more", elem).css("display", "inline-block")
           .attr("href", "?Post:#{post.post_id}:#{title_hash}")
+      #if post have over fold, makes it more compact in main page
+      #this is useful when there're lots long posts
+      if !full
+        $(".body",elem).css("height","300px")
+          .css("overflow","hidden")
+       
     $(".details .published", elem).html(date_published)
         .data("content", post.date_published)
 
