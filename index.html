@@ -52,6 +52,10 @@
  <h2 data-editable="description"></h2>
  <a href="#Follow" class="feed-follow"><span class='text-follow'>Follow in Newsfeed</span><span class='text-following'>Following</span><div class="icon-feed"></div></a>
  <hr>
+ <a href="?Toc=dateDesc">TOC by date</a>
+ <br>
+ <a href="?Toc=tagAll">TOC by tag</a>
+ <hr>
  <div class="links" data-editable="links"></div>
 
  <!-- Last comments -->
@@ -84,7 +88,7 @@
 
   <!-- Template: post -->
   <div class="post template" data-object="Post:23" data-deletable="True">
-   <h1 class="title"><a href="?Post:23:Title" data-editable="title" data-editable-mode="simple" class="editable">Title</a></h1>
+   <h1 class="title"><a href="#" data-editable="title" data-editable-mode="simple" class="editable">Title</a></h1>
    <div class="details">
     <span class="published" data-editable="date_published" data-editable-mode="timestamp">21 hours ago &middot; 2 min read</span>
     <a href="?Post:23:title" class="comments-num">&middot; <div class="icon-comment"></div> <span class="num">3 comments</span></a>
@@ -93,6 +97,8 @@
      <span class="score-inactive"> <span class="icon-up">^</span><span class="score-num">0</span> </span>
      <span class="score-active"> <span class="icon-up">^</span><span class="score-num">1</span> </span>
     </a>-->
+    <br>
+      <span class="tag" data-editable="tag" data-editable-mode="simple">tag: </span>
    </div>
    <div class="body" data-editable="body">Body</div>
    <a class="more" href="#"><span class='readmore'>Read more</span> →</a>
@@ -104,10 +110,12 @@
 
  <!-- Single Post show -->
  <div class="post post-full" data-object="Post:23" data-deletable="True">
-  <h1 class="title"><a href="?Post:23:Title" data-editable="title" data-editable-mode="simple" class="editable">Title</a></h1>
+  <h1 class="title"><a href="#" data-editable="title" data-editable-mode="simple" class="editable">Title</a></h1>
   <div class="details">
    <span class="published" data-editable="date_published" data-editable-mode="timestamp">21 hours ago &middot; 2 min read</span>
    <a href="#Like" class="like" title="Like this post"><div class="icon-heart"></div><div class="icon-heart icon-heart-anim"></div> <span class="num"></span></a>
+   <br>
+      <span class="tag" data-editable="tag" data-editable-mode="simple">tag: </span>
   </div>
 
   <div class="body" data-editable="body"></div>
@@ -152,8 +160,9 @@
 
  <!-- Pager -->
  <div class="pager">
-  <a class="prev" href="#">← <span>Prev page</span></a>
-  <a class="next" href="#"><span>Next page</span> →</a>
+  <a class="first" href="?page=1">&lt;&lt;</a>
+  <a class="currentpage" href="javascript:void"></a>
+  <a class="last" href="#">&gt;&gt;</a>
  </div>
  <!-- EOF Pager -->
 
