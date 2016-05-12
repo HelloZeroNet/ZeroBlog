@@ -648,7 +648,7 @@ class ZeroBlog extends ZeroFrame
         .data("content", post.date_published)
 
 
-    $(".details .tag",elem).append(tagToHtml(tag))
+    $(".details .tag",elem).append(@tagToHtml(tag))
 
     $(".details .tag",elem).data("content",(tag.join(" ")))
 
@@ -800,13 +800,14 @@ class ZeroBlog extends ZeroFrame
       else if type == "Site"
         data[elem.data("editable")] = content
 
+      self = @
       @writeData data, (res) ->
         if cb
           if res == true # OK
             if elem.data("editable") == "tag"
               # tag list appears as links
               # reserve leading text
-              cb($(".post.template span.tag").text()+tagToHtml(dedup))
+              cb($(".post.template span.tag").text()+self.tagToHtml(dedup))
             else if elem.data("editable-mode") == "simple" # No markdown
               cb(content)
             else if elem.data("editable-mode") == "timestamp" # Format timestamp
@@ -998,6 +999,21 @@ class ZeroBlog extends ZeroFrame
       @loadData()
       if $("body").hasClass("page-main") then @pageMain()
       if $("body").hasClass("page-post") then @pagePost()
+
+  tagToHtml:(tag) ->
+    if typeof tag is 'string'
+      #input parameter must not empty nor have duplicate
+      tag = tag.split(" ")
+    
+    if tag.length is 0
+      return "<a href='?Toc=tagNone'>not tagged</a>"
+    
+    ret = ""
+    
+    for i in tag
+      ret+=("<a href='?Toc=tag:"+encodeURIComponent(i)+"'>"+i+"</a> ")
+    return ret
+
 
 
 window.Page = new ZeroBlog()
