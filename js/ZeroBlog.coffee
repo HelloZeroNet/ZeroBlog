@@ -295,7 +295,8 @@ class ZeroBlog extends ZeroFrame
         for i in res
           date = new Date(i.date_published*1000)
           markdown += "- [#{date.getFullYear()}-\
-            #{date.getMonth()+1}-#{date.getDate()}:#{i.title}](?Post:#{i.post_id})\n"
+            #{date.getMonth()+1}-#{date.getDate()}:\
+            #{i.title}](?Post:#{i.post_id})\n"
 
 
         @applyPostdata($(".post-full"),
@@ -447,7 +448,8 @@ class ZeroBlog extends ZeroFrame
         # Temporary dbschema bug workaround
         if res.error
           self.cmd "dbQuery", ["SELECT *, -1 AS votes FROM post
-            WHERE post_id = #{self.post_id} LIMIT 1"], (res)->parse_res(res,tag_res)
+            WHERE post_id = #{self.post_id} LIMIT 1"],
+            (res)->parse_res(res,tag_res)
         else
           parse_res(res,tag_res)
 
@@ -635,7 +637,8 @@ class ZeroBlog extends ZeroFrame
         .data("content", post.title)
     #valid post_id
     if post.post_id > 0
-        $(".title .editable", elem).attr("href", "?Post:#{post.post_id}:#{title_hash}")
+      $(".title .editable", elem).attr("href",
+      "?Post:#{post.post_id}:#{title_hash}")
 
     date_published = Time.since(post.date_published)
     # Published date
