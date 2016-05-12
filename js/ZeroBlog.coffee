@@ -441,12 +441,13 @@ class ZeroBlog extends ZeroFrame
               SELECT value FROM tag
               WHERE post_id=#{@post_id}
               """
+      self = @
  
       deal_post = (post_res,tag_res) ->
         # Temporary dbschema bug workaround
         if res.error
-          @cmd "dbQuery", ["SELECT *, -1 AS votes FROM post
-            WHERE post_id = #{@post_id} LIMIT 1"], (res)->parse_res(res,tag_res)
+          self.cmd "dbQuery", ["SELECT *, -1 AS votes FROM post
+            WHERE post_id = #{self.post_id} LIMIT 1"], (res)->parse_res(res,tag_res)
         else
           parse_res(res,tag_res)
 
@@ -545,6 +546,7 @@ class ZeroBlog extends ZeroFrame
  
 
  
+      self = @
       deal_post = (post_res,tag_res) ->
         if res.error
           # Temporary dbschema bug workaround
@@ -556,9 +558,9 @@ class ZeroBlog extends ZeroFrame
             LEFT JOIN comment USING (post_id)
             GROUP BY post_id
             ORDER BY date_published DESC
-            LIMIT #{(@page-1)*limit}, #{limit+1}
+            LIMIT #{(self.page-1)*limit}, #{limit+1}
            """
-          @cmd "dbQuery", [query], (res)-> parse_res(res,tag_res)
+          self.cmd "dbQuery", [query], (res)-> parse_res(res,tag_res)
         else
           parse_res(res,tag_res)
 
