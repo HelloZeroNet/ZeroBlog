@@ -87,9 +87,10 @@ class ZeroBlog extends ZeroFrame
 			if res
 				for row in res
 					@data[row.key] = row.value
-				$(".left h1 a:not(.editable-edit)").html(@data.title).data("content", @data.title)
-				$(".left h2").html(Text.renderMarked(@data.description)).data("content", @data.description)
-				$(".left .links").html(Text.renderMarked(@data.links)).data("content", @data.links)
+
+				if @data.title then $(".left h1 a:not(.editable-edit)").html(@data.title).data("content", @data.title)
+				if @data.description then $(".left h2").html(Text.renderMarked(@data.description)).data("content", @data.description)
+				if @data.links then $(".left .links").html(Text.renderMarked(@data.links)).data("content", @data.links)
 
 	loadLastcomments: (type="show", cb=false) ->
 		query = "
@@ -268,7 +269,7 @@ class ZeroBlog extends ZeroFrame
 
 	# Check if publishing is necessary
 	checkPublishbar: ->
-		if not @data["modified"] or @data["modified"] > @site_info.content.modified
+		if @data? and (not @data["modified"] or @data["modified"] > @site_info.content.modified)
 			$(".publishbar").addClass("visible")
 		else
 			$(".publishbar").removeClass("visible")
