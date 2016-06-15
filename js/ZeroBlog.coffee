@@ -159,10 +159,13 @@ class ZeroBlog extends ZeroFrame
 				if res.length
 					post = res[0]
 					@applyPostdata($(".post-full"), post, true)
+					$(".post-full").css("display", "block")
 					$(".post-full .like").attr("id", "post_like_#{post.post_id}").off("click").off("click").on "click", @submitPostVote
+					$(".notfound").css("display", "none")
 					Comments.pagePost(@post_id)
 				else
-					$(".post-full").html("<h1>Not found</h1>")
+					$(".notfound").css("display", "block")
+					$(".post-full").css("display", "none")
 				@pageLoaded()
 				Comments.checkCert()
 
