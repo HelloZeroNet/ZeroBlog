@@ -395,7 +395,7 @@ class ZeroBlog extends ZeroFrame
 	# Save content to data.json
 	saveContent: (elem, content, cb=false) =>
 		if elem.data("deletable") and content == null then return @deleteObject(elem, cb) # Its a delete request
-		elem.data("content", content)
+		if elem.data('editableMode') == "timestamp"  then elem.data("content", Time.timestamp(content)) else elem.data("content", content)
 		[type, id] = @getObject(elem).data("object").split(":")
 		id = parseInt(id)
 		if type == "Post" or type == "Site"
