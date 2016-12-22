@@ -497,6 +497,7 @@ class ZeroBlog extends ZeroFrame
 		# Updating title in content.json
 		@cmd "fileGet", ["content.json"], (content) =>
 			content = content.replace /"title": ".*?"/, "\"title\": \"#{data.title}\"" # Load as raw html to prevent js bignumber problems
+			content = unescape(encodeURIComponent(content))
 			@cmd "fileWrite", ["content.json", btoa(content)], (res) =>
 				if res != "ok"
 					@cmd "wrapperNotification", ["error", "Content.json write error: #{res}"]
