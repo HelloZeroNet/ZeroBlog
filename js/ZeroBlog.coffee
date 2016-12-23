@@ -47,7 +47,7 @@ class ZeroBlog extends ZeroFrame
 			username = Page.site_info.cert_user_id.replace /@.*/, ""
 			@follow.addFeed("Username mentions", "
 				SELECT
-				'comment' AS type,
+				'mention' AS type,
 				 date_added,
 				 post.title AS title,
 				 keyvalue.value || ': ' || comment.body AS body,
