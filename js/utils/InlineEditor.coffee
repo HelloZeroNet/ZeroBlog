@@ -42,6 +42,7 @@ class InlineEditor
 				@editor[0].selectionEnd = 0
 				@editor.focus()
 
+		$(".editbg").css("display", "block").cssLater("opacity", 0.9, 10)
 		$(".editable-edit").css("display", "none") # Hide all edit button until its not finished
 
 		$(".editbar").css("display", "inline-block").addClassLater("visible", 10) 
@@ -68,7 +69,8 @@ class InlineEditor
 	stopEdit: =>
 		@editor.remove()
 		@editor = null
-		@elem.css("display", "")
+		@elem.css("display", "").css("z-index", 999).css("position", "relative")
+		$(".editbg").css("opacity", 0).cssLater("display", "none")
 
 		$(".editable-edit").css("display", "") # Show edit buttons
 

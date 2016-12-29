@@ -52,7 +52,10 @@ a:hover { color: #3498db }
 .editing p { margin: 0px; padding: 0px }*/ /* IE FIX */
 .editor { width: 100%; display: block; overflow :hidden; resize: none; border: none; box-sizing: border-box; z-index: 900; position: relative }
 .editor:focus { border: 0px; outline-offset: 0px }
-
+.editbg {
+	display: none; width: 100%; height: 100%; position: fixed; opacity: 0; background-color: white; transition: opacity 0.5s;
+	left: 0px; top: 0px; z-index: 500; backface-visibility: hidden;
+}
 
 /* -- Editbar -- */
 
