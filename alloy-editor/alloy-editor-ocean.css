@@ -1,0 +1,669 @@
+@font-face {
+	font-family: 'alloyeditor-ocean';
+	src: url(data:application/font-woff;charset=utf-8;base64,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) format('woff');
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class*="ae-icon-"], [class*=" ae-icon-"] {
+	display: block;
+	font-family: 'alloyeditor-ocean';
+	speak: none;
+	font-size: 20px;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1.2;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+
+.ae-icon-add:before {
+	content: "\";
+}
+
+.ae-icon-align-center:before {
+	content: "\";
+}
+
+.ae-icon-align-justified:before {
+	content: "\";
+}
+
+.ae-icon-align-left:before {
+	content: "\";
+}
+
+.ae-icon-align-right:before {
+	content: "\";
+}
+
+.ae-icon-arrow:before {
+	content: "\";
+}
+
+.ae-icon-audio:before {
+	content: "\";
+}
+
+.ae-icon-bin:before {
+	content: "\";
+}
+
+.ae-icon-bold:before {
+	content: "\";
+}
+
+.ae-icon-bulleted-list:before {
+	content: "\";
+}
+
+.ae-icon-camera:before {
+	content: "\";
+}
+
+.ae-icon-cell:before {
+	content: "\";
+}
+
+.ae-icon-close:before {
+	content: "\";
+}
+
+.ae-icon-code:before {
+	content: "\";
+}
+
+.ae-icon-column:before {
+	content: "\";
+}
+
+.ae-icon-embed:before {
+	content: "\";
+}
+
+.ae-icon-h1:before {
+	content: "\";
+}
+
+.ae-icon-h2:before {
+	content: "\";
+}
+
+.ae-icon-image:before {
+	content: "\";
+}
+
+.ae-icon-indent-block:before {
+	content: "\";
+}
+
+.ae-icon-italic:before {
+	content: "\";
+}
+
+.ae-icon-link:before {
+	content: "\";
+}
+
+.ae-icon-numbered-list:before {
+	content: "\";
+}
+
+.ae-icon-ok:before {
+	content: "\";
+}
+
+.ae-icon-outdent-block:before {
+	content: "\";
+}
+
+.ae-icon-quote:before {
+	content: "\";
+}
+
+.ae-icon-remove:before {
+	content: "\";
+}
+
+.ae-icon-removeformat:before {
+	content: "\";
+}
+
+.ae-icon-row:before {
+	content: "\";
+}
+
+.ae-icon-separator:before {
+	content: "\";
+}
+
+.ae-icon-strike:before {
+	content: "\";
+}
+
+.ae-icon-subscript:before {
+	content: "\";
+}
+
+.ae-icon-superscript:before {
+	content: "\";
+}
+
+.ae-icon-table:before {
+	content: "\";
+}
+
+.ae-icon-twitter:before {
+	content: "\";
+}
+
+.ae-icon-underline:before {
+	content: "\";
+}
+
+.ae-icon-unlink:before {
+	content: "\";
+}
+
+.ae-icon-video:before {
+	content: "\";
+}
+@charset "UTF-8";
+/** GENERAL VARIABLES */
+/** COMPONENT VARIABLES **/
+/** DROPDOWN-LISTBOX **/
+/** DROPDOWN-LISTBOX HEADER **/
+/** DROPDOWN-LISTBOX ITEM */
+/**
+ * The order of imports is as follow:
+ * CSS for outer (parent) components should precede
+ * the CSS of nested components or components which
+ * stay on the same level in the hierarchy.
+ */
+.ae-placeholder:not(:focus):before {
+  content: attr(data-placeholder);
+  position: absolute; }
+
+.ae-twitter-link {
+  padding: 0 5px; }
+  .ae-twitter-link:after {
+    display: inline-block;
+    margin: 0 0 0 4px;
+    vertical-align: middle; }
+
+.ae-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0; }
+
+.ae-ui IE10-PLUS::-ms-reveal, .ae-ui [class^=ae-toolbar] {
+  height: auto;
+  box-sizing: content-box; }
+
+.ae-ui .ae-toolbar, .ae-ui [class^=ae-toolbar-] {
+  line-height: 1;
+  padding: 10px;
+  position: absolute; }
+  .ae-ui .ae-toolbar input, .ae-ui .ae-toolbar textarea, .ae-ui .ae-toolbar keygen, .ae-ui .ae-toolbar select, .ae-ui .ae-toolbar button, .ae-ui [class^=ae-toolbar-] input, .ae-ui [class^=ae-toolbar-] textarea, .ae-ui [class^=ae-toolbar-] keygen, .ae-ui [class^=ae-toolbar-] select, .ae-ui [class^=ae-toolbar-] button {
+    font-size: 14px; }
+  .ae-ui .ae-toolbar.ae-toolbar-transition, .ae-ui [class^=ae-toolbar-].ae-toolbar-transition {
+    -webkit-transition-property: height, left, opacity, top;
+    -moz-transition-property: height, left, opacity, top;
+    transition-property: height, left, opacity, top;
+    -webkit-transition-duration: 0.15s;
+    -moz-transition-duration: 0.15s;
+    transition-duration: 0.15s;
+    -webkit-transition-timing-function: ease-out;
+    -moz-transition-timing-function: ease-out;
+    transition-timing-function: ease-out; }
+  .ae-ui .ae-toolbar .ae-button, .ae-ui .ae-toolbar .ae-toolbar-element, .ae-ui [class^=ae-toolbar-] .ae-button, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element {
+    border-width: 0;
+    color: inherit;
+    cursor: pointer;
+    margin: 0;
+    padding: 0; }
+    .ae-ui .ae-toolbar .ae-button:hover:disabled, .ae-ui .ae-toolbar .ae-button:hover.ae-button-disabled, .ae-ui .ae-toolbar .ae-button:focus:disabled, .ae-ui .ae-toolbar .ae-button:focus.ae-button-disabled, .ae-ui .ae-toolbar .ae-toolbar-element:hover:disabled, .ae-ui .ae-toolbar .ae-toolbar-element:hover.ae-button-disabled, .ae-ui .ae-toolbar .ae-toolbar-element:focus:disabled, .ae-ui .ae-toolbar .ae-toolbar-element:focus.ae-button-disabled, .ae-ui [class^=ae-toolbar-] .ae-button:hover:disabled, .ae-ui [class^=ae-toolbar-] .ae-button:hover.ae-button-disabled, .ae-ui [class^=ae-toolbar-] .ae-button:focus:disabled, .ae-ui [class^=ae-toolbar-] .ae-button:focus.ae-button-disabled, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element:hover:disabled, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element:hover.ae-button-disabled, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element:focus:disabled, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element:focus.ae-button-disabled {
+      color: inherit; }
+    .ae-ui .ae-toolbar .ae-button:disabled, .ae-ui .ae-toolbar .ae-button.ae-button-disabled, .ae-ui .ae-toolbar .ae-toolbar-element:disabled, .ae-ui .ae-toolbar .ae-toolbar-element.ae-button-disabled, .ae-ui [class^=ae-toolbar-] .ae-button:disabled, .ae-ui [class^=ae-toolbar-] .ae-button.ae-button-disabled, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element:disabled, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element.ae-button-disabled {
+      cursor: auto;
+      opacity: 0.3; }
+  .ae-ui .ae-toolbar .ae-button, .ae-ui [class^=ae-toolbar-] .ae-button {
+    height: 24px;
+    width: 24px; }
+
+.ae-ui .ae-toolbar-add {
+  border: solid 0 transparent;
+  padding: 0; }
+  .ae-ui .ae-toolbar-add .ae-button {
+    height: 24px;
+    width: 24px; }
+
+.ae-ui .ae-toolbar-styles {
+  box-sizing: border-box;
+  max-width: 100%; }
+
+.ae-ui .ae-arrow-box:after {
+  content: '';
+  margin: auto;
+  position: absolute; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-bottom:after {
+  height: 0;
+  width: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 4px solid currentColor;
+  left: 0;
+  right: 0;
+  top: 100%; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-top:after {
+  height: 0;
+  width: 0;
+  border-bottom: 4px solid currentColor;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  left: 0;
+  right: 0;
+  top: -4px; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-top-left:after {
+  height: 0;
+  width: 0;
+  border-bottom: 4px solid currentColor;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  left: 15px;
+  top: -4px; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-top-right:after {
+  height: 0;
+  width: 0;
+  border-bottom: 4px solid currentColor;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  right: 15px;
+  top: -4px; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-left:after {
+  height: 0;
+  width: 0;
+  border-bottom: 5px solid transparent;
+  border-right: 4px solid currentColor;
+  border-top: 5px solid transparent;
+  left: -4px;
+  top: 0;
+  bottom: 0; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-right:after {
+  height: 0;
+  width: 0;
+  border-bottom: 5px solid transparent;
+  border-left: 4px solid currentColor;
+  border-top: 5px solid transparent;
+  right: -4px;
+  top: 0;
+  bottom: 0; }
+
+.ae-ui .ae-container, .ae-ui [class^=ae-container-] {
+  -webkit-box-align: center;
+  -moz-box-align: center;
+  box-align: center;
+  -webkit-align-items: center;
+  -moz-align-items: center;
+  -ms-align-items: center;
+  -o-align-items: center;
+  align-items: center;
+  -ms-flex-align: center;
+  display: -webkit-inline-box;
+  display: -moz-inline-box;
+  display: inline-box;
+  display: -webkit-inline-flex;
+  display: -moz-inline-flex;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-orient: horizontal;
+  -moz-box-orient: horizontal;
+  box-orient: horizontal;
+  -webkit-box-direction: normal;
+  -moz-box-direction: normal;
+  box-direction: normal;
+  -webkit-flex-direction: row;
+  -moz-flex-direction: row;
+  flex-direction: row;
+  -ms-flex-direction: row;
+  -webkit-box-lines: multiple;
+  -moz-box-lines: multiple;
+  box-lines: multiple;
+  -webkit-flex-wrap: wrap;
+  -moz-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  box-sizing: border-box; }
+  .ae-ui .ae-container *, .ae-ui .ae-container *:after, .ae-ui .ae-container *:before, .ae-ui [class^=ae-container-] *, .ae-ui [class^=ae-container-] *:after, .ae-ui [class^=ae-container-] *:before {
+    box-sizing: inherit;
+    color: inherit; }
+  .ae-ui .ae-container input, .ae-ui .ae-container textarea, .ae-ui .ae-container keygen, .ae-ui .ae-container select, .ae-ui .ae-container button, .ae-ui [class^=ae-container-] input, .ae-ui [class^=ae-container-] textarea, .ae-ui [class^=ae-container-] keygen, .ae-ui [class^=ae-container-] select, .ae-ui [class^=ae-container-] button {
+    color: initial; }
+  .ae-ui .ae-container .ae-container, .ae-ui .ae-container [class^=ae-container-], .ae-ui .ae-container .ae-button, .ae-ui .ae-container .ae-toolbar-element, .ae-ui .ae-container label, .ae-ui [class^=ae-container-] .ae-container, .ae-ui [class^=ae-container-] [class^=ae-container-], .ae-ui [class^=ae-container-] .ae-button, .ae-ui [class^=ae-container-] .ae-toolbar-element, .ae-ui [class^=ae-container-] label {
+    font-size: 14px;
+    margin: 0;
+    position: relative; }
+    .ae-ui .ae-container .ae-container:not(:last-child), .ae-ui .ae-container [class^=ae-container-]:not(:last-child), .ae-ui .ae-container .ae-button:not(:last-child), .ae-ui .ae-container .ae-toolbar-element:not(:last-child), .ae-ui .ae-container label:not(:last-child), .ae-ui [class^=ae-container-] .ae-container:not(:last-child), .ae-ui [class^=ae-container-] [class^=ae-container-]:not(:last-child), .ae-ui [class^=ae-container-] .ae-button:not(:last-child), .ae-ui [class^=ae-container-] .ae-toolbar-element:not(:last-child), .ae-ui [class^=ae-container-] label:not(:last-child) {
+      margin-right: 10px; }
+
+.ae-ui .ae-container-edit-link, .ae-ui .ae-container-edit-table {
+  height: 24px \9; }
+  .ae-ui .ae-container-edit-link *, .ae-ui .ae-container-edit-table * {
+    float: left \9; }
+  .ae-ui .ae-container-edit-link label, .ae-ui .ae-container-edit-table label {
+    padding: 0;
+    position: relative \9;
+    top: 25% \9;
+    transform: translateY(-50%) \9; }
+  .ae-ui .ae-container-edit-link IE10-PLUS::-ms-reveal, .ae-ui .ae-container-edit-link label, .ae-ui .ae-container-edit-table IE10-PLUS::-ms-reveal, .ae-ui .ae-container-edit-table label {
+    top: 0;
+    transform: translateY(0); }
+
+.ae-ui .ae-container-input {
+  -webkit-box-lines: single;
+  -moz-box-lines: single;
+  box-lines: single;
+  -webkit-flex-wrap: nowrap;
+  -moz-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  width: 192px; }
+  .ae-ui .ae-container-input.xxl {
+    width: 336px; }
+  .ae-ui .ae-container-input.medium {
+    width: 72px; }
+  .ae-ui .ae-container-input.small {
+    width: 36px; }
+  .ae-ui .ae-container-input.flexible {
+    width: auto;
+    flex-grow: 1; }
+  .ae-ui .ae-container-input input, .ae-ui .ae-container-input .ae-input {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    -webkit-flex: 1;
+    -moz-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    height: 24px;
+    margin: 0;
+    max-width: 100%;
+    padding: 0 0 0 4px;
+    display: inline-block \9;
+    width: 168px \9; }
+  .ae-ui .ae-container-input .ae-container-dropdown {
+    padding-left: 10px; }
+  .ae-ui .ae-container-input .ae-icon-remove {
+    float: right \9; }
+
+.ae-ui .ae-container-dropdown, .ae-ui [class^=ae-container-dropdown-] {
+  float: left \9;
+  width: 120px !important; }
+  .ae-ui .ae-container-dropdown > .ae-toolbar-element, .ae-ui [class^=ae-container-dropdown-] > .ae-toolbar-element {
+    float: left \9;
+    height: 24px;
+    text-align: left;
+    width: 100%; }
+    .ae-ui .ae-container-dropdown > .ae-toolbar-element .ae-container, .ae-ui [class^=ae-container-dropdown-] > .ae-toolbar-element .ae-container {
+      padding: 0;
+      height: 100% \9;
+      width: 100%; }
+      .ae-ui .ae-container-dropdown > .ae-toolbar-element .ae-container .ae-icon-arrow, .ae-ui [class^=ae-container-dropdown-] > .ae-toolbar-element .ae-container .ae-icon-arrow {
+        -webkit-transform: rotate(90deg);
+        -moz-transform: rotate(90deg);
+        -ms-transform: rotate(90deg);
+        -o-transform: rotate(90deg);
+        transform: rotate(90deg);
+        float: right \9;
+        position: absolute \9;
+        right: 0 \9;
+        top: 0 \9; }
+      .ae-ui .ae-container-dropdown > .ae-toolbar-element .ae-container .ae-container-dropdown-selected-item, .ae-ui [class^=ae-container-dropdown-] > .ae-toolbar-element .ae-container .ae-container-dropdown-selected-item {
+        -webkit-box-flex: 1;
+        -moz-box-flex: 1;
+        box-flex: 1;
+        -webkit-flex: 1;
+        -moz-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        display: inline-block;
+        line-height: 24px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        position: relative \9; }
+      .ae-ui .ae-container-dropdown > .ae-toolbar-element .ae-container IE10-PLUS::-ms-reveal, .ae-ui .ae-container-dropdown > .ae-toolbar-element .ae-container .ae-container-dropdown-selected-item, .ae-ui [class^=ae-container-dropdown-] > .ae-toolbar-element .ae-container IE10-PLUS::-ms-reveal, .ae-ui [class^=ae-container-dropdown-] > .ae-toolbar-element .ae-container .ae-container-dropdown-selected-item {
+        top: 0;
+        transform: translateY(0); }
+
+.ae-ui .ae-container-dropdown-small {
+  width: 48px !important; }
+
+.ae-ui .ae-container-dropdown-medium {
+  width: 96px !important; }
+
+.ae-ui .ae-container-dropdown-xl {
+  width: 192px !important; }
+
+.ae-ui .ae-button-bridge [class*="ae-icon-"], .ae-ui .ae-button-bridge [class*=" ae-icon-"] {
+  background-repeat: no-repeat;
+  display: block;
+  height: 16px;
+  width: 16px;
+  margin-left: 4px; }
+
+.ae-ui .ae-has-dropdown {
+  display: block;
+  float: left \9;
+  /* Set width here (not min-width) to prevent the dropdown container from moving when expanding/collapsing the it */
+  width: 24px; }
+
+.ae-ui .ae-dropdown, .ae-ui [class^=ae-dropdown-] {
+  left: 0;
+  padding: 4px;
+  position: absolute;
+  z-index: 0;
+  top: 34px; }
+  .ae-ui .ae-dropdown .ae-list-header, .ae-ui [class^=ae-dropdown-] .ae-list-header {
+    display: inline-block;
+    margin: 10px 0 0 0; }
+    .ae-ui .ae-dropdown .ae-list-header:first-child, .ae-ui [class^=ae-dropdown-] .ae-list-header:first-child {
+      margin-top: 10px; }
+  .ae-ui .ae-dropdown .ae-listbox, .ae-ui [class^=ae-dropdown-] .ae-listbox {
+    list-style: none;
+    margin: 0;
+    min-height: 44px;
+    min-width: 132px;
+    padding: 0; }
+    .ae-ui .ae-dropdown .ae-listbox .ae-toolbar-element, .ae-ui [class^=ae-dropdown-] .ae-listbox .ae-toolbar-element {
+      font-size: inherit;
+      height: 3em;
+      line-height: inherit;
+      margin-right: 0;
+      max-height: inherit;
+      min-width: 100%;
+      padding: 0 0 0 8px;
+      overflow: hidden;
+      text-align: left;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: auto; }
+      .ae-ui .ae-dropdown .ae-listbox .ae-toolbar-element *, .ae-ui [class^=ae-dropdown-] .ae-listbox .ae-toolbar-element * {
+        display: inline; }
+      .ae-ui .ae-dropdown .ae-listbox .ae-toolbar-element[class^=ae-icon-]:before, .ae-ui [class^=ae-dropdown-] .ae-listbox .ae-toolbar-element[class^=ae-icon-]:before {
+        padding-right: 10px;
+        vertical-align: middle; }
+  .ae-ui .ae-dropdown *, .ae-ui [class^=ae-dropdown-] * {
+    display: block \9; }
+
+.ae-ui .ae-camera {
+  align-items: center;
+  display: flex;
+  flex-flow: column;
+  justify-content: center; }
+  .ae-ui .ae-camera .ae-camera-canvas {
+    left: -10000px;
+    position: absolute;
+    top: -10000px; }
+  .ae-ui .ae-camera .ae-camera-shoot {
+    margin-top: 10px; }
+
+/** GENERAL VARIABLES **/
+/**
+ * AUTOGENERATED FONT ICON MAP
+ *
+ * This map is autogenerated in build-time based on the contents
+ * of the icons/svg folder. It maps the generated icon names with
+ * their corresponding glyphs.
+ *
+ * Use this for consistency in any skin where an icon needs to be
+ * referenced from within the css like this:
+ *
+ * .ae-some-link:after {
+ *     content: map-get($font-icon-map, iconName);
+ * }
+ */
+/** COLOR PALETTE **/
+/** COMPONENT VARIABLES **/
+/** DROPDOWN-LIST **/
+.ae-editable ::-moz-selection {
+  background: #e6f1fa !important;
+  color: inherit;
+  text-shadow: none; }
+
+.ae-editable ::selection {
+  background: #e6f1fa !important;
+  color: inherit;
+  text-shadow: none; }
+
+.ae-twitter-link {
+  background-color: #f8f8f8; }
+  .ae-twitter-link:after {
+    content: "";
+    font-family: alloyeditor-ocean; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-bottom:after {
+  color: #32a8e6; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-top:after {
+  color: #32a8e6; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-top-left:after {
+  color: #32a8e6; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-top-right:after {
+  color: #32a8e6; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-left:after {
+  color: #32a8e6; }
+
+.ae-ui .ae-arrow-box.ae-arrow-box-right:after {
+  color: #32a8e6; }
+
+.ae-ui .ae-container-dropdown > .ae-toolbar-element .ae-container .ae-icon-arrow, .ae-ui [class^=ae-container-dropdown-] > .ae-toolbar-element .ae-container .ae-icon-arrow {
+  -webkit-transform: rotate(90deg);
+  -moz-transform: rotate(90deg);
+  -ms-transform: rotate(90deg);
+  -o-transform: rotate(90deg);
+  transform: rotate(90deg); }
+
+.ae-ui .ae-container-input {
+  background-color: #fff;
+  border-radius: 0; }
+  .ae-ui .ae-container-input .ae-icon-remove {
+    color: #000;
+    font-size: 24px;
+    line-height: 24px; }
+  .ae-ui .ae-container-input .ae-container-dropdown {
+    background-color: #fff;
+    color: #000; }
+  .ae-ui .ae-container-input input, .ae-ui .ae-container-input .ae-input {
+    border-radius: 0;
+    border-width: 0;
+    color: #000;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 14px;
+    outline: none; }
+    .ae-ui .ae-container-input input::-webkit-input-placeholder, .ae-ui .ae-container-input .ae-input::-webkit-input-placeholder {
+      color: #999; }
+    .ae-ui .ae-container-input input::-moz-placeholder, .ae-ui .ae-container-input .ae-input::-moz-placeholder {
+      color: #999; }
+    .ae-ui .ae-container-input input:-moz-placeholder, .ae-ui .ae-container-input .ae-input:-moz-placeholder {
+      color: #999; }
+    .ae-ui .ae-container-input input:-ms-input-placeholder, .ae-ui .ae-container-input .ae-input:-ms-input-placeholder {
+      color: #999; }
+    .ae-ui .ae-container-input input:focus, .ae-ui .ae-container-input .ae-input:focus {
+      box-shadow: none; }
+    .ae-ui .ae-container-input input::-ms-clear, .ae-ui .ae-container-input .ae-input::-ms-clear {
+      display: none; }
+
+.ae-ui .ae-button-bridge [class*="ae-icon-"], .ae-ui .ae-button-bridge [class*=" ae-icon-"] {
+  -webkit-filter: brightness(0) invert(100%);
+  filter: brightness(0) invert(100%); }
+  .ae-ui .ae-button-bridge [class*="ae-icon-"]:hover, .ae-ui .ae-button-bridge [class*=" ae-icon-"]:hover {
+    -webkit-filter: sepia(80%) hue-rotate(-20deg) invert(90%) saturate(8);
+    filter: sepia(80%) hue-rotate(-20deg) invert(90%) saturate(8); }
+
+.ae-ui .ae-dropdown, .ae-ui [class^=ae-dropdown-] {
+  background-color: #fcfcfc;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 4px 4px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  color: #000; }
+  .ae-ui .ae-dropdown.ae-arrow-box:after, .ae-ui [class^=ae-dropdown-].ae-arrow-box:after {
+    color: #fcfcfc;
+    display: none; }
+  .ae-ui .ae-dropdown .ae-list-header, .ae-ui [class^=ae-dropdown-] .ae-list-header {
+    color: #999;
+    font-size: small;
+    font-style: italic; }
+  .ae-ui .ae-dropdown .ae-listbox .ae-toolbar-element:hover, .ae-ui [class^=ae-dropdown-] .ae-listbox .ae-toolbar-element:hover {
+    background-color: #fcfcfc; }
+  .ae-ui .ae-dropdown .ae-listbox .ae-toolbar-element.active, .ae-ui [class^=ae-dropdown-] .ae-listbox .ae-toolbar-element.active {
+    color: #32a8e6; }
+
+.ae-ui .ae-toolbar, .ae-ui [class^=ae-toolbar-] {
+  background-color: #32a8e6;
+  border-radius: 4px;
+  color: #fff;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+  .ae-ui .ae-toolbar .ae-button, .ae-ui .ae-toolbar .ae-toolbar-element, .ae-ui [class^=ae-toolbar-] .ae-button, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element {
+    background-color: transparent; }
+    .ae-ui .ae-toolbar .ae-button:hover, .ae-ui .ae-toolbar .ae-toolbar-element:hover, .ae-ui [class^=ae-toolbar-] .ae-button:hover, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element:hover {
+      color: #1888c3; }
+    .ae-ui .ae-toolbar .ae-button.ae-button-pressed, .ae-ui .ae-toolbar .ae-toolbar-element.ae-button-pressed, .ae-ui [class^=ae-toolbar-] .ae-button.ae-button-pressed, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element.ae-button-pressed {
+      background-color: #1a95d5; }
+      .ae-ui .ae-toolbar .ae-button.ae-button-pressed:hover, .ae-ui .ae-toolbar .ae-toolbar-element.ae-button-pressed:hover, .ae-ui [class^=ae-toolbar-] .ae-button.ae-button-pressed:hover, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element.ae-button-pressed:hover {
+        color: #1888c3; }
+    .ae-ui .ae-toolbar .ae-button.ae-button-disabled, .ae-ui .ae-toolbar .ae-toolbar-element.ae-button-disabled, .ae-ui [class^=ae-toolbar-] .ae-button.ae-button-disabled, .ae-ui [class^=ae-toolbar-] .ae-toolbar-element.ae-button-disabled {
+      opacity: 0.3; }
+
+.ae-ui .ae-toolbar-add {
+  background-color: #32a8e6;
+  border-color: transparent;
+  border-radius: 12px;
+  color: #fff; }
+  .ae-ui .ae-toolbar-add:hover, .ae-ui .ae-toolbar-add:focus {
+    opacity: 0.7; }
+  .ae-ui .ae-toolbar-add .ae-button-add:hover, .ae-ui .ae-toolbar-add .ae-button-add:focus {
+    color: inherit; }
+  .ae-ui .ae-toolbar-add .ae-button-add .ae-icon-add {
+    font-size: 12px;
+    line-height: 12px; }

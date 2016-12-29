@@ -1,0 +1,6 @@
+.ae-icon-inlinecode { font-family: monospace; font-size: 10px; word-break: break-all; line-height: 9px; padding: 4px; }
+.ae-icon-inlinecode:before { content: "0101"; }
+.ae-ui .ae-toolbar-add { transition: top 0.3s, opacity 0.3s; opacity: 0 !important; }
+.ae-ui .ae-toolbar-add.emptyline { opacity: 1 !important; }
+.ae-container-edit-link-target { display: none !important; }
+.cke_editable { outline: none; }

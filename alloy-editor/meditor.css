@@ -1,0 +1,21 @@
+.meditor { z-index: 999; position: relative; }
+.meditor-editmode {
+	float: right; font-family: monospace; border: none; font-weight: normal; font-size: 12px;
+	padding: 5px; border: 1px solid #d2d0d0; border-radius: 5px; transition: all 0.3s; margin-right: -36px;
+}
+.meditor-editmode:hover { border-color: #b381bb; transition: none; color: #333; }
+.meditor-editmode:focus { transition: all 0.3s; }
+.meditor-editmode.markdown { border-color: #9C27B0; background-color: #9C27B0; color: white; }
+.meditor-markdown {
+	width: 99%; font-family: "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; box-sizing: border-box; padding: 10px;
+    border: 1px solid #bbb; border-radius: 3px; box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); overflow: hidden;
+}
+
+.ae-icon-h2:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 3px; font-size: 23px; }
+.ae-icon-h3:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 4px; font-size: 16px; }
+
+.ae-button:focus { outline: none }
+.ae-ui .ae-toolbar-styles, .ae-ui .ae-toolbar-add, .ae-ui .ae-toolbar { z-index: 999 }
+
+h2.empty:before { content: "Heading"; color: #DDD; position: absolute; pointer-events: none; }
+h3.empty:before { content: "Sub-Heading"; color: #DDD; position: absolute; pointer-events: none; }
