@@ -22,22 +22,25 @@ class InlineEditor
 	startEdit: =>
 		@content_before = @elem.html() # Save current to restore on cancel
 
-		@editor = $("<textarea class='editor'></textarea>")
-		@editor.css("outline", "10000px solid rgba(255,255,255,0)").cssLater("transition", "outline 0.3s", 5).cssLater("outline", "10000px solid rgba(255,255,255,0.9)", 10) # Animate other elements fadeout
-		@editor.val @getContent(@elem, "raw")
-		@elem.after(@editor)
+		if @elem.data("editable-mode") == "meditor"
+			@editor = new Meditor(@elem[0])
+			@editor.load()
+		else
+			@editor = $("<textarea class='editor'></textarea>")
+			@editor.val @getContent(@elem, "raw")
+			@elem.after(@editor)
 
-		@elem.html [1..50].join("fill the width") # To make sure we span the editor as far as we can
-		@copyStyle(@elem, @editor) # Copy elem style to editor
-		@elem.html @content_before # Restore content
+			@elem.html [1..50].join("fill the width") # To make sure we span the editor as far as we can
+			@copyStyle(@elem, @editor) # Copy elem style to editor
+			@elem.html @content_before # Restore content
 
-		
-		@autoExpand(@editor) # Set editor to autoexpand
-		@elem.css("display", "none") # Hide elem
 
-		if $(window).scrollTop() == 0 # Focus textfield if scroll on top
-			@editor[0].selectionEnd = 0
-			@editor.focus()
+			@autoExpand(@editor) # Set editor to autoexpand
+			@elem.css("display", "none") # Hide elem
+
+			if $(window).scrollTop() == 0 # Focus textfield if scroll on top
+				@editor[0].selectionEnd = 0
+				@editor.focus()
 
 		$(".editable-edit").css("display", "none") # Hide all edit button until its not finished
 
