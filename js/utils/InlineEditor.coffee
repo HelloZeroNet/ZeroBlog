@@ -45,7 +45,7 @@ class InlineEditor
 		$(".editbg").css("display", "block").cssLater("opacity", 0.9, 10)
 		$(".editable-edit").css("display", "none") # Hide all edit button until its not finished
 
-		$(".editbar").css("display", "inline-block").addClassLater("visible", 10) 
+		$(".editbar").css("display", "inline-block").addClassLater("visible", 10)
 		$(".publishbar").css("opacity", 0) # Hide publishbar
 		$(".editbar .object").text @getObject(@elem).data("object")+"."+@elem.data("editable")
 		$(".editbar .button").removeClass("loading")
@@ -62,7 +62,7 @@ class InlineEditor
 
 		window.onbeforeunload = ->
 			return 'Your unsaved blog changes will be lost!'
-		
+
 		return false
 
 
@@ -100,7 +100,7 @@ class InlineEditor
 
 	deleteObject: =>
 		object_type = @getObject(@elem).data("object").split(":")[0]
-		Page.cmd "wrapperConfirm", ["Are you sure you sure to delete this #{object_type}?", "Delete"], (confirmed) => 
+		Page.cmd "wrapperConfirm", ["Are you sure you sure to delete this #{object_type}?", "Delete"], (confirmed) =>
 			$(".editbar .delete").addClass("loading")
 			Page.saveContent @getObject(@elem), null, =>
 				@stopEdit()
@@ -158,7 +158,7 @@ class InlineEditor
 				s = this.selectionStart
 				val = elem.val()
 				elem.val(val.substring(0,this.selectionStart) + "\t" + val.substring(this.selectionEnd))
-				this.selectionEnd = s+1; 
+				this.selectionEnd = s+1;
 
- 
+
 window.InlineEditor = InlineEditor

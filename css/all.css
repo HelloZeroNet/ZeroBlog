@@ -1,6 +1,6 @@
 
 
-/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
+/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
 
 
 .comments { margin-bottom: 60px }
@@ -56,7 +56,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 
 
-/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Follow.css ---- */
+/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Follow.css ---- */
 
 
 .icon-feed {
@@ -90,7 +90,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 
 
-/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Menu.css ---- */
+/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Menu.css ---- */
 
 
 .menu {
@@ -110,7 +110,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 }
 
 
-/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
+/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
 
 
 /* Design based on medium */
@@ -139,7 +139,7 @@ a:hover { color: #3498db }
 .button:active { position: relative; top: 1px }
 
 /*.button-delete { background-color: #e74c3c; border-bottom-color: #A83F34; color: white }*/
-.button-outline { background-color: white; color: #DDD; border: 1px solid #eee }
+.button-outline { background-color: white; color: #CACACA; border: 1px solid #eee }
 
 .button-delete:hover { background-color: #FF5442; border: 1px solid #FF5442; color: white }
 .button-ok:hover { background-color: #27AE60; border: 1px solid #27AE60; color: white }
@@ -167,7 +167,10 @@ a:hover { color: #3498db }
 .editing p { margin: 0px; padding: 0px }*/ /* IE FIX */
 .editor { width: 100%; display: block; overflow :hidden; resize: none; border: none; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; z-index: 900; position: relative }
 .editor:focus { border: 0px; outline-offset: 0px }
-
+.editbg {
+	display: none; width: 100%; height: 100%; position: fixed; opacity: 0; background-color: white; -webkit-transition: opacity 0.5s; -moz-transition: opacity 0.5s; -o-transition: opacity 0.5s; -ms-transition: opacity 0.5s; transition: opacity 0.5s ;
+	left: 0px; top: 0px; z-index: 500; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -o-backface-visibility: hidden; -ms-backface-visibility: hidden; backface-visibility: hidden ;
+}
 
 /* -- Editbar -- */
 
@@ -318,7 +321,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */
+/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */
 
 
 /* Base64 encoder: http://www.motobit.com/util/base64-decoder-encoder.asp */
@@ -355,7 +358,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/github.css ---- */
+/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/github.css ---- */
 
 
 /*
@@ -485,7 +488,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 
 
-/* ---- data-live/1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
+/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
 
 
 .icon { display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; }
