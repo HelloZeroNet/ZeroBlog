@@ -24,7 +24,7 @@ a:hover { color: #3498db }
 .button:active { position: relative; top: 1px }
 
 /*.button-delete { background-color: #e74c3c; border-bottom-color: #A83F34; color: white }*/
-.button-outline { background-color: white; color: #DDD; border: 1px solid #eee }
+.button-outline { background-color: white; color: #CACACA; border: 1px solid #eee }
 
 .button-delete:hover { background-color: #FF5442; border: 1px solid #FF5442; color: white }
 .button-ok:hover { background-color: #27AE60; border: 1px solid #27AE60; color: white }
