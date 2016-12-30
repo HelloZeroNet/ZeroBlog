@@ -17,5 +17,14 @@
 .ae-button:focus { outline: none }
 .ae-ui .ae-toolbar-styles, .ae-ui .ae-toolbar-add, .ae-ui .ae-toolbar { z-index: 999 }
 
+.ae-icon-inlinecode { font-family: monospace; font-size: 10px; word-break: break-all; line-height: 9px; padding: 4px; }
+.ae-icon-inlinecode:before { content: "0101"; }
+.ae-ui .ae-toolbar-add { transition: top 0.3s, opacity 0.3s; opacity: 0 !important; }
+.ae-ui .ae-toolbar-add.emptyline, .ae-ui .ae-toolbar-add:hover { opacity: 1 !important; }
+.ae-container-edit-link-target { display: none !important; }
+.cke_editable { outline: none; }
+
 h2.empty:before { content: "Heading"; color: #DDD; position: absolute; pointer-events: none; }
 h3.empty:before { content: "Sub-Heading"; color: #DDD; position: absolute; pointer-events: none; }
+
+.meditor hr { display: block !important }
