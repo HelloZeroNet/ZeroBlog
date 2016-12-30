@@ -84,7 +84,6 @@ class Meditor extends Class
 			back = marked(@getMarkdown(), {gfm: true, breaks: true})
 
 	handleEditmodeChange: =>
-		@log "Change mode", @tag_editmode
 		if @tag_editmode.classList.contains("markdown")
 			# Change to ckeditor
 			@tag_markdown.style.display = "none"

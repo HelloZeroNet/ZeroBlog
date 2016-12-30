@@ -606,13 +606,20 @@
     __extends(CustomAlloyEditor, _super);
 
     function CustomAlloyEditor(_at_tag) {
-      var editor;
+      var editor, el, height_added, height_before, style;
       this.tag = _at_tag;
       this.handleSelectionChange = __bind(this.handleSelectionChange, this);
       this.handleChange = __bind(this.handleChange, this);
       this.handleCommand = __bind(this.handleCommand, this);
       this.handleAction = __bind(this.handleAction, this);
       editor = AlloyEditor.editable(this.tag);
+      el = editor._editor.element.$;
+      height_before = el.getClientRects()[0].height;
+      style = getComputedStyle(el);
+      el.style.position = "relative";
+      el.style.paddingTop = (parseInt(style["padding-top"]) + 20) + "px";
+      height_added = el.getClientRects()[0].height - height_before;
+      el.style.top = (parseInt(style["top"]) - height_added) + "px";
       editor.get('nativeEditor').on("selectionChange", this.handleSelectionChange);
       editor.get('nativeEditor').on("focus", (function(_this) {
         return function(e) {
@@ -628,6 +635,7 @@
       });
       editor.get('nativeEditor').on("actionPerformed", this.handleAction);
       editor.get('nativeEditor').on('afterCommandExec', this.handleCommand);
+      window.editor = editor;
       this.el_last_created = null;
       return editor;
     }
@@ -692,7 +700,7 @@
     };
 
     CustomAlloyEditor.prototype.handleSelectionChange = function(e) {
-      var el, toolbar_add, _ref, _ref1;
+      var el, toolbar_add;
       if (this.el_last_created && this.el_last_created.getText().replace(/\u200B/g, '').trim() !== "") {
         this.el_last_created.removeClass("empty");
         this.el_last_created = null;
@@ -711,17 +719,25 @@
           this.el_last_created = el;
         }
         toolbar_add.classList.remove("lineselected");
-        toolbar_add.classList.add("emptyline");
+        return toolbar_add.classList.add("emptyline");
       } else {
         toolbar_add.classList.add("lineselected");
-        toolbar_add.classList.remove("emptyline");
+        return toolbar_add.classList.remove("emptyline");
       }
-      if ((_ref = e.editor.element.getPrivate().events.mouseout) != null ? _ref.listeners.length : void 0) {
-        e.editor.element.removeListener("mouseout", e.editor.element.getPrivate().events.mouseout.listeners[0].fn);
-      }
-      if ((_ref1 = e.editor.element.getPrivate().events.mouseleave) != null ? _ref1.listeners.length : void 0) {
-        return e.editor.element.removeListener("mouseleave", e.editor.element.getPrivate().events.mouseleave.listeners[0].fn);
-      }
+
+      /*
+      		if e.editor.element.getPrivate().events.mouseout?.listeners.length
+      			e.editor.element.removeListener("mouseout", e.editor.element.getPrivate().events.mouseout.listeners[0].fn)
+      
+      		if e.editor.element.getPrivate().events.mouseleave?.listeners.length
+      			 * Keep only mouseout
+      			func = e.editor.element.getPrivate().events.mouseleave.listeners[0]
+      			console.log "remove", e.editor.element.removeListener("mouseleave", func.fn)
+      			e.editor.element.on "mouseleave", (e_leave) ->
+      				if document.querySelector(".ae-toolbar-styles") == null
+      					window.editor._mainUI.forceUpdate()
+      					func(e_leave, e_leave.data)
+       */
     };
 
     return CustomAlloyEditor;
@@ -731,6 +747,7 @@
   window.CustomAlloyEditor = CustomAlloyEditor;
 
 }).call(this);
+
 
 
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Follow.coffee ---- */
@@ -915,7 +932,7 @@
       this.edit_button.on("click", this.startEdit);
       this.elem.addClass("editable").before(this.edit_button);
       this.editor = null;
-      this.elem.on("mouseenter", (function(_this) {
+      this.elem.on("mouseenter click", (function(_this) {
         return function(e) {
           var scrolltop, top;
           _this.edit_button.css("opacity", "0.4");
@@ -942,7 +959,7 @@
       var _i, _results;
       this.content_before = this.elem.html();
       if (this.elem.data("editable-mode") === "meditor") {
-        this.editor = new Meditor(this.elem[0]);
+        this.editor = new Meditor(this.elem[0], this.getContent(this.elem, "raw"));
         this.editor.load();
       } else {
         this.editor = $("<textarea class='editor'></textarea>");
@@ -985,7 +1002,7 @@
     InlineEditor.prototype.stopEdit = function() {
       this.editor.remove();
       this.editor = null;
-      this.elem.css("display", "").css("z-index", 999).css("position", "relative");
+      this.elem.css("display", "").css("z-index", 999).css("position", "relative").cssLater("z-index", "").cssLater("position", "");
       $(".editbg").css("opacity", 0).cssLater("display", "none");
       $(".editable-edit").css("display", "");
       $(".editbar").cssLater("display", "none", 1000).removeClass("visible");
@@ -1096,7 +1113,6 @@
 }).call(this);
 
 
-
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Meditor.coffee ---- */
 
 
@@ -1109,9 +1125,8 @@
   Meditor = (function(_super) {
     __extends(Meditor, _super);
 
-    function Meditor(_at_tag_original, _at_body) {
+    function Meditor(_at_tag_original, body) {
       this.tag_original = _at_tag_original;
-      this.body = _at_body;
       this.val = __bind(this.val, this);
       this.remove = __bind(this.remove, this);
       this.save = __bind(this.save, this);
@@ -1124,19 +1139,29 @@
       this.tag_container.insertAdjacentHTML('afterBegin', this.tag_original.outerHTML);
       this.tag_original.style.display = "none";
       this.tag = this.tag_container.firstChild;
+      if (body) {
+        this.tag.innerHTML = marked(body, {
+          gfm: true,
+          breaks: true
+        });
+      }
       this;
     }
 
     Meditor.prototype.load = function() {
       var script, style;
-      style = document.createElement("link");
-      style.href = "alloy-editor/all.css";
-      style.rel = "stylesheet";
-      document.head.appendChild(style);
-      script = document.createElement("script");
-      script.src = "alloy-editor/all.js";
-      document.head.appendChild(script);
-      return script.onload = this.handleEditorLoad;
+      if (!window.AlloyEditor) {
+        style = document.createElement("link");
+        style.href = "alloy-editor/all.css";
+        style.rel = "stylesheet";
+        document.head.appendChild(style);
+        script = document.createElement("script");
+        script.src = "alloy-editor/all.js";
+        document.head.appendChild(script);
+        return script.onload = this.handleEditorLoad;
+      } else {
+        return this.handleEditorLoad();
+      }
     };
 
     Meditor.prototype.handleEditorLoad = function() {
@@ -1206,7 +1231,6 @@
     };
 
     Meditor.prototype.handleEditmodeChange = function() {
-      this.log("Change mode", this.tag_editmode);
       if (this.tag_editmode.classList.contains("markdown")) {
         this.tag_markdown.style.display = "none";
         this.tag.style.display = "";
@@ -1384,18 +1408,13 @@
     }
 
     Text.prototype.toColor = function(text) {
-      var color, hash, i, value, _i, _j, _ref;
+      var color, hash, i, _i, _ref;
       hash = 0;
       for (i = _i = 0, _ref = text.length - 1; 0 <= _ref ? _i <= _ref : _i >= _ref; i = 0 <= _ref ? ++_i : --_i) {
         hash = text.charCodeAt(i) + ((hash << 5) - hash);
       }
       color = '#';
       return "hsl(" + (hash % 360) + ",30%,50%)";
-      for (i = _j = 0; _j <= 2; i = ++_j) {
-        value = (hash >> (i * 8)) & 0xFF;
-        color += ('00' + value.toString(16)).substr(-2);
-      }
-      return color;
     };
 
     Text.prototype.renderMarked = function(text, options) {
@@ -2215,6 +2234,7 @@
       elem.data("object", "Post:" + post.post_id);
       $(".title .editable", elem).html(post.title).attr("href", "?Post:" + post.post_id + ":" + title_hash).data("content", post.title);
       date_published = Time.since(post.date_published);
+      post.body = post.body.replace(/^\* \* \*/m, "---");
       if (post.body.match(/^---/m)) {
         date_published += " &middot; " + (Time.readtime(post.body));
         $(".more", elem).css("display", "inline-block").attr("href", "?Post:" + post.post_id + ":" + title_hash);

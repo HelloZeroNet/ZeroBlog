@@ -675,18 +675,6 @@
 
 
 
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/alloy-editor/editor-custom.css ---- */
-
-
-.ae-icon-inlinecode { font-family: monospace; font-size: 10px; word-break: break-all; line-height: 9px; padding: 4px; }
-.ae-icon-inlinecode:before { content: "0101"; }
-.ae-ui .ae-toolbar-add { -webkit-transition: top 0.3s, opacity 0.3s; -moz-transition: top 0.3s, opacity 0.3s; -o-transition: top 0.3s, opacity 0.3s; -ms-transition: top 0.3s, opacity 0.3s; transition: top 0.3s, opacity 0.3s ; opacity: 0 !important; }
-.ae-ui .ae-toolbar-add.emptyline { opacity: 1 !important; }
-.ae-container-edit-link-target { display: none !important; }
-.cke_editable { outline: none; }
-
-
-
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/alloy-editor/editor.css ---- */
 
 
@@ -704,14 +692,14 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 
 .meditor { z-index: 999; position: relative; }
 .meditor-editmode {
-	float: right; font-family: monospace; border: none; font-weight: normal; font-size: 12px;
-	padding: 5px; border: 1px solid #d2d0d0; -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; margin-right: -36px;
+	float: right; font-family: monospace; border: none; font-weight: normal; font-size: 12px; z-index: 999; position: relative;
+	padding: 5px; border: 1px solid #d2d0d0; -webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; margin-top: -38px;
 }
 .meditor-editmode:hover { border-color: #b381bb; -webkit-transition: none; -moz-transition: none; -o-transition: none; -ms-transition: none; transition: none ; color: #333; }
 .meditor-editmode:focus { -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; }
 .meditor-editmode.markdown { border-color: #9C27B0; background-color: #9C27B0; color: white; }
 .meditor-markdown {
-	width: 99%; font-family: "Segoe UI", Helvetica, Arial, sans-serif; font-size: 14px; line-height: 1.6; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; padding: 10px;
+	width: 100%; font-family: monospace; font-size: 14px; line-height: 1.6; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; padding: 10px;
     border: 1px solid #bbb; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px ; -webkit-box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); -moz-box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); -o-box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); -ms-box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4) ; overflow: hidden;
 }
 
@@ -721,5 +709,14 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
 .ae-button:focus { outline: none }
 .ae-ui .ae-toolbar-styles, .ae-ui .ae-toolbar-add, .ae-ui .ae-toolbar { z-index: 999 }
 
+.ae-icon-inlinecode { font-family: monospace; font-size: 10px; word-break: break-all; line-height: 9px; padding: 4px; }
+.ae-icon-inlinecode:before { content: "0101"; }
+.ae-ui .ae-toolbar-add { -webkit-transition: top 0.3s, opacity 0.3s; -moz-transition: top 0.3s, opacity 0.3s; -o-transition: top 0.3s, opacity 0.3s; -ms-transition: top 0.3s, opacity 0.3s; transition: top 0.3s, opacity 0.3s ; opacity: 0 !important; }
+.ae-ui .ae-toolbar-add.emptyline, .ae-ui .ae-toolbar-add:hover { opacity: 1 !important; }
+.ae-container-edit-link-target { display: none !important; }
+.cke_editable { outline: none; }
+
 h2.empty:before { content: "Heading"; color: #DDD; position: absolute; pointer-events: none; }
 h3.empty:before { content: "Sub-Heading"; color: #DDD; position: absolute; pointer-events: none; }
+
+.meditor hr { display: block !important }
