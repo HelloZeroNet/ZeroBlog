@@ -300,6 +300,7 @@ class ZeroBlog extends ZeroFrame
 		$(".title .editable", elem).html(post.title).attr("href", "?Post:#{post.post_id}:#{title_hash}").data("content", post.title)
 		date_published = Time.since(post.date_published)
 		# Published date
+		post.body = post.body.replace(/^\* \* \*/m, "---")
 		if post.body.match /^---/m # Has more over fold
 			date_published += " &middot; #{Time.readtime(post.body)}" # If has break add readtime
 			$(".more", elem).css("display", "inline-block").attr("href", "?Post:#{post.post_id}:#{title_hash}")
