@@ -4,7 +4,7 @@ class InlineEditor
 		@edit_button.on "click", @startEdit
 		@elem.addClass("editable").before(@edit_button)
 		@editor = null
-		@elem.on "mouseenter", (e) =>
+		@elem.on "mouseenter click", (e) =>
 			@edit_button.css("opacity", "0.4")
 			# Keep in display
 			scrolltop = $(window).scrollTop()
