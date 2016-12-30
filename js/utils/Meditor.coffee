@@ -15,16 +15,19 @@ class Meditor extends Class
 
 
 	load: =>
-		style = document.createElement("link")
-		style.href = "alloy-editor/all.css"
-		style.rel = "stylesheet"
-		document.head.appendChild(style)
+		if not window.AlloyEditor
+			style = document.createElement("link")
+			style.href = "alloy-editor/all.css"
+			style.rel = "stylesheet"
+			document.head.appendChild(style)
 
-		script = document.createElement("script")
-		script.src = "alloy-editor/all.js"
-		document.head.appendChild(script)
+			script = document.createElement("script")
+			script.src = "alloy-editor/all.js"
+			document.head.appendChild(script)
 
-		script.onload = @handleEditorLoad
+			script.onload = @handleEditorLoad
+		else
+			@handleEditorLoad()
 
 
 	handleEditorLoad: =>
