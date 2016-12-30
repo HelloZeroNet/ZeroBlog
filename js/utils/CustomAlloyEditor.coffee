@@ -1,6 +1,17 @@
 class CustomAlloyEditor extends Class
 	constructor: (@tag) ->
 		editor = AlloyEditor.editable(@tag)
+
+		# Add top padding to avoid toolbar movement
+		el = editor._editor.element.$
+		height_before = el.getClientRects()[0].height
+		style = getComputedStyle(el)
+		el.style.position = "relative"
+		el.style.paddingTop = (parseInt(style["padding-top"]) + 20) + "px"
+		height_added = el.getClientRects()[0].height - height_before
+		el.style.top = (parseInt(style["top"]) - height_added) + "px"
+
+		# Add listeners
 		editor.get('nativeEditor').on "selectionChange", @handleSelectionChange
 		editor.get('nativeEditor').on "focus", (e) =>
 			setTimeout ( =>
@@ -12,6 +23,8 @@ class CustomAlloyEditor extends Class
 			e.data.el.remove()  # Don't allow image upload yet
 		editor.get('nativeEditor').on "actionPerformed", @handleAction
 		editor.get('nativeEditor').on 'afterCommandExec', @handleCommand
+
+		window.editor = editor
 
 		@el_last_created = null
 
@@ -106,10 +119,22 @@ class CustomAlloyEditor extends Class
 			toolbar_add.classList.remove("emptyline")
 
 		# Remove toolbar moving
+		###
 		if e.editor.element.getPrivate().events.mouseout?.listeners.length
 			e.editor.element.removeListener("mouseout", e.editor.element.getPrivate().events.mouseout.listeners[0].fn)
+
 		if e.editor.element.getPrivate().events.mouseleave?.listeners.length
-			e.editor.element.removeListener("mouseleave", e.editor.element.getPrivate().events.mouseleave.listeners[0].fn)
+			# Keep only mouseout
+			func = e.editor.element.getPrivate().events.mouseleave.listeners[0]
+			console.log "remove", e.editor.element.removeListener("mouseleave", func.fn)
+			e.editor.element.on "mouseleave", (e_leave) ->
+				if document.querySelector(".ae-toolbar-styles") == null
+					window.editor._mainUI.forceUpdate()
+					func(e_leave, e_leave.data)
+		###
+
+
+
 
 
 window.CustomAlloyEditor = CustomAlloyEditor
