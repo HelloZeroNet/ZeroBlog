@@ -87,8 +87,16 @@ selections.unshift({
 // Other settings
 CKEDITOR.config.language = "en"
 CKEDITOR.config.title = ""
+CKEDITOR.config.fullPage  = true
 CKEDITOR.config.pasteFromWordRemoveFontStyles = true
 CKEDITOR.config.removePlugins = "dragdrop"
+AlloyEditor.Core.ATTRS.removePlugins.value += ',ae_embed'
+AlloyEditor.Buttons.linkEdit.defaultProps.appendProtocol = false
+CKEDITOR.config.buttonCfg = {
+    buttonLinkEdit: {
+        appendProtocol: false
+    }
+}
 AlloyEditor.Core.ATTRS.toolbars.value = {
     add: {
         buttons: ['h2', 'h3', 'quote', 'code', 'hline', 'table'],
