@@ -69,7 +69,7 @@ class InlineEditor
 	stopEdit: =>
 		@editor.remove()
 		@editor = null
-		@elem.css("display", "").css("z-index", 999).css("position", "relative")
+		@elem.css("display", "").css("z-index", 999).css("position", "relative").cssLater("z-index", "").cssLater("position", "")
 		$(".editbg").css("opacity", 0).cssLater("display", "none")
 
 		$(".editable-edit").css("display", "") # Show edit buttons
