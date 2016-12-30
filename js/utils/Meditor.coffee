@@ -1,5 +1,5 @@
 class Meditor extends Class
-	constructor: (@tag_original, @body) ->
+	constructor: (@tag_original, body) ->
 		@log "Create", @
 
 		@tag_original.insertAdjacentHTML('beforeBegin', "<div class='meditor'></div>")
@@ -8,6 +8,9 @@ class Meditor extends Class
 		@tag_container.insertAdjacentHTML('afterBegin', @tag_original.outerHTML)
 		@tag_original.style.display = "none"
 		@tag = @tag_container.firstChild
+
+		if body
+			@tag.innerHTML = marked(body, {gfm: true, breaks: true})
 		@
 
 

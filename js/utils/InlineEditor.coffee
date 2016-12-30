@@ -23,7 +23,7 @@ class InlineEditor
 		@content_before = @elem.html() # Save current to restore on cancel
 
 		if @elem.data("editable-mode") == "meditor"
-			@editor = new Meditor(@elem[0])
+			@editor = new Meditor(@elem[0], @getContent(@elem, "raw"))
 			@editor.load()
 		else
 			@editor = $("<textarea class='editor'></textarea>")
