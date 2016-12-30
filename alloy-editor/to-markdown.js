@@ -253,6 +253,12 @@ module.exports = [
     }
   },
   {
+    filter: ["main", "article", "section", "figure", "footer", "header", "body", "figcaption"],
+    replacement: function (content) {
+      return content
+    }
+  },
+  {
     filter: ['del', 's', 'strike'],
     replacement: function (content) {
       return '~~' + content + '~~'
