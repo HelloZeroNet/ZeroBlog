@@ -105,7 +105,7 @@ CKEDITOR.config.buttonCfg = {
 }
 AlloyEditor.Core.ATTRS.toolbars.value = {
     add: {
-        buttons: ['h2', 'h3', 'quote', 'code', 'hline', 'table'],
+        buttons: ['h2', 'h3', 'quote', 'code', 'hline', 'table', 'image'],
         tabIndex: 2
     },
     styles: {
