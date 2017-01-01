@@ -61,7 +61,7 @@ a:hover { color: #3498db }
 
 .bottombar {
 	display: none; position: fixed; padding: 10px 20px; opacity: 0; background-color: rgba(255,255,255,0.9);
-	right: 30px; bottom: 0px; z-index: 999; transition: all 0.3s; transform: translateY(50px)
+	right: 30px; bottom: 0px; z-index: 1000; transition: all 0.3s; transform: translateY(50px)
 }
 .bottombar.visible { transform: translateY(0px); opacity: 1 }
 .publishbar { z-index: 990}
@@ -145,7 +145,7 @@ code {
 	color: #444; font-weight: normal; font-size: 13px; vertical-align: text-bottom; border-bottom-width: 2px;
 }
 .post .body pre { table-layout: fixed; width: auto; display: table; white-space: normal; }
-.post .body pre code { padding: 10px 20px; white-space: pre; max-width: 850px }
+.post .body pre code { padding: 10px 20px; white-space: pre; max-width: 850px; display: block }
 
 blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 /*.post .more {
