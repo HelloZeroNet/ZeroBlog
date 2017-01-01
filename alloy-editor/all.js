@@ -975,6 +975,12 @@ selections.unshift({
     buttons: ['bold', 'italic', 'strike', 'inlinecode', 'link'],
     test: AlloyEditor.SelectionTest.text
 })
+// Remove Image toolbar
+AlloyEditor.Core.ATTRS.toolbars.value.styles.selections.forEach(
+    function(selection, i, selections) {
+        if (selection.name == "image") selections.splice(i, 1)
+    }
+)
 
 
 // Other settings
@@ -983,7 +989,7 @@ CKEDITOR.config.title = ""
 CKEDITOR.config.fullPage  = true
 CKEDITOR.config.pasteFromWordRemoveFontStyles = true
 CKEDITOR.config.removePlugins = "dragdrop"
-AlloyEditor.Core.ATTRS.removePlugins.value += ',ae_embed'
+AlloyEditor.Core.ATTRS.removePlugins.value += ',ae_embed,ae_imagealignment,ae_dragresize'
 AlloyEditor.Buttons.linkEdit.defaultProps.appendProtocol = false
 CKEDITOR.config.buttonCfg = {
     buttonLinkEdit: {
@@ -992,7 +998,7 @@ CKEDITOR.config.buttonCfg = {
 }
 AlloyEditor.Core.ATTRS.toolbars.value = {
     add: {
-        buttons: ['h2', 'h3', 'quote', 'code', 'hline', 'table'],
+        buttons: ['h2', 'h3', 'quote', 'code', 'hline', 'table', 'image'],
         tabIndex: 2
     },
     styles: {

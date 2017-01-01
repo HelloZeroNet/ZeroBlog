@@ -612,6 +612,9 @@
       this.handleChange = __bind(this.handleChange, this);
       this.handleCommand = __bind(this.handleCommand, this);
       this.handleAction = __bind(this.handleAction, this);
+      this.handleImageAdd = __bind(this.handleImageAdd, this);
+      this.getExtension = __bind(this.getExtension, this);
+      this.resizeImage = __bind(this.resizeImage, this);
       editor = AlloyEditor.editable(this.tag);
       el = editor._editor.element.$;
       height_before = el.getClientRects()[0].height;
@@ -630,15 +633,108 @@
       })(this));
       editor.get('nativeEditor').on("click", this.handleSelectionChange);
       editor.get('nativeEditor').on("change", this.handleChange);
-      editor.get('nativeEditor').on('imageAdd', function(e) {
-        return e.data.el.remove();
-      });
+      editor.get('nativeEditor').on('imageAdd', this.handleImageAdd);
       editor.get('nativeEditor').on("actionPerformed", this.handleAction);
       editor.get('nativeEditor').on('afterCommandExec', this.handleCommand);
       window.editor = editor;
       this.el_last_created = null;
-      return editor;
+      this.image_size_limit = 200 * 1024;
+      this.image_resize_width = 1200;
+      this.image_resize_height = 900;
+      this.image_preverse_ratio = true;
+      this.image_try_png = false;
+      return this;
     }
+
+    CustomAlloyEditor.prototype.calcSize = function(source_width, source_height, target_width, target_height) {
+      var height, width;
+      if (source_width <= target_width && source_height <= target_height) {
+        return [source_width, source_height];
+      }
+      width = target_width;
+      height = width * (source_height / source_width);
+      if (height > target_height) {
+        height = target_height;
+        width = height * (source_width / source_height);
+      }
+      return [Math.round(width), Math.round(height)];
+    };
+
+    CustomAlloyEditor.prototype.scaleHalf = function(image) {
+      var canvas, ctx;
+      canvas = document.createElement("canvas");
+      canvas.width = image.width / 1.5;
+      canvas.height = image.height / 1.5;
+      ctx = canvas.getContext("2d");
+      ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
+      return canvas;
+    };
+
+    CustomAlloyEditor.prototype.resizeImage = function(image, width, height) {
+      var canvas, ctx, image_base64uri, image_resized, _ref;
+      canvas = document.createElement("canvas");
+      if (this.image_preverse_ratio) {
+        _ref = this.calcSize(image.width, image.height, width, height), canvas.width = _ref[0], canvas.height = _ref[1];
+      } else {
+        canvas.width = width;
+        canvas.height = height;
+      }
+      ctx = canvas.getContext("2d");
+      ctx.fillStyle = "#FFF";
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+      image_resized = image;
+      while (image_resized.width > width * 1.5) {
+        image_resized = this.scaleHalf(image_resized);
+      }
+      ctx.drawImage(image_resized, 0, 0, canvas.width, canvas.height);
+      if (this.image_try_png && this.getExtension(image.src) === "png") {
+
+        /*
+        			quant = new RgbQuant({colors: 256, method: 1})
+        			quant.sample(canvas)
+        			quant.palette(true)
+        			canvas_quant = drawPixels(quant.reduce(canvas), width)
+        			optimizer = new CanvasTool.PngEncoder(canvas_quant, { bitDepth: 8, colourType: CanvasTool.PngEncoder.ColourType.TRUECOLOR })
+        			image_base64uri = "data:image/png;base64," + btoa(optimizer.convert())
+         */
+        image_base64uri = canvas.toDataURL("image/png", 0.1);
+        if (image_base64uri.length > this.image_size_limit) {
+          this.log("PNG too large (" + image_base64uri.length + " bytes), convert to jpg instead");
+          image_base64uri = canvas.toDataURL("image/jpeg", 0.7);
+        } else {
+          this.log("Converted to PNG");
+        }
+      } else {
+        image_base64uri = canvas.toDataURL("image/jpeg", 0.7);
+      }
+      this.log("Resized " + image.width + "x" + image.height + " to " + canvas.width + "x" + canvas.height + " (" + image_base64uri.length + " bytes)");
+      return [image_base64uri, canvas.width, canvas.height];
+    };
+
+    CustomAlloyEditor.prototype.getExtension = function(data) {
+      return data.match("/[a-z]+")[0].replace("/", "").replace("jpeg", "jpg");
+    };
+
+    CustomAlloyEditor.prototype.handleImageAdd = function(e) {
+      var height, image_base64uri, name, width, _ref;
+      if (e.data.file.name) {
+        name = e.data.file.name.replace(/[^\w\.-]/gi, "_");
+      } else {
+        name = Time.timestamp() + "." + this.getExtension(e.data.file.type);
+      }
+      e.data.el.$.style.maxWidth = "2400px";
+      if (e.data.file.size > this.image_size_limit) {
+        this.log("File size " + e.data.file.size + " larger than allowed " + this.image_size_limit + ", resizing...");
+        _ref = this.resizeImage(e.data.el.$, this.image_resize_width, this.image_resize_height), image_base64uri = _ref[0], width = _ref[1], height = _ref[2];
+        e.data.el.$.src = image_base64uri;
+        name = name.replace(/(png|gif|jpg)/, this.getExtension(image_base64uri));
+      } else {
+        image_base64uri = e.data.el.$.src;
+      }
+      e.data.el.$.style.maxWidth = "";
+      e.data.el.$.alt = name + " (" + width + "x" + height + ")";
+      return this.handleImageSave(name, image_base64uri, e.data.el.$);
+    };
 
     CustomAlloyEditor.prototype.handleAction = function(e) {
       var el, new_el, ranges;
@@ -747,7 +843,6 @@
   window.CustomAlloyEditor = CustomAlloyEditor;
 
 }).call(this);
-
 
 
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Follow.coffee ---- */
@@ -927,6 +1022,7 @@
       this.deleteObject = __bind(this.deleteObject, this);
       this.saveEdit = __bind(this.saveEdit, this);
       this.stopEdit = __bind(this.stopEdit, this);
+      this.handleImageSave = __bind(this.handleImageSave, this);
       this.startEdit = __bind(this.startEdit, this);
       this.edit_button = $("<a href='#Edit' class='editable-edit icon-edit'></a>");
       this.edit_button.on("click", this.startEdit);
@@ -960,6 +1056,7 @@
       this.content_before = this.elem.html();
       if (this.elem.data("editable-mode") === "meditor") {
         this.editor = new Meditor(this.elem[0], this.getContent(this.elem, "raw"));
+        this.editor.handleImageSave = this.handleImageSave;
         this.editor.load();
       } else {
         this.editor = $("<textarea class='editor'></textarea>");
@@ -997,6 +1094,19 @@
         return 'Your unsaved blog changes will be lost!';
       };
       return false;
+    };
+
+    InlineEditor.prototype.handleImageSave = function(name, image_base64uri, el) {
+      var file_path, object_name;
+      el.style.opacity = 0.5;
+      object_name = this.getObject(this.elem).data("object").replace(/[^A-Za-z0-9]/g, "_").toLowerCase();
+      file_path = "data/img/" + object_name + "_" + name;
+      return Page.cmd("fileWrite", [file_path, image_base64uri.replace(/.*,/, "")], (function(_this) {
+        return function() {
+          el.style.opacity = 1;
+          return el.src = file_path;
+        };
+      })(this));
     };
 
     InlineEditor.prototype.stopEdit = function() {
@@ -1053,6 +1163,7 @@
       $('pre code').each(function(i, block) {
         return hljs.highlightBlock(block);
       });
+      Page.cleanupImages();
       return false;
     };
 
@@ -1113,6 +1224,7 @@
 }).call(this);
 
 
+
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Meditor.coffee ---- */
 
 
@@ -1169,6 +1281,9 @@
       this.tag_editmode = this.tag.previousSibling;
       this.tag_editmode.onclick = this.handleEditmodeChange;
       this.editor = new CustomAlloyEditor(this.tag);
+      if (this.handleImageSave) {
+        this.editor.handleImageSave = this.handleImageSave;
+      }
       this.tag.insertAdjacentHTML('beforeBegin', this.tag_original.outerHTML);
       this.tag_markdown = this.tag.previousSibling;
       this.tag_markdown.innerHTML = "<textarea class='meditor-markdown'>MARKDOWN</textarea>";
@@ -2383,6 +2498,7 @@
           return _this.writeData(data, function(res) {
             if (cb) {
               if (res === true) {
+                _this.cleanupImages();
                 if (elem.data("editable-mode") === "simple") {
                   return cb(content);
                 } else if (elem.data("editable-mode") === "timestamp") {
@@ -2635,6 +2751,30 @@
         };
       })(this));
       return false;
+    };
+
+    ZeroBlog.prototype.cleanupImages = function() {
+      return this.cmd("fileGet", ["data/data.json"], (function(_this) {
+        return function(data) {
+          return Page.cmd("fileList", "data/img", function(files) {
+            var file, _i, _len, _results;
+            _results = [];
+            for (_i = 0, _len = files.length; _i < _len; _i++) {
+              file = files[_i];
+              if (file.indexOf("post_") !== 0) {
+                continue;
+              }
+              if (data.indexOf(file) === -1) {
+                _this.log("Deleting image", file, "...");
+                _results.push(_this.cmd("fileDelete", "data/img/" + file));
+              } else {
+                _results.push(void 0);
+              }
+            }
+            return _results;
+          });
+        };
+      })(this));
     };
 
     ZeroBlog.prototype.onRequest = function(cmd, message) {
