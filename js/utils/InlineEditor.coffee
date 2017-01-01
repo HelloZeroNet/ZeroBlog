@@ -122,6 +122,8 @@ class InlineEditor
 		$('pre code').each (i, block) -> # Higlight code blocks
 			hljs.highlightBlock(block)
 
+		Page.cleanupImages()
+
 		return false
 
 

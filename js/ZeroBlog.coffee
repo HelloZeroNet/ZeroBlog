@@ -422,6 +422,7 @@ class ZeroBlog extends ZeroFrame
 			@writeData data, (res) =>
 				if cb
 					if res == true # OK
+						@cleanupImages()
 						if elem.data("editable-mode") == "simple" # No markdown
 							cb(content)
 						else if elem.data("editable-mode") == "timestamp" # Format timestamp
@@ -559,6 +560,18 @@ class ZeroBlog extends ZeroFrame
 				@log "Writepublish result", res
 
 		return false
+
+	# Delete non-referenced images
+	cleanupImages: ->
+		@cmd "fileGet", ["data/data.json"], (data) =>
+			Page.cmd "fileList", "data/img", (files) =>
+				for file in files
+					if file.indexOf("post_") != 0
+						continue
+					if data.indexOf(file) == -1
+						@log "Deleting image", file, "..."
+						@cmd "fileDelete", "data/img/#{file}"
+
 
 	# Parse incoming requests
 	onRequest: (cmd, message) ->
