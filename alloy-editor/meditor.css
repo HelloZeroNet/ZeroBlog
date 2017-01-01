@@ -27,4 +27,4 @@
 h2.empty:before { content: "Heading"; color: #DDD; position: absolute; pointer-events: none; }
 h3.empty:before { content: "Sub-Heading"; color: #DDD; position: absolute; pointer-events: none; }
 
-.meditor hr { display: block !important }
+.meditor hr:first-of-type { display: block !important; position: absolute; margin: 0px; border-bottom: 1px dashed #DEDEDE; width: 100% }
