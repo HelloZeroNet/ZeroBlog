@@ -24,6 +24,7 @@ class InlineEditor
 
 		if @elem.data("editable-mode") == "meditor"
 			@editor = new Meditor(@elem[0], @getContent(@elem, "raw"))
+			@editor.handleImageSave = @handleImageSave
 			@editor.load()
 		else
 			@editor = $("<textarea class='editor'></textarea>")
@@ -65,6 +66,13 @@ class InlineEditor
 
 		return false
 
+	handleImageSave: (name, image_base64uri, el) =>
+		el.style.opacity = 0.5
+		object_name = @getObject(@elem).data("object").replace(/[^A-Za-z0-9]/g, "_").toLowerCase()
+		file_path = "data/img/#{object_name}_#{name}"
+		Page.cmd "fileWrite", [file_path, image_base64uri.replace(/.*,/, "")], =>
+			el.style.opacity = 1
+			el.src = file_path
 
 	stopEdit: =>
 		@editor.remove()

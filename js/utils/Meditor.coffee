@@ -38,6 +38,7 @@ class Meditor extends Class
 
 		# Create ckeditor
 		@editor = new CustomAlloyEditor(@tag)
+		if @handleImageSave then @editor.handleImageSave = @handleImageSave
 
 		# Create markdown editor textfield
 		@tag.insertAdjacentHTML('beforeBegin', @tag_original.outerHTML)
