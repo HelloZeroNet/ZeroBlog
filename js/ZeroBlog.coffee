@@ -269,6 +269,18 @@ class ZeroBlog extends ZeroFrame
 				elem.data("editor", editor)
 		@logEnd "Adding inline editors"
 
+	addImageZoom: (parent) ->
+		$("img", parent).each (i, img_elem) =>
+			img_elem.onload = =>
+				img_elem = $(img_elem)
+				size = img_elem.attr("alt")?.match("([0-9]+)x([0-9]+)")
+				if not size
+					return
+				if img_elem.width() < parseInt(size[1]) or img_elem.height() < parseInt(size[2])
+					img_elem.attr("data-action", "zoom")
+				img_elem.onload = null
+			if img_elem.complete
+				img_elem.onload()
 
 	# Check if publishing is necessary
 	checkPublishbar: ->
@@ -347,7 +359,7 @@ class ZeroBlog extends ZeroFrame
 
 		if $(".body", elem).data("content") != post.body
 			$(".body", elem).html(Text.renderMarked(body)).data("content", post.body)
-
+			@addImageZoom(elem)
 
 	# Wrapper websocket connection ready
 	onOpenWebsocket: (e) =>

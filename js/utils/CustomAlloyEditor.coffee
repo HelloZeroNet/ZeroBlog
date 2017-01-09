@@ -112,6 +112,8 @@ class CustomAlloyEditor extends Class
 			name = name.replace(/(png|gif|jpg)/, @getExtension(image_base64uri))  # Change extension if necessary
 		else
 			image_base64uri = e.data.el.$.src
+			width = e.data.el.$.width
+			height = e.data.el.$.height
 		# e.data.el.remove()  # Don't allow image upload yet
 		e.data.el.$.style.maxWidth = ""  # Show in standard size
 		e.data.el.$.alt = "#{name} (#{width}x#{height})"

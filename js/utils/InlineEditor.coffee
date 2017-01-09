@@ -100,6 +100,8 @@ class InlineEditor
 
 				$('pre code').each (i, block) -> # Higlight code blocks
 					hljs.highlightBlock(block)
+
+				Page.addImageZoom(@elem)
 			else
 				$(".editbar .save").removeClass("loading")
 

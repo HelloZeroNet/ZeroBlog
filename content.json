@@ -5,9 +5,17 @@
  "description": "Blogging platform Demo",
  "domain": "Blog.ZeroNetwork.bit",
  "files": {
+  "alloy-editor/all.css": {
+   "sha512": "c1e2049d304f77ad078fd4546a62c1456ba5459ef169fe82394a090a22487b8e",
+   "size": 63344
+  },
+  "alloy-editor/all.js": {
+   "sha512": "0c917acb6b3f7397d37263a8ee01100929e7aed3c752b2103cb884f65aef7b23",
+   "size": 737537
+  },
   "css/all.css": {
-   "sha512": "925dc5974f267939c38490ae2bada5677789e8482f5320fe2d9c252d1c62c79a",
-   "size": 127369
+   "sha512": "4742f4b675019bad2d6c3b795a3228470e6a11a9d47050a48c6baeb2ff5adf49",
+   "size": 129435
   },
   "data-default/data.json": {
    "sha512": "aff6accbac7e950ff567105666ddf29b70ca7c2dcd9d90f9a969509a42a9b195",
@@ -18,20 +26,28 @@
    "size": 679
   },
   "data/data.json": {
-   "sha512": "8f3a8284e4d51633a56bbbca4c5e2607925a21a09734fc412178c8b32a5e2cbf",
-   "size": 73658
+   "sha512": "8c254f6a122e7176d9a7b641128e2955d7f66fd4de6662d4a799b0bf257be01f",
+   "size": 118493
   },
   "data/files/ZeroFrame.coffee": {
-   "sha512": "96a11e88429e2fa26c47f5d24bf52d030d506f1dfecb2a4e2c5e034cc5d07e31",
-   "size": 1335
+   "sha512": "e9d440c26e858ff524313e60881714bcaf292470ce63d2b33b93d9920a21a7c4",
+   "size": 1467
+  },
+  "data/img/allony.png": {
+   "sha512": "2cf2ef70d1dbf2395384581ffb0e1cc9e8dfa5a64441e5ab7c08477127fb6d9a",
+   "size": 1572
   },
   "data/img/autoupdate.png": {
    "sha512": "d2b4dc8e0da2861ea051c0c13490a4eccf8933d77383a5b43de447c49d816e71",
    "size": 24460
   },
   "data/img/clone.png": {
-   "sha512": "b60362ebb7744cd3fe07d25e2f29df246cb359da7f613ba8612649593f28d74e",
-   "size": 4547
+   "sha512": "07df9f39af99b2a4348f1f0984b0e8667add7821a689e0a737df49bd68411def",
+   "size": 11539
+  },
+  "data/img/decentralized_web_summit.png": {
+   "sha512": "90f83d91ea366eeb13c5874c0d25ef6efa6d20cc6e3f556fdc4de949d58248a4",
+   "size": 25428
   },
   "data/img/direct_domains.png": {
    "sha512": "5f14b30c1852735ab329b22496b1e2ea751cb04704789443ad73a70587c59719",
@@ -40,6 +56,10 @@
   "data/img/domain.png": {
    "sha512": "ce87e0831f4d1e95a95d7120ca4d33f8273c6fce9f5bbedf7209396ea0b57b6a",
    "size": 11881
+  },
+  "data/img/getd.png": {
+   "sha512": "22987f498e2dd6e5dee9f6367fec22fa1d2ad3538b2455d1d9e3fc400d1933db",
+   "size": 36735
   },
   "data/img/memory.png": {
    "sha512": "dd56515085b4a79b5809716f76f267ec3a204be3ee0d215591a77bf0f390fa4e",
@@ -57,9 +77,29 @@
    "sha512": "84df27a2ee59f18bc646ed4e6610a6ca7569fad2e85198ba9aa278a3258f35c3",
    "size": 104799
   },
+  "data/img/optional_manager.png": {
+   "sha512": "f0df2c1df5106f63e922ac0b65388d97bab1e7c26f6bf06469b44eae8b798cec",
+   "size": 29008
+  },
+  "data/img/pocketchip.jpg": {
+   "sha512": "05ddad3659e71dfbc6afbba3faaf680c810636ea2319e1e9950ed462cfa75d01",
+   "size": 131607
+  },
+  "data/img/post_101_ezgif.com-f1dae34e05.gif": {
+   "sha512": "ee45043be1c79a1ef952f2ab030d24b63592790b572750b8bf42544d80a228e3",
+   "size": 15609
+  },
+  "data/img/post_101_plus.png": {
+   "sha512": "e8d3bd6fe509e79389385389d66874a388a8474218c3ef5b3cf9339196d0633d",
+   "size": 243
+  },
   "data/img/progressbar.png": {
    "sha512": "23d592ae386ce14158cec34d32a3556771725e331c14d5a4905c59e0fe980ebf",
    "size": 13294
+  },
+  "data/img/search.png": {
+   "sha512": "b5adf6562b0078bdda257d216a07b43fa6f81e0989fcabf83817ef072cbeb1f1",
+   "size": 18735
   },
   "data/img/sidebar.png": {
    "sha512": "e5fdafcc7226f830eb27a1296236aa985625e27480e6829660db978ceae0bba9",
@@ -72,6 +112,10 @@
   "data/img/slots_memory.png": {
    "sha512": "82a250e6da909d7f66341e5b5c443353958f86728cd3f06e988b6441e6847c29",
    "size": 9488
+  },
+  "data/img/startup.png": {
+   "sha512": "d9f4d652396bbb89f0508e3e3908bd03408e99681f33e47f790b53a9b1c4fafc",
+   "size": 4257
   },
   "data/img/trayicon.png": {
    "sha512": "e7ae65bf280f13fb7175c1293dad7d18f1fcb186ebc9e1e33850cdaccb897b8f",
@@ -93,6 +137,10 @@
    "sha512": "efe4e815a260e555303e5c49e550a689d27a8361f64667bd4a91dbcccb83d2b4",
    "size": 24001
   },
+  "data/img/zerochat.png": {
+   "sha512": "b1512ad6514a87d8052dac880b3ef0d9f2e70cf2e4605bfebd4a6c792d1c2ba9",
+   "size": 12029
+  },
   "data/img/zeroid.png": {
    "sha512": "b46d541a9e51ba2ddc8a49955b7debbc3b45fd13467d3c20ef104e9d938d052b",
    "size": 18875
@@ -100,6 +148,10 @@
   "data/img/zeromail.png": {
    "sha512": "f2ced47d30bbf76549ae990b63dab00f3764ad48b6085464b122b108f31da368",
    "size": 34638
+  },
+  "data/img/zerome.png": {
+   "sha512": "2b97eadf18d93c52c3316d14d8d54b1564a058e332fbf7bbb107bf24ad07e302",
+   "size": 21698
   },
   "data/img/zeroname.png": {
    "sha512": "bab45a1bb2087b64e4f69f756b2ffa5ad39b7fdc48c83609cdde44028a7a155d",
@@ -118,44 +170,49 @@
    "size": 26606
   },
   "data/pdf/zeronet_presentation.pdf": {
-   "sha512": "556d7294d964badd0fa6191984a0525f70c8821ec6473c7487684259e88f688a",
-   "size": 477911
+   "sha512": "70274438cf2fbb63e1d3c75a74250ca5d968d63cadbb4426305b3b51f2608a01",
+   "size": 472084
   },
   "dbschema.json": {
-   "sha512": "b387d0a1f93c159d0c89534e1c08115355b3b65262ab85ff79ec65768a514bde",
-   "size": 1924
+   "sha512": "fa70ee2fce3f8342c6909e0e9b853bca71fa996f23f85739f94c086f2bda5ceb",
+   "size": 2571
+  },
+  "img/avatar.png": {
+   "sha512": "a656c470967e27c2b385182a361db8bab1696fe3b2d79c86394236d02ce42eb8",
+   "size": 87
   },
   "img/loading.gif": {
    "sha512": "8a42b98962faea74618113166886be488c09dad10ca47fe97005edc5fb40cc00",
    "size": 723
   },
   "index.html": {
-   "sha512": "59331ccbe89d293a8209d61aea1c1a87e483d517df3a3331a146274138a3d461",
-   "size": 6210
+   "sha512": "1025375f4a07a4723b7aca895c478d7f68d712882487180c9b79206df688e85a",
+   "size": 6370
   },
   "js/all.js": {
-   "sha512": "afd397f939dd5572b8b060f7601e6a727ccf673f439050aaf83081c7d6827b04",
-   "size": 219924
+   "sha512": "a493bfc212939c37f0a0449a0aa6c5f095852ef4975dd58d762dd34b9d2202d5",
+   "size": 247911
   }
  },
- "ignore": "((js|css)/(?!all.(js|css))|data/.*db|data/users/.*/.*)",
+ "ignore": "((js|css|alloy-editor)/(?!all.(js|css))|data/.*db|data/users/.*/.*)",
  "includes": {
   "data/users/content.json": {
    "signers": [],
    "signers_required": 1
   }
  },
+ "inner_path": "content.json",
+ "modified": 1483290562.531,
  "postmessage_nonce_security": true,
- "modified": 1454871785.45,
  "sign": [
-  53523412265427659660002592635772655067131373145368568573632488247121248785089,
-  101255384476047707765244829076483505851690344946361674232933275211895120676214
+  57465607774301586817202676245832029615176987417029507515583851344301200194310,
+  36772088310616530629251261181853038146063159440873673819339816208385844880098
  ],
  "signers_sign": "G7W/oNvczE5nPTFYVOqv8+GOpQd23LS/Dc1Q6xQ1NRDDHlYzmoSE63UQ7Za05kD0rwIYXbuUSr8z8p6RhZmnUs8=",
  "signs": {
-  "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "G0xZKJ7DgmgzJN8sFphi5TxLkn07pZsj8Bq9AQzlTeQf/7GVkojwYLy62riA/xr4L/PHsCDppOtHVcPJC9Pk9UY="
+  "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "HCb2qALKgheUbuEf0mpR6M7SfguE2CZeQBJ3wkMCZXGt+m2QXPU39aph+WCdUUM9d8WaRltFYf9rZNO8fNypv34="
  },
  "signs_required": 1,
  "title": "ZeroBlog",
- "zeronet_version": "0.3.6"
+ "zeronet_version": "0.5.1"
 }
