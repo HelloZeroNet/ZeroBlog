@@ -146,7 +146,10 @@
         "padding-top": "",
         "transform": "scale(1)"
       }, null, 40);
-      return elem.cssLater("transition", "", 1000, "noclear");
+      return elem.cssLater({
+        "transition": "",
+        "transform": ""
+      }, null, 1000, "noclear");
     }), 10);
     return this;
   };
@@ -181,6 +184,7 @@
   };
 
 }).call(this);
+
 
 
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/lib/jquery.csslater.coffee ---- */

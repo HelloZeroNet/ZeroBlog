@@ -6,7 +6,7 @@ jQuery.fn.cssSlideDown = ->
 		height = elem.outerHeight()
 		elem.css({"height": 0, "display": ""}).cssLater("transition", "all 0.3s ease-out", 20)
 		elem.cssLater({"height": height, "opacity": 1, "margin-bottom": "", "margin-top": "", "padding-bottom": "", "padding-top": "", "transform": "scale(1)"}, null, 40)
-		elem.cssLater("transition", "", 1000, "noclear")
+		elem.cssLater({"transition": "", "transform": ""}, null, 1000, "noclear")
 	), 10
 	return @
 
