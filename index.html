@@ -172,6 +172,11 @@
 </div>
 <!-- EOF Template: menu -->
 
-<script type="text/javascript" src="js/all.js" asyc></script>
+<script type="text/javascript" src="js/all.js?lang={lang}" asyc></script>
+<script>
+$(".topmenu a").each( function(i, elem) {
+    $(elem).attr("href", Text.fixLink($(elem).attr("href")))
+});
+</script>
 </body>
 </html>
