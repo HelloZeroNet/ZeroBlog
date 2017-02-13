@@ -206,12 +206,16 @@
    "size": 723
   },
   "index.html": {
-   "sha512": "1025375f4a07a4723b7aca895c478d7f68d712882487180c9b79206df688e85a",
-   "size": 6370
+   "sha512": "503623af793ba3d4209a08b7c94b06db410804bdf7089fed040c471c459a71a5",
+   "size": 6382
   },
   "js/all.js": {
    "sha512": "2e75e1eddde295bc99ce54f87b987219caed30d0828fe361c900ffb9a9fe1905",
    "size": 247867
+  },
+  "languages/pl.json": {
+   "sha512": "f84ea772597afc947fb0e759318aaa3371a36efe542abdbd6b6411ea99468826",
+   "size": 864
   }
  },
  "ignore": "((js|css|alloy-editor)/(?!all.(js|css))|data/.*db|data/users/.*/.*)",
@@ -222,15 +226,15 @@
   }
  },
  "inner_path": "content.json",
- "modified": 1486643882,
+ "modified": 1486949114,
  "postmessage_nonce_security": true,
  "sign": [
-  67734636948931289926131864528132648992753063628749920470499816658017566675500,
-  113280103959434528513125770219729153422146341265446029598261218795423933630110
+  46220524892014274189597736846232592807986501080175547419624109664319912543976,
+  48261414791532551873927752970010534526261073351836499372694272435238865271264
  ],
  "signers_sign": "G7W/oNvczE5nPTFYVOqv8+GOpQd23LS/Dc1Q6xQ1NRDDHlYzmoSE63UQ7Za05kD0rwIYXbuUSr8z8p6RhZmnUs8=",
  "signs": {
-  "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "G5IEjqOs9HhIBNtez33rLZBHZ/KQKWMkQ2FBYzp+6o8N6NL6KwjuL2neRUCoupdSJkiLrcESikFjierrpB6hFyU="
+  "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "G4MrVTYetIomtruNF7KyB5VNSynx4oy/IEZJzNz84XwTcW1GQNkXuRHLFVK0YLtVxmTyX8Jm3AscS4e2+0QG/wg="
  },
  "signs_required": 1,
  "title": "ZeroBlog",
