@@ -1,8 +1,8 @@
 /* Design based on medium */
 
-body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto', sans-serif; height: 15000px; overflow: hidden; backface-visibility: hidden }
+body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; height: 15000px; overflow: hidden; backface-visibility: hidden }
 body.loaded { height: auto; overflow: auto }
-h1, h2, h3, h4 { font-family: 'Roboto', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
+h1, h2, h3, h4 { font-family: 'Roboto Light', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
 h2 { margin-top: 2em }
 h3 { font-size: 24px; margin-top: 2em }
@@ -166,6 +166,10 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 .pager .prev:hover { box-shadow: inset -150px 0px 0px 0px #333; }
 .pager .prev:active { box-shadow: inset -150px 0px 0px 0px #AF3BFF; }
 
+.zoom-img {
+	filter: none; -webkit-filter: blur(0px); -moz-filter: blur(0px); -ms-filter: blur(0px); filter:progid:DXImageTransform.Microsoft.Blur(PixelRadius='0');
+	backface-visibility: hidden; transform: translateZ(0); image-rendering: optimizeSpeed;
+}
 /* Score */
 /*
 .score {
