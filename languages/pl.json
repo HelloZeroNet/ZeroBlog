@@ -1,0 +1,34 @@
+{
+	"Add new post": "Dodaj nowy wpis",
+	"Follow in Newsfeed": "Śledź na Tablicy",
+	"Posts": "Wpisy",
+	"Comments": "Komentarze",
+	"Following": "Śledzony",
+
+	"Like this post": "Polub ten wpis",
+	"Latest comments:": "Ostatnie komentarze:",
+	"Reply": "Odpowiedz",
+
+	"Bold": "Wytłuszczenie",
+	"Italic": "Kursywa",
+	"Strikethrough": "Przekreślenie",
+	"Code": "Kod",
+	"Link": "Odnośnik",
+
+	"More comments": "Więcej komentarzy",
+	"Sign in as...": "Zaloguj się jako...",
+	"Submit comment": "Wyślij komentarz",
+	"Please sign in": "Proszę, zaloguj się",
+	"new comment": "nowy komentarz",
+	"used: ": "zużyto: ",
+
+	" minutes ago": " minut(y/ę) temu",
+	" hours ago": " godzin(y/ę) temu",
+	" days ago": " dni(dzień) temu",
+	"on ": "",
+	"Just now": "Właśnie teraz",
+
+	"Save": "Zapisz",
+	"Cancel": "Anuluj",
+	"Delete ": "Usuń "
+}
