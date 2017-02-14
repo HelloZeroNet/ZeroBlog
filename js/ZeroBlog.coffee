@@ -617,6 +617,14 @@ class ZeroBlog extends ZeroFrame
 			@loadData()
 			if $("body").hasClass("page-main") then @pageMain()
 			if $("body").hasClass("page-post") then @pagePost()
+		else if site_info.event?[0] == "cert_changed" and site_info.cert_user_id
+			# Auto click follow username mentions on cert change
+			@initFollowButton()
+			mentions_menu_elem = @follow.feeds["Username mentions"][1]
+			setTimeout ( =>
+				if not mentions_menu_elem.hasClass("selected")
+					mentions_menu_elem.trigger("click")
+			), 100
 
 
 window.Page = new ZeroBlog()
