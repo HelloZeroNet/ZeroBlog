@@ -1136,7 +1136,6 @@
 }).call(this);
 
 
-
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Follow.coffee ---- */
 
 
@@ -1157,6 +1156,7 @@
       this.menu = new Menu(this.elem);
       this.feeds = {};
       this.follows = {};
+      this.elem.off("click");
       this.elem.on("click", (function(_this) {
         return function() {
           var is_default_feed, menu_item, param, query, title, _ref, _ref1;
@@ -1186,7 +1186,7 @@
       if (!this.feeds) {
         return;
       }
-      return Page.cmd("feedListFollow", [], (function(_this) {
+      Page.cmd("feedListFollow", [], (function(_this) {
         return function(_at_follows) {
           var is_default_feed, menu_item, param, query, title, _ref, _ref1;
           _this.follows = _at_follows;
@@ -1203,6 +1203,13 @@
           return _this.elem.css("display", "inline-block");
         };
       })(this));
+      return setTimeout(((function(_this) {
+        return function() {
+          if (typeof Page.site_info.feed_following !== "undefined" && Page.site_info.feed_following === null) {
+            return _this.followDefaultFeeds();
+          }
+        };
+      })(this)), 100);
     };
 
     Follow.prototype.addFeed = function(title, query, is_default_feed, param) {
@@ -1235,7 +1242,7 @@
         _ref1 = _ref[title], query = _ref1[0], menu_item = _ref1[1], is_default_feed = _ref1[2], param = _ref1[3];
         if (is_default_feed) {
           menu_item.addClass("selected");
-          this.log("Following", title);
+          this.log("Following", title, menu_item);
         }
       }
       this.updateListitems();
@@ -3106,7 +3113,7 @@
     };
 
     ZeroBlog.prototype.setSiteinfo = function(site_info) {
-      var _ref, _ref1;
+      var mentions_menu_elem, _ref, _ref1, _ref2;
       this.site_info = site_info;
       this.event_site_info.resolve(site_info);
       if ($("body").hasClass("page-post")) {
@@ -3134,6 +3141,16 @@
         if ($("body").hasClass("page-post")) {
           return this.pagePost();
         }
+      } else if (((_ref2 = site_info.event) != null ? _ref2[0] : void 0) === "cert_changed" && site_info.cert_user_id) {
+        this.initFollowButton();
+        mentions_menu_elem = this.follow.feeds["Username mentions"][1];
+        return setTimeout(((function(_this) {
+          return function() {
+            if (!mentions_menu_elem.hasClass("selected")) {
+              return mentions_menu_elem.trigger("click");
+            }
+          };
+        })(this)), 100);
       }
     };
 

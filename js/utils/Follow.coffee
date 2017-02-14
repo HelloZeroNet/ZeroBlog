@@ -3,6 +3,7 @@ class Follow extends Class
 		@menu = new Menu(@elem)
 		@feeds = {}
 		@follows = {}
+		@elem.off "click"
 		@elem.on "click", =>
 			if Page.server_info.rev > 850
 				if @elem.hasClass "following"
@@ -29,6 +30,11 @@ class Follow extends Class
 			@updateListitems()
 			@elem.css "display", "inline-block"
 
+		setTimeout ( =>
+			if typeof(Page.site_info.feed_following) != "undefined" and Page.site_info.feed_following == null  # Has not manipulated followings yet
+				@followDefaultFeeds()
+		), 100
+
 
 	addFeed: (title, query, is_default_feed=false, param="") ->
 		menu_item = @menu.addItem title, @handleMenuClick
@@ -50,7 +56,7 @@ class Follow extends Class
 		for title, [query, menu_item, is_default_feed, param] of @feeds
 			if is_default_feed
 				menu_item.addClass "selected"
-				@log "Following", title
+				@log "Following", title, menu_item
 		@updateListitems()
 		@saveFeeds()
 
