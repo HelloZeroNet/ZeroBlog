@@ -31,7 +31,7 @@ class Follow extends Class
 			@elem.css "display", "inline-block"
 
 		setTimeout ( =>
-			if typeof(Page.site_info.feed_following) != "undefined" and Page.site_info.feed_following == null  # Has not manipulated followings yet
+			if typeof(Page.site_info.feed_follow_num) != "undefined" and Page.site_info.feed_follow_num == null  # Has not manipulated followings yet
 				@followDefaultFeeds()
 		), 100
 

@@ -1205,7 +1205,7 @@
       })(this));
       return setTimeout(((function(_this) {
         return function() {
-          if (typeof Page.site_info.feed_following !== "undefined" && Page.site_info.feed_following === null) {
+          if (typeof Page.site_info.feed_follow_num !== "undefined" && Page.site_info.feed_follow_num === null) {
             return _this.followDefaultFeeds();
           }
         };
@@ -1302,6 +1302,7 @@
   window.Follow = Follow;
 
 }).call(this);
+
 
 
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/InlineEditor.coffee ---- */
