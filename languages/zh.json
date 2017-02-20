@@ -1,0 +1,34 @@
+{
+	"Add new post": "添加新日志",
+	"Follow in Newsfeed": "点击订阅",
+	"Posts": "日志",
+	"Comments": "评论",
+	"Following": "已经订阅",
+
+	"Like this post": "喜欢这篇日志",
+	"Latest comments:": "最新评论：",
+	"Reply": "回复",
+
+	"Bold": "加粗",
+	"Italic": "斜体",
+	"Strikethrough": "删除线",
+	"Code": "代码",
+	"Link": "链接",
+
+	"More comments": "更多评论",
+	"Sign in as...": "获取马甲...",
+	"Submit comment": "提交评论",
+	"Please sign in": "先拿马甲再说话",
+	"new comment": "撰写新评论",
+	"used: ": "已使用: ",
+
+	" minutes ago": " 分钟以前",
+	" hours ago": " 小时以前",
+	" days ago": " 天以前",
+	"on ": "on ",
+	"Just now": "就在刚刚",
+
+	"Save": "保存",
+	"Cancel": "取消",
+	"Delete ": "删除"
+}
