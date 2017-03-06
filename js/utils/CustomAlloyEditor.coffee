@@ -9,7 +9,8 @@ class CustomAlloyEditor extends Class
 		el.style.position = "relative"
 		el.style.paddingTop = (parseInt(style["padding-top"]) + 20) + "px"
 		height_added = el.getClientRects()[0].height - height_before
-		el.style.top = (parseInt(style["top"]) - height_added) + "px"
+		el.style.top = (parseInt(style["marginTop"]) - 20 - height_added) + "px"
+		el.style.marginBottom = (parseInt(style["marginBottom"]) + parseInt(el.style.top)) + "px"
 
 		# Add listeners
 		editor.get('nativeEditor').on "selectionChange", @handleSelectionChange

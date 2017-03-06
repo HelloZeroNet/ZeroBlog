@@ -911,7 +911,8 @@
       el.style.position = "relative";
       el.style.paddingTop = (parseInt(style["padding-top"]) + 20) + "px";
       height_added = el.getClientRects()[0].height - height_before;
-      el.style.top = (parseInt(style["top"]) - height_added) + "px";
+      el.style.top = (parseInt(style["marginTop"]) - 20 - height_added) + "px";
+      el.style.marginBottom = (parseInt(style["marginBottom"]) + parseInt(el.style.top)) + "px";
       editor.get('nativeEditor').on("selectionChange", this.handleSelectionChange);
       editor.get('nativeEditor').on("focus", (function(_this) {
         return function(e) {
@@ -1136,6 +1137,7 @@
 }).call(this);
 
 
+
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Follow.coffee ---- */
 
 
@@ -1302,7 +1304,6 @@
   window.Follow = Follow;
 
 }).call(this);
-
 
 
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/InlineEditor.coffee ---- */
