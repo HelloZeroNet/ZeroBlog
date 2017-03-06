@@ -11,8 +11,8 @@
     border: 1px solid #bbb; border-radius: 3px; box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); overflow: hidden;
 }
 
-.ae-icon-h2:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 3px; font-size: 23px; }
-.ae-icon-h3:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 4px; font-size: 16px; }
+.ae-icon-h2:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 3px; font-size: 23px; font-family: serif; }
+.ae-icon-h3:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 4px; font-size: 16px; font-family: serif; }
 
 .ae-button:focus { outline: none }
 .ae-ui .ae-toolbar-styles, .ae-ui .ae-toolbar-add, .ae-ui .ae-toolbar { z-index: 999 }

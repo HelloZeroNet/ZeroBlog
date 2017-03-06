@@ -703,8 +703,8 @@ For licensing, see LICENSE.md or http://ckeditor.com/license
     border: 1px solid #bbb; -webkit-border-radius: 3px; -moz-border-radius: 3px; -o-border-radius: 3px; -ms-border-radius: 3px; border-radius: 3px ; -webkit-box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); -moz-box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); -o-box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); -ms-box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4) ; overflow: hidden;
 }
 
-.ae-icon-h2:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 3px; font-size: 23px; }
-.ae-icon-h3:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 4px; font-size: 16px; }
+.ae-icon-h2:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 3px; font-size: 23px; font-family: serif; }
+.ae-icon-h3:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 4px; font-size: 16px; font-family: serif; }
 
 .ae-button:focus { outline: none }
 .ae-ui .ae-toolbar-styles, .ae-ui .ae-toolbar-add, .ae-ui .ae-toolbar { z-index: 999 }
