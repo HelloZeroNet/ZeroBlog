@@ -254,6 +254,8 @@ a:hover { color: #3498db }
 
 .post .body a img { margin-bottom: -8px }
 .post .body img { max-width: 100% }
+.post .body table { border-collapse: collapse; margin-bottom: 10px; margin: auto }
+.post .body td, .post .body th { padding: 5px 10px; border: 1px solid #EEE; border-collapse: collapse; text-align: left }
 
 code {
 	background-color: #f5f5f5; border: 1px solid #ccc; padding: 0px 5px; overflow: auto; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; display: inline-block;
