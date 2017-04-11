@@ -398,7 +398,10 @@ class ZeroBlog extends ZeroFrame
 		id = parseInt(id)
 		content = elem.data("content")
 		if elem.data("editable-mode") == "timestamp" # Convert to time
-			content = Time.date(content, "full")
+			if raw == "raw"
+				content = Time.date(content,"ultra")
+			else
+				content = Time.date(content, "full")
 
 		if elem.data("editable-mode") == "simple" or raw # No markdown
 			return content
