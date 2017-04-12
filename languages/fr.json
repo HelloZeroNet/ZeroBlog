@@ -1,0 +1,53 @@
+{
+    "Add new post": "Ajouter un article",
+    "Follow in Newsfeed": "Suivre dans le fil d'actualités",
+    "Username mentions": "Mentions",
+    "Posts": "Articles",
+    "0 Comments:": "0 Commentaire :",
+    "Comments": "Commentaires",
+    "Following": "Suivi",
+
+    "Like this post": "Aimer cet article",
+    "Latest comments:": "Derniers commentaires :",
+    "Reply": "Répondre",
+
+    "Bold": "Gras",
+    "Italic": "Italique",
+    "Strikethrough": "Strikethrough",
+    "Code": "Code",
+    "Link": "Lien",
+    "Type or paste link here": "Écrire ou copier le lien ici",
+
+    "**bold**": "**gras**",
+    "_italic_": "_italique_",
+    "strikethrough": "barré",
+    "- Lists": "- Listes",
+    "1. Numbered lists": "1. Listes numérotées",
+    "[Links](http://www.zeronet.io)": "[Liens](http://www.zeronet.io)",
+    "[References][1]<br>[1]: Can be used": "[Référence][1]<br>[1]: Peut être utilisé",
+    "&gt; Quotes": "&gt; Citations",
+    "--- Horizontal rule": "--- Barre horizontale",
+
+    "More comments": "Plus de commentaires...",
+    "Sign in as...": "Se connecter...",
+    "Submit comment": "Commenter",
+    "Please sign in": "Veuillez vous connecter",
+    "new comment": "Nouveau commentaire",
+    "used: ": "Utilisé : ",
+
+    " minutes ago": " minutes",
+    " hours ago": " heures",
+    " days ago": " jours",
+    "on ": "le ",
+    "Just now": "À l'instant",
+    "less than 1 min read": "moins d'une minute de lecture",
+    " min read": " minutes de lecture",
+
+    "Content changed": "Contenu modifié",
+    "Sign &amp; Publish new content": "Signer et publier le nouveau contenu",
+
+    " Editing: ": " Édition de : ",
+    "Save": "Enregistrer",
+    "Cancel": "Annuler",
+    "Delete ": "Supprimer "
+}

@@ -18,7 +18,7 @@
 .feed-follow .text-follow, .feed-follow .text-following {
 	max-width: 0px; opacity: 0; overflow: hidden; display: inline-block; vertical-align: bottom; transition: all 0.3s; white-space: nowrap;
 }
-.feed-follow .text-follow { max-width: 120px; opacity: 1 }
+.feed-follow .text-follow { max-width: 170px; opacity: 1 }
 .feed-follow.following .text-following { max-width: 60px; opacity: 1; color: #7A26E2; }
 .feed-follow.following .text-follow { max-width: 0px; opacity: 0 }
 
