@@ -186,7 +186,6 @@
 }).call(this);
 
 
-
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/lib/jquery.csslater.coffee ---- */
 
 
@@ -314,7 +313,6 @@
   };
 
 }).call(this);
-
 
 
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/lib/marked.min.js ---- */
@@ -884,7 +882,6 @@
 }).call(this);
 
 
-
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/utils/CustomAlloyEditor.coffee ---- */
 
 
@@ -1140,7 +1137,6 @@
 }).call(this);
 
 
-
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/utils/Follow.coffee ---- */
 
 
@@ -1307,7 +1303,6 @@
   window.Follow = Follow;
 
 }).call(this);
-
 
 
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/utils/InlineEditor.coffee ---- */
@@ -1530,7 +1525,6 @@
 }).call(this);
 
 
-
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/utils/Meditor.coffee ---- */
 
 
@@ -1691,7 +1685,6 @@
 }).call(this);
 
 
-
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/utils/Menu.coffee ---- */
 
 
@@ -1771,7 +1764,6 @@
 }).call(this);
 
 
-
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/utils/RateLimit.coffee ---- */
 
 
@@ -1799,7 +1791,6 @@
   };
 
 }).call(this);
-
 
 
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/utils/Text.coffee ---- */
@@ -1887,7 +1878,6 @@
 }).call(this);
 
 
-
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/utils/Time.coffee ---- */
 
 
@@ -1958,7 +1948,6 @@
   window.Time = new Time;
 
 }).call(this);
-
 
 
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/utils/ZeroFrame.coffee ---- */
@@ -2072,7 +2061,6 @@
   window.ZeroFrame = ZeroFrame;
 
 }).call(this);
-
 
 
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/Comments.coffee ---- */
@@ -2329,7 +2317,6 @@
   window.Comments = new Comments();
 
 }).call(this);
-
 
 
 /* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/js/ZeroBlog.coffee ---- */
@@ -2725,31 +2712,19 @@
     ZeroBlog.prototype.pageMain = function() {
       var limit, query;
       limit = 15;
-      query = "SELECT COUNT(*) as post_id,\n	NULL as title,NULL as body,NULL as date_published,\n	NULL as json_id, NULL as comments,NULL as votes\nFROM post\nUNION ALL\nSELECT * FROM (\nSELECT\n	post.*, COUNT(comment_id) AS comments,\n	(SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes\nFROM post\nLEFT JOIN comment USING (post_id)\nGROUP BY post_id\nORDER BY date_published DESC\nLIMIT " + ((this.page - 1) * limit) + ", " + (limit + 1) + "\n)";
-      this.cmd("dbQuery", [query], (function(_this) {
-        return function(res) {
-          var parse_res;
-          return parse_res = function(res, tags) {
-            var s;
-            s = +(new Date);
-            if (res.length > limit) {
-              res.pop();
-              return _this.applyPagerdata(_this.page, limit, true);
-            } else {
-              return _this.applyPagerdata(_this.page, limit, false);
-            }
-          };
-        };
-      })(this));
+      query = "SELECT\n	post.*, COUNT(comment_id) AS comments,\n	(SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes\nFROM post\nLEFT JOIN comment USING (post_id)\nGROUP BY post_id\nORDER BY date_published DESC\nLIMIT " + ((this.page - 1) * limit) + ", " + (limit + 1);
       return this.cmd("dbQuery", [query], (function(_this) {
         return function(res) {
           var deal_post, parse_res, tag_query;
           parse_res = function(res, tags) {
-            var elem, j, l, len, len1, post, s, tag, total;
-            total = res[0].post_id;
-            res = res.slice(1);
+            var elem, j, l, len, len1, post, s, tag;
             s = +(new Date);
-            _this.applyPagerdata(_this.page, limit, total);
+            if (res.length > limit) {
+              res.pop();
+              _this.applyPagerdata(_this.page, limit, true);
+            } else {
+              _this.applyPagerdata(_this.page, limit, false);
+            }
             res.reverse();
             for (j = 0, len = res.length; j < len; j++) {
               post = res[j];

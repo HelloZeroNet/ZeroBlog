@@ -367,12 +367,6 @@ class ZeroBlog extends ZeroFrame
 	pageMain: ->
 		limit = 15
 		query = """
-			SELECT COUNT(*) as post_id,
-				NULL as title,NULL as body,NULL as date_published,
-				NULL as json_id, NULL as comments,NULL as votes
-			FROM post
-			UNION ALL
-			SELECT * FROM (
 			SELECT
 				post.*, COUNT(comment_id) AS comments,
 				(SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes
@@ -381,7 +375,6 @@ class ZeroBlog extends ZeroFrame
 			GROUP BY post_id
 			ORDER BY date_published DESC
 			LIMIT #{(@page-1)*limit}, #{limit+1}
-			)
 		"""
 		@cmd "dbQuery", [query], (res) =>
 			parse_res = (res,tags) =>
@@ -391,14 +384,6 @@ class ZeroBlog extends ZeroFrame
 					@applyPagerdata(@page, limit, true)
 				else
 					@applyPagerdata(@page, limit, false)
-
-		@cmd "dbQuery", [query], (res) =>
-			parse_res = (res,tags) =>
-				total = res[0].post_id
-				res = res[1..]
-				s = (+ new Date)
-
-				@applyPagerdata(@page, limit, total)
 
 				res.reverse()
 				for post in res
