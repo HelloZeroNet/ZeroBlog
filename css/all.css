@@ -1,6 +1,6 @@
 
 
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/Comments.css ---- */
 
 
 .comments { margin-bottom: 60px }
@@ -56,7 +56,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 
 
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Follow.css ---- */
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/Follow.css ---- */
 
 
 .icon-feed {
@@ -74,7 +74,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 .feed-follow {
 	font-size: 14px; display: inline-block; padding: 7px 14px; font-weight: normal; display: none;
-	-webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; -ms-border-radius: 4px; border-radius: 4px ; border: 1px solid #EEE; border-bottom: 1px solid #DDD; transition: all 0.3s
+	-webkit-border-radius: 4px; -moz-border-radius: 4px; -o-border-radius: 4px; -ms-border-radius: 4px; border-radius: 4px ; border: 1px solid #333; border-bottom: 1px solid #333; transition: all 0.3s
 }
 .feed-follow .text-follow, .feed-follow .text-following {
 	max-width: 0px; opacity: 0; overflow: hidden; display: inline-block; vertical-align: bottom; -webkit-transition: all 0.3s; -moz-transition: all 0.3s; -o-transition: all 0.3s; -ms-transition: all 0.3s; transition: all 0.3s ; white-space: nowrap;
@@ -90,14 +90,14 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 
 
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Menu.css ---- */
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/Menu.css ---- */
 
 
 .menu {
 	background-color: white; padding: 10px 0px; position: absolute; top: 0px; left: 0px; max-height: 0px; overflow: hidden; -webkit-transform: translate(0px, -30px); -moz-transform: translate(0px, -30px); -o-transform: translate(0px, -30px); -ms-transform: translate(0px, -30px); transform: translate(0px, -30px) ; pointer-events: none;
 	-webkit-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -moz-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -o-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -ms-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); box-shadow: 0px 2px 8px rgba(0,0,0,0.3) ; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; opacity: 0; -webkit-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -moz-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -o-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -ms-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out ;
 }
-.menu.visible { opacity: 1; max-height: 350px; -webkit-transform: translate(0px, 0px); -moz-transform: translate(0px, 0px); -o-transform: translate(0px, 0px); -ms-transform: translate(0px, 0px); transform: translate(0px, 0px) ; -webkit-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -moz-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -o-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -ms-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out ; pointer-events: all }
+.menu.visible { opacity: 1; max-height: 350px; -webkit-transform: translate(0px, 0px); -moz-transform: translate(0px, 0px); -o-transform: translate(0px, 0px); -ms-transform: translate(0px, 0px); transform: translate(0px, 0px) ; -webkit-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -moz-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -o-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -ms-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out ; pointer-events: all; z-index: 110; }
 
 .menu-item { display: block; text-decoration: none; color: black; padding: 6px 24px; -webkit-transition: all 0.2s; -moz-transition: all 0.2s; -o-transition: all 0.2s; -ms-transition: all 0.2s; transition: all 0.2s ; border-bottom: none; font-weight: normal; padding-left: 30px; }
 .menu-item-separator { margin-top: 5px; border-top: 1px solid #eee }
@@ -110,7 +110,8 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 }
 
 
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
+
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/ZeroBlog.css ---- */
 
 
 /* Design based on medium */
@@ -127,7 +128,7 @@ p { margin-top: 0.9em; margin-bottom: 0.9em }
 hr { margin: 20px 0px; border: none; border-bottom: 1px solid #eee; margin-left: auto; margin-right: auto; width: 120px; }
 small { font-size: 80%; color: #999; }
 
-a { border-bottom: 1px solid #3498db; text-decoration: none; color: black; font-weight: bold }
+a { text-decoration: none; color: #3498db; font-weight: bold; word-wrap: break-word; }
 a.nolink { border-bottom: none }
 a:hover { color: #3498db }
 
@@ -203,9 +204,12 @@ a:hover { color: #3498db }
 }
 .left h1 a.nolink { font-family: Tinos; display: inline-block; padding: 1px }
 .left h1 a.editable-edit { float: none }
-.left h2 { font-size: 15px; font-family: Tinos; line-height: 1.6em; color: #AAA; margin-top: 14px; letter-spacing: 0.2px }
+.left h2 { font-size: 15px; font-family: Tinos; line-height: 1.6em; color: #AAA; margin-top: 14px; letter-spacing: 0.2px; color: #000; }
+.left p {
+	word-wrap: break-word;
+}
 .left ul, .left li { padding: 0px; margin: 0px; list-style-type: none; line-height: 2em }
-.left hr { margin-left: 100px; margin-right: 0px; width: auto }
+.left hr { margin-left: 100px; margin-right: 0px; width: auto; border-bottom: 1px solid #333 }
 /*.left .links { width: 230px; margin-left: -60px }*/
 .left .links.editor { text-align: left !important }
 
@@ -260,9 +264,11 @@ a:hover { color: #3498db }
 code {
 	background-color: #f5f5f5; border: 1px solid #ccc; padding: 0px 5px; overflow: auto; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; display: inline-block;
 	color: #444; font-weight: normal; font-size: 13px; vertical-align: text-bottom; border-bottom-width: 2px;
+	max-width: 660px;
+	overflow: auto;
 }
 .post .body pre { table-layout: fixed; width: auto; display: table; white-space: normal; }
-.post .body pre code { padding: 10px 20px; white-space: pre; max-width: 850px; display: block }
+.post .body pre code { padding: 10px 20px; white-space: pre; max-width: 660px; display: block; overflow: auto }
 
 blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 /*.post .more {
@@ -327,7 +333,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/fonts.css ---- */
 
 
 /* Base64 encoder: http://www.motobit.com/util/base64-decoder-encoder.asp */
@@ -364,7 +370,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/github.css ---- */
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/github.css ---- */
 
 
 /*
@@ -494,7 +500,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 
 
 
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/icons.css ---- */
 
 
 .icon { display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; }
@@ -521,7 +527,133 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .icon-up { font-weight: normal !important; font-size: 15px; font-family: Tahoma; vertical-align: -4px; padding-right: 5px; display: inline; height: 1px; }
 
 
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/zoom.css ---- */
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/mobile.css ---- */
+
+
+.left .nav-trigger {
+display: none; }
+.left .menu-icon {
+display: none; }
+@media screen and (max-width: 1000px) {
+.right {
+max-width: 650px;
+}
+.post .body pre code {
+max-width: 600px;
+}
+}
+@media screen and (max-width: 750px) {
+body, html {height: 100%;}
+code {max-width: 100%;}
+.right {
+width: 95%;
+max-width: 100%;
+margin-left: 0px;
+padding-right: 10px;
+padding-left: 10px;
+}
+.editable-edit {
+position: absolute;
+margin-left: -40px;
+padding: 8px 40px;
+}
+.post {
+min-width: 300px;
+}
+.editable {
+width: 100% !important;
+}
+.left {
+position: fixed;
+left: -300px;
+height: 100%;
+z-index: 1;
+margin-left: -20px;
+margin-top: 0px;
+}
+
+.left label[for="nav-trigger"] {
+display: block;
+cursor: pointer;
+position: absolute;
+z-index: 24;
+margin-top: 10px;
+margin-left: 310px;
+}
+.left .menu-icon {
+background-color: #333;
+display: block;
+float: left;
+border: 1px solid #e8e8e8;
+-webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ;
+width: 36px;
+height: 26px;
+line-height: 0;
+padding-top: 10px;
+text-align: center; }
+.left .menu-icon > svg path {
+  fill: #ccc; }
+.left input ~ .trigger {
+background-color: #eee;
+overflow: auto;
+position: absolute;
+width: 100%;
+left: 0px;
+padding-top: 100px;
+margin-top: -100px;
+z-index: 20;
+clear: both;
+display: block;
+height: 100%;
+padding-left: 25px;
+padding-right: 30px;
+-webkit-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -moz-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -o-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -ms-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1) ;
+border-right: 2px solid #eee;
+}
+.left input:checked ~ .trigger {
+-webkit-box-shadow: 0px 0px 30px #999; -moz-box-shadow: 0px 0px 30px #999; -o-box-shadow: 0px 0px 30px #999; -ms-box-shadow: 0px 0px 30px #999; box-shadow: 0px 0px 30px #999 ;
+left: 310px;
+}
+.lastcomments {
+background-color: transparent;
+}
+html, body, p, th, td, li {
+font-size: medium !important;
+}
+.lastcomments .lastcomment {
+font-size: 85% !important;
+}
+.editbg {
+z-index: 0 !important;
+}
+.ae-ui .ae-toolbar-add {
+left: 0px !important;
+}
+.post .body pre {
+width: 100%;
+}
+.post .body pre code {
+max-width: 100%;
+padding: 5px 5px;
+white-space: pre-wrap;
+}
+.post .body code {
+max-width: 100%;
+white-space: pre-wrap;
+}
+
+}
+
+/* Fix publish bar */
+@media screen and (max-width: 410px) {
+.publishbar small {
+display: none;
+}
+}
+
+
+
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/zoom.css ---- */
 
 
 img[data-action="zoom"] {

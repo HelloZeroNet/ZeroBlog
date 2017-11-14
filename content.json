@@ -22,8 +22,8 @@
    "size": 737537
   },
   "css/all.css": {
-   "sha512": "2d7a6001b26a4a33911cc0c5935ccbaf1a40f56a0ea213267ac3b1b865d58863",
-   "size": 130255
+   "sha512": "5cae062efef2761952cd3d594b662b70c59bd6771cde1c6f7508917324f681fd",
+   "size": 132908
   },
   "data-default/data.json": {
    "sha512": "c8952629acf0c47ac1a53c7b8910e3aae2eda34371cb5182b9c9a50e483a297c",
@@ -50,8 +50,8 @@
    "size": 723
   },
   "index.html": {
-   "sha512": "31b50f6d59d23a8c24292161585d1e4a695b4d1fba9645648c7e6acfd72ea6ba",
-   "size": 6740
+   "sha512": "24c864ff5d2b8a2bc0363c0132c19bfe32ab537c824119314f605895bfab9bc8",
+   "size": 7615
   },
   "js/all.js": {
    "sha512": "61d103f38f39f3e64144a2473e9c9da109df5404768960f9dc6b9eeefdd8da85",
@@ -86,11 +86,11 @@
   }
  },
  "inner_path": "content.json",
- "modified": 1510673379,
+ "modified": 1510675619,
  "postmessage_nonce_security": true,
  "signers_sign": "GwcX6fQSYco45YGEw0Tr7h8TE8UqLlz4HM/2NLzbfdPRcorFKi9IO2P5ZznLBLbTQK+11D3zZjAK/MQmSaSoSpA=",
  "signs": {
-  "1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW": "G3IaJOeyt1xHHks998VdG5QylJHTQFHUMhTBMS8BbZo/DbPPL33J3fcQfIW3JVvWt+A1MQawoflnLy7rXr7qgbQ="
+  "1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW": "G/PbRQq63Pw1gMsaRi6f8s7U9weBXU09rAu8GLqWXq6sTqmJW48UNwOevRIFzxiBRobZiwsFLkbyzhvQvYwojsE="
  },
  "signs_required": 1,
  "title": "ZeroBlog Plus",
