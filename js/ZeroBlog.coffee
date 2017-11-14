@@ -145,20 +145,194 @@ class ZeroBlog extends ZeroFrame
 			$("body").addClass("page-post")
 			@post_id = parseInt(match[1])
 			@pagePost()
+		else if match = url.match /Toc=(.*)/
+			@pageToc(match[1])
 		else
 			$("body").addClass("page-main")
 			if match = url.match /page=([0-9]+)/
 				@page = parseInt(match[1])
 			@pageMain()
 
+	pageToc:(tocType) ->
+		$("body").addClass("page-post")
+
+		if tocType.match /^dateDesc/
+			@pageTocDateDesc()
+		else if tocType.match /^tagAll/
+			@pageTocTagAll()
+		else if tocType.match /^tag/
+			@pageTocByTag(tocType.split("&")[0].substring(3))
+
+		@pageLoaded()
+		#TOC page didn't show details row nor allow edit,comments
+		$(".post .details").hide()
+		$(".editable-edit").hide()
+		Comments.hide()
+
+	emptyTocPage: (title,body) ->
+		@applyPostdata($(".post-full"),
+			title:title
+			post_id:-1
+			votes:-1
+			comments:-1
+			body:body
+			,true)
+
+	pageTocByTag:(tagType) ->
+		queryString = ""
+		tag =""
+		#query untagged
+		if tagType.match /^None/
+			tag="all untagged"
+			queryString = """SELECT date_published,title,post_id FROM post
+			WHERE post_id NOT IN (SELECT DISTINCT (post_id) FROM tag)
+			ORDER BY date_published DESC"""
+		else
+
+			tag = decodeURIComponent(tagType.substring(1))
+			@log "Toc by tag:", tag
+			#by tag
+			queryString = """SELECT post.date_published AS date_published,
+				post_id,post.title AS title FROM tag
+				JOIN (SELECT date_published,title,post_id FROM post) AS post
+				USING (post_id) WHERE value="#{tag}"
+				ORDER BY date_published DESC
+				"""
+		@cmd "dbQuery", [queryString], (res) =>
+			parse_res = (res) =>
+				if res.length is 0
+					@emptyTocPage("#{tag}","no posts found")
+					return
+
+				markdown=""
+				for i in res
+					date = new Date(i.date_published*1000)
+					markdown += "- [#{date.getFullYear()}-\
+						#{date.getMonth()+1}-#{date.getDate()}:\
+						#{i.title}](?Post:#{i.post_id})\n"
+
+
+				@applyPostdata($(".post-full"),
+					title:"posts of tag:"+tag
+					post_id:-1
+					votes:-1
+					comments:-1
+					body:markdown
+					,true)
+			if res.error
+				@emptyTocPage("error when getting index","error when getting index")
+			else
+				parse_res(res)
+
+
+	pageTocTagAll: () ->
+		#list all tags only. to avoid too many duplicate post with different tag
+		#first row is total post number
+		#second row is tagged number
+		#follow rows is tagged value,count
+		@cmd "dbQuery", ["""SELECT "all" AS value,COUNT(*) AS count FROM post
+					 UNION ALL
+					 SELECT "tagged" AS value,COUNT(DISTINCT post_id) AS count
+					 FROM tag
+					 UNION ALL
+					 SELECT value, COUNT(post_id)
+					 FROM tag	GROUP BY value ORDER BY count DESC"""], (res) =>
+			parse_res = (res) =>
+
+				total_post = res[0].count
+				if total_post is 0
+					emptyTocPage("no post","no post at all")
+					return
+
+				markdown = ""
+				tagged = res[2..]
+
+				if tagged.length > 0
+					markdown += "Tagged:\n\n"
+
+				for one in tagged
+					escaped = encodeURIComponent(one.value)
+					markdown += "[#{one.value}: #{one.count} post(s)]\
+						(?Toc=tag:#{escaped})\n"
+
+				untagged=total_post - res[1].count
+
+				if untagged != 0
+					markdown += "\n[Untagged: #{untagged} post(s)]\
+						(?Toc=tagNone)"
+
+
+				@applyPostdata($(".post-full"),
+					title:"index by tag"
+					post_id:-1
+					votes:-1
+					comments:-1
+					body:markdown
+					,true)
+			if res.error
+				@emptyTocPage("error when getting index","sorry, error happened")
+			else
+				parse_res(res)
+
 	# - Pages -
+
+
+	pageTocDateDesc: () ->
+		@log "Toc by date desc"
+		@cmd "dbQuery", ["SELECT post_id,date_published,title FROM post
+				ORDER BY date_published DESC"], (res) =>
+			parse_res = (res) =>
+
+				#id is needed when applyPostdata
+
+				if res.length is 0
+
+					@emptyTocPage("no post","no post at all")
+					return
+
+				# makes next month
+				month = new Date(new Date().getTime()+31*24*60*60*1000)
+				markdown = ""
+
+				for post in res
+					#in current range
+					post_date = new Date(post.date_published*1000)
+					if post_date<month
+						#new range
+						month = new Date(post_date)
+						month.setDate(1)
+						month.setHours(0)
+						month.setMinutes(0)
+						month.setSeconds(0)
+						#month begin with 0 should add 1
+						markdown+="\n"+month.getFullYear()+" "+(month.getMonth()+1)+"\n"
+
+					markdown+="- ["+post_date.getDate()+" \
+						:"+post.title+"](?Post:#{post.post_id})\n"
+
+				@applyPostdata($(".post-full"),
+					title:"index by date"
+					post_id:-1
+					votes:-1
+					comments:-1
+					body:markdown
+					,true)
+
+			if res.error
+				@emptyTocPage("error","error while getting index")
+			else
+				parse_res(res)
 
 	pagePost: () ->
 		s = (+ new Date)
 		@cmd "dbQuery", ["SELECT *, (SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes FROM post WHERE post_id = #{@post_id} LIMIT 1"], (res) =>
-			parse_res = (res) =>
+			parse_res = (res,tag_res) =>
 				if res.length
 					post = res[0]
+					#post.tag is in data["tag"] table, must query and add them manually
+					post.tag=[]
+					for tag in tag_res
+						post.tag.push(tag.value)
 					@applyPostdata($(".post-full"), post, true)
 					$(".post-full").css("display", "block")
 					$(".post-full .like").attr("id", "post_like_#{post.post_id}").off("click").off("click").on "click", @submitPostVote
@@ -170,16 +344,35 @@ class ZeroBlog extends ZeroFrame
 				@pageLoaded()
 				Comments.checkCert()
 
-			# Temporary dbschema bug workaround
-			if res.error
-				@cmd "dbQuery", ["SELECT *, -1 AS votes FROM post WHERE post_id = #{@post_id} LIMIT 1"], parse_res
-			else
-				parse_res(res)
+			tag_query = """
+				SELECT value FROM tag
+				WHERE post_id=#{@post_id}
+			"""
+			deal_post = (post_res,tag_res) =>
+				# Temporary dbschema bug workaround
+				if res.error
+					@cmd "dbQuery", ["SELECT *, -1 AS votes FROM post
+						WHERE post_id = #{@post_id} LIMIT 1"],
+						(res)->parse_res(res,tag_res)
+				else
+					parse_res(res,tag_res)
+
+			@cmd "dbQuery", [tag_query], (tag_res) =>
+				if tag_res.error
+					deal_post(res,[])
+				else
+					deal_post(res,tag_res)
 
 
 	pageMain: ->
 		limit = 15
 		query = """
+			SELECT COUNT(*) as post_id,
+				NULL as title,NULL as body,NULL as date_published,
+				NULL as json_id, NULL as comments,NULL as votes
+			FROM post
+			UNION ALL
+			SELECT * FROM (
 			SELECT
 				post.*, COUNT(comment_id) AS comments,
 				(SELECT COUNT(*) FROM post_vote WHERE post_vote.post_id = post.post_id) AS votes
@@ -188,9 +381,10 @@ class ZeroBlog extends ZeroFrame
 			GROUP BY post_id
 			ORDER BY date_published DESC
 			LIMIT #{(@page-1)*limit}, #{limit+1}
+			)
 		"""
 		@cmd "dbQuery", [query], (res) =>
-			parse_res = (res) =>
+			parse_res = (res,tags) =>
 				s = (+ new Date)
 				if res.length > limit # Has next page
 					res.pop()
@@ -198,8 +392,22 @@ class ZeroBlog extends ZeroFrame
 				else
 					@applyPagerdata(@page, limit, false)
 
+		@cmd "dbQuery", [query], (res) =>
+			parse_res = (res,tags) =>
+				total = res[0].post_id
+				res = res[1..]
+				s = (+ new Date)
+
+				@applyPagerdata(@page, limit, total)
+
 				res.reverse()
 				for post in res
+					post.tag =[]
+
+					for tag in tags
+						if post.post_id == tag.post_id
+							post.tag.push(tag.value)
+
 					elem = $("#post_#{post.post_id}")
 					if elem.length == 0 # Not exits yet
 						elem = $(".post.template").clone().removeClass("template").attr("id", "post_#{post.post_id}")
@@ -231,22 +439,37 @@ class ZeroBlog extends ZeroFrame
 						@writeData(data)
 					return false
 
-			# Temporary dbschema bug workaround
-			if res.error
-				query = """
-					SELECT
-						post.*, COUNT(comment_id) AS comments,
-						-1 AS votes
-					FROM post
-					LEFT JOIN comment USING (post_id)
-					GROUP BY post_id
-					ORDER BY date_published DESC
-					LIMIT #{(@page-1)*limit}, #{limit+1}
-				"""
-				@cmd "dbQuery", [query], parse_res
-			else
-				parse_res(res)
+			tag_query = """
+				SELECT tag.* FROM tag
+				LEFT JOIN (
+				SELECT post_id FROM post
+				ORDER BY date_published DESC
+				LIMIT #{(@page-1)*limit}, #{limit+1}
+				) AS post USING (post_id)
+			"""
 
+			deal_post = (post_res,tag_res) ->
+				# Temporary dbschema bug workaround
+				if res.error
+					query = """
+						SELECT
+							post.*, COUNT(comment_id) AS comments,
+							-1 AS votes
+						FROM post
+						LEFT JOIN comment USING (post_id)
+						GROUP BY post_id
+						ORDER BY date_published DESC
+						LIMIT #{(@page-1)*limit}, #{limit+1}
+					"""
+					@cmd "dbQuery", [query], (res)-> parse_res(res,tag_res)
+				else
+					parse_res(res,tag_res)
+
+			@cmd "dbQuery", [tag_query], (tag_res) ->
+				if tag_res.error
+					deal_post(res,[])
+				else
+					deal_post(res,tag_res)
 
 	# - EOF Pages -
 
@@ -305,9 +528,28 @@ class ZeroBlog extends ZeroFrame
 
 		return false # Ignore link default event
 
+	tagToHtml: (tag) =>
+		if typeof tag is 'string'
+			#input parameter must not empty nor have duplicate
+			tag = tag.split(" ")
+		
+		if tag.length is 0
+			ret = "<a href='?Toc=tagNone'>not tagged</a>"
+		else
+			ret = " "
+			for i in tag
+				ret+=("<a href='?Toc=tag:"+encodeURIComponent(i)+"'>"+i+"</a> ")
+		return ret
 
 	# Apply from data to post html element
 	applyPostdata: (elem, post, full=false) ->
+		#tag is passed as post property (to display tag links),
+		#but it's not saved to post.tag in json
+		#so must delete this property after use
+		tag=post.tag
+		if not tag
+			tag=[]
+		delete post.tag
 		title_hash = post.title.replace(/[#?& ]/g, "+").replace(/[+]+/g, "+")
 		elem.data("object", "Post:"+post.post_id)
 		$(".title .editable", elem).html(post.title).attr("href", "?Post:#{post.post_id}:#{title_hash}").data("content", post.title)
@@ -318,6 +560,12 @@ class ZeroBlog extends ZeroFrame
 			date_published += " &middot; #{Time.readtime(post.body)}" # If has break add readtime
 			$(".more", elem).css("display", "inline-block").attr("href", "?Post:#{post.post_id}:#{title_hash}")
 		$(".details .published", elem).html(date_published).data("content", post.date_published)
+		#$(".details .tag",elem).html(@tagToHtml(tag))
+		# Temporary double tag bug workaround
+		if !$(".details .tag", elem).hasClass("tagged")
+			$(".details .tag", elem).addClass("tagged")
+			$(".details .tag", elem).append(@tagToHtml(tag))
+		$(".details .tag",elem).data("content",(tag.join(" ")))
 		# Comments num
 		if post.comments > 0
 			$(".details .comments-num", elem).css("display", "inline").attr("href", "?Post:#{post.post_id}:#{title_hash}#Comments")
@@ -423,12 +671,36 @@ class ZeroBlog extends ZeroFrame
 		@cmd "fileGet", ["data/data.json"], (res) =>
 			data = JSON.parse(res)
 			if type == "Post"
-				post = (post for post in data.post when post.post_id == id)[0]
+				changeKey=elem.data("editable")
+				#tag is maintained by data["tag"],not post["tag"]
+				#so must exclude tag property changes.
+				if changeKey != "tag"
+					post = (post for post in data.post when post.post_id == id)[0]
 
-				if elem.data("editable-mode") == "timestamp" # Time parse to timestamp
-					content = Time.timestamp(content)
+					if elem.data("editable-mode") == "timestamp" # Time parse to timestamp
+						content = Time.timestamp(content)
 
-				post[elem.data("editable")] = content
+					post[changeKey] = content
+				else
+					#db not allow duplicate tag of same post nor empty tag
+					temp = {}
+					dedup = []
+					for val,idx in content.split(" ")
+						if val != ""
+							temp[val]=idx
+					for k,v of temp
+						dedup.push(k)
+
+					if not data.tag
+						data.tag = []
+					#exclude old tag
+					tag_index = (tag for tag in data.tag when tag.post_id != id)
+					data["tag"] = tag_index
+					#add new tag
+					for tag in dedup
+						data["tag"].push(
+							value:tag
+							post_id:id)
 			else if type == "Site"
 				data[elem.data("editable")] = content
 
@@ -436,7 +708,10 @@ class ZeroBlog extends ZeroFrame
 				if cb
 					if res == true # OK
 						@cleanupImages()
-						if elem.data("editable-mode") == "simple" # No markdown
+						if elem.data("editable") == "tag"
+							# tag list appears as links
+							cb($(".post.template span.tag").text() + @tagToHtml(dedup))
+						else if elem.data("editable-mode") == "simple" # No markdown
 							cb(content)
 						else if elem.data("editable-mode") == "timestamp" # Format timestamp
 							cb(Time.since(content))
@@ -477,6 +752,11 @@ class ZeroBlog extends ZeroFrame
 				if type == "Post"
 					post = (post for post in data.post when post.post_id == id)[0]
 					if not post then return false # No post found for this id
+					if not data.tag
+						data.tag=[]
+					#remove all tag index from json
+					tag_index = (tag for tag in data.tag when tag.post_id != id)
+					data["tag"] = tag_index
 					data.post.splice(data.post.indexOf(post), 1) # Remove from data
 
 					@writeData data, (res) =>

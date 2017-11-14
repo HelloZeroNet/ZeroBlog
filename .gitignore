@@ -1,0 +1,12 @@
+# Hidden files
+.*
+!/.gitignore
+!/.travis.yml
+
+
+# Database
+*.db
+
+data/users/*
+!/data/users/content.json
+!/data/data.json
