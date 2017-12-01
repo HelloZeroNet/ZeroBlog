@@ -4,8 +4,8 @@ body { background-color: white; color: #333332; margin: 10px; padding: 0px; font
 body.loaded { height: auto; overflow: auto }
 h1, h2, h3, h4 { font-family: 'Roboto Light', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
-h2 { margin-top: 2em }
-h3 { font-size: 24px; margin-top: 2em }
+h2 { font-size: 24px; margin-top: 2em }
+h3 { font-size: 18px; margin-top: 2em }
 h1 + h2, h2 + h3 { margin-top: inherit }
 
 p { margin-top: 0.9em; margin-bottom: 0.9em }
@@ -131,7 +131,7 @@ a:hover { color: #3498db }
 .post .details .like .num { margin-left: 21px; color: #CCC; transition: all 0.3s }
 .post .details .like:hover .num { color: #FA6C8D }
 .post .details .like.loading { pointer-events: none; animation: bounce .3s infinite alternate ease-out; animation-delay: 1s; }
-.post .body { font-size: 21.5px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
+.post .body { font-size: 15px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
 
 .post .body h1 { text-align: center; margin-top: 50px }
 .post .body h1:before { content: " "; border-top: 1px solid #EEE; width: 120px; display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px; }
