@@ -41,6 +41,10 @@ height: 100%;
 z-index: 1;
 margin-left: -20px;
 margin-top: 0px;
+width: 240px;
+}
+.left .trigger {
+  padding-left: 0;
 }
 .left label[for="nav-trigger"] {
 display: block;
@@ -48,7 +52,7 @@ cursor: pointer;
 position: absolute;
 z-index: 24;
 margin-top: 10px;
-margin-left: 310px;
+margin-left: 340px;
 }
 .left .menu-icon {
 background-color: #333;
