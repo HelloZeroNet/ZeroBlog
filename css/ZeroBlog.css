@@ -1,7 +1,7 @@
 /* Design based on medium */
 
 body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; height: 15000px; overflow: hidden; backface-visibility: hidden }
-body.loaded { height: auto; overflow: auto }
+body.loaded { height: auto; overflow: auto; max-width: 960px; margin-left: auto; margin-right: auto; }
 h1, h2, h3, h4 { font-family: 'Roboto Light', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
 h2 { font-size: 24px; margin-top: 2em }
@@ -79,9 +79,10 @@ a:hover { color: #3498db }
 
 /* -- Left -- */
 
-.left { float: left; position: absolute; width: 220px; padding-left: 20px; padding-right: 20px; margin-top: 60px; text-align: right }
-.right { float: left; padding-left: 60px; margin-left: 240px; max-width: 700px; padding-right: 60px; padding-top: 60px }
-
+.left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
+.right { display: inline-block; width: 75%; padding-top: 60px }
+.left .trigger { padding-left: 20px; }
+.right .posts, .right .pager, .right .footer { padding-left: 60px; }
 .left .avatar {
 	background-color: #F0F0F0; width: 60px; height: 60px; border-radius: 100%; margin-bottom: 10px;
 	background-position: center center; background-size: 70%; display: inline-block; image-rendering: pixelated;

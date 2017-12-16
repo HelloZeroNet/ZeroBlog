@@ -117,7 +117,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 /* Design based on medium */
 
 body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; height: 15000px; overflow: hidden; -webkit-backface-visibility: hidden ; -moz-backface-visibility: hidden ; -o-backface-visibility: hidden ; -ms-backface-visibility: hidden ; backface-visibility: hidden  }
-body.loaded { height: auto; overflow: auto }
+body.loaded { height: auto; overflow: auto; max-width: 960px; margin-left: auto; margin-right: auto; }
 h1, h2, h3, h4 { font-family: 'Roboto Light', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
 h2 { font-size: 24px; margin-top: 2em }
@@ -195,9 +195,10 @@ a:hover { color: #3498db }
 
 /* -- Left -- */
 
-.left { float: left; position: absolute; width: 220px; padding-left: 20px; padding-right: 20px; margin-top: 60px; text-align: right }
-.right { float: left; padding-left: 60px; margin-left: 240px; max-width: 700px; padding-right: 60px; padding-top: 60px }
-
+.left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
+.right { display: inline-block; width: 75%; padding-top: 60px }
+.left .trigger { padding-left: 20px; }
+.right .posts, .right .pager, .right .footer { padding-left: 60px; }
 .left .avatar {
 	background-color: #F0F0F0; width: 60px; height: 60px; -webkit-border-radius: 100%; -moz-border-radius: 100%; -o-border-radius: 100%; -ms-border-radius: 100%; border-radius: 100% ; margin-bottom: 10px;
 	background-position: center center; background-size: 70%; display: inline-block; image-rendering: pixelated;
@@ -573,6 +574,10 @@ height: 100%;
 z-index: 1;
 margin-left: -20px;
 margin-top: 0px;
+width: 240px;
+}
+.left .trigger {
+  padding-left: 0;
 }
 .left label[for="nav-trigger"] {
 display: block;
@@ -580,7 +585,7 @@ cursor: pointer;
 position: absolute;
 z-index: 24;
 margin-top: 10px;
-margin-left: 310px;
+margin-left: 340px;
 }
 .left .menu-icon {
 background-color: #333;
