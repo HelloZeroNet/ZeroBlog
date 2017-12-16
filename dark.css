@@ -291,6 +291,7 @@ background-color: transparent;
 
 /* chromium scrollbar */
 
+@media screen and (min-width: 750px) {
 ::-webkit-scrollbar
   {
     width: 6px !important;
@@ -299,10 +300,22 @@ background-color: transparent;
   body::-webkit-scrollbar {
     width: 6px !important;
 }
+
+  ::-webkit-scrollbar-thumb
+  {
+    height: 50px !important;
+    background-color: #666 !important;
+    border-radius: 3px !important;
+  }
+
   ::-webkit-scrollbar-button
   {
-    background-color: #666 !important;
+	  display: none !important;
   }
+
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
+}
 
   ::-webkit-scrollbar-track
   {
@@ -312,13 +325,6 @@ background-color: transparent;
   ::-webkit-scrollbar-track-piece
   {
     background-color: #333 !important;
-  }
-
-  ::-webkit-scrollbar-thumb
-  {
-    height: 50px !important;
-    background-color: #666 !important;
-    border-radius: 3px !important;
   }
 
   ::-webkit-scrollbar-corner
@@ -331,6 +337,4 @@ background-color: transparent;
     background-color: #666 !important;
   }
 
-body::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
-}
+  }

@@ -81,8 +81,8 @@ a:hover { color: #3498db }
 
 .left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
 .right { display: inline-block; width: 75%; padding-top: 60px }
-.left .trigger { padding-left: 20px; }
-.right .posts, .right .post-full, .right .pager, .right .footer { padding-left: 60px; }
+.left .trigger { padding: 0 20px; }
+.right .posts, .right .post-full, .right .pager, .right .footer { padding: 0 30px; }
 .left .avatar {
 	background-color: #F0F0F0; width: 60px; height: 60px; border-radius: 100%; margin-bottom: 10px;
 	background-position: center center; background-size: 70%; display: inline-block; image-rendering: pixelated;
@@ -143,7 +143,7 @@ a:hover { color: #3498db }
 
 .post .body a img { margin-bottom: -8px }
 .post .body img { max-width: 100% }
-.post .body table { border-collapse: collapse; margin-bottom: 10px; margin: auto }
+.post .body table { display: block; width: 100%; overflow: auto; border-spacing: 0; border-collapse: collapse; margin-bottom: 10px; margin: auto }
 .post .body td, .post .body th { padding: 5px 10px; border: 1px solid #EEE; border-collapse: collapse; text-align: left }
 
 code {
@@ -152,8 +152,8 @@ code {
 	max-width: 660px;
 	overflow: auto;
 }
-.post .body pre { table-layout: fixed; width: auto; display: table; white-space: normal; }
-.post .body pre code { padding: 10px 20px; white-space: pre; max-width: 660px; display: block; overflow: auto }
+.post .body pre { table-layout: fixed; width: auto; max-width: 100%; overflow: auto; white-space: normal; }
+.post .body pre code { padding: 10px 20px; white-space: pre; display: block; overflow: auto }
 
 blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 /*.post .more {
