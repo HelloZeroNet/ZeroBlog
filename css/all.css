@@ -116,8 +116,10 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 /* Design based on medium */
 
-body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; height: 15000px; overflow: hidden; -webkit-backface-visibility: hidden ; -moz-backface-visibility: hidden ; -o-backface-visibility: hidden ; -ms-backface-visibility: hidden ; backface-visibility: hidden  }
-body.loaded { height: auto; overflow: auto; max-width: 960px; margin-left: auto; margin-right: auto; }
+body {
+  background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -o-backface-visibility: hidden; -ms-backface-visibility: hidden; backface-visibility: hidden ;
+  height: auto; overflow: auto; max-width: 960px; margin-left: auto; margin-right: auto
+}
 h1, h2, h3, h4 { font-family: 'Roboto Light', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
 h2 { font-size: 24px; margin-top: 2em }
