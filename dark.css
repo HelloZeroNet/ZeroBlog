@@ -1,0 +1,340 @@
+/* general */
+
+* {
+border-color: #333 !important;
+text-shadow: none !important;
+}
+a {
+border-bottom: none;
+color: #8899A6 !important;
+}
+a:hover {
+color: #ccc !important;
+}
+strong {
+color: #ccc;
+}
+textarea {
+outline: 1px solid #333 !important;
+background-color: #161616 !important;
+color: #ccc !important;
+}
+select {
+color: #ccc !important;
+}
+body {
+background-color: #1b1b1b !important;
+color: #ccc;
+}
+
+h1, h2, h3, h4, h5, h6 {
+color: #ccc;
+}
+hr {
+background-color: #333;
+border-bottom: 1px solid #333;
+border-right: 1px solid #333;
+}
+:root {
+background-color: transparent;
+}
+  th {
+    background-color: #303030 !important;
+    color: #ccc !important;
+}
+  tr {
+    background-color: #242424 !important;
+    color: #ccc !important;
+}
+   tr:hover {
+    background-color: #333 !important;
+}
+li:nth-child(2n+1) {
+background-color: transparent !important;
+}
+button {
+background: #333;
+color: #ccc;
+}
+  ::-moz-selection {
+    background: rgba(200,200,200,0.2) !important;
+    color: #ddd !important;
+  }
+  ::selection {
+    background: rgba(200,200,200,0.2) !important;
+    color: #ddd !important;
+  }
+::-webkit-input-placeholder {
+color: #999 !important;
+}
+::-moz-placeholder {
+color: #999 !important;
+opacity: 1;
+}
+
+/* notification */
+
+.notification > .body > .message > div {
+background-color: #444 !important;
+}
+.notification .body {
+background-color: #333;
+}
+.notification {
+color: #ccc;
+}
+.notification .input {
+background-color: #161616 !important;
+}
+.notification .select:hover, .notification .select.active {
+background-color: #444;
+}
+
+/* noscript page */
+.unsupported {
+background-color: #242424;
+box-shadow: 0px 0px 5px #888;
+}
+
+/* blacklist page */
+.content #details {
+background-color: #303030;
+box-shadow: none;
+}
+.content {
+color: #ccc;
+}
+
+/* code theme */
+
+.hljs-tag, .hljs-name, .hljs-attribute {
+color: #F0E68C;
+}
+.hljs-keyword, .hljs-selector-tag, .hljs-subst {
+color: #F0E68C;
+}
+.hljs-built_in, .hljs-builtin-name {
+color: #98FB98;
+}
+pre {
+color: #ddd;
+background-color: #333; /* '!important' affects NullPaste selected text color */
+border: 0px solid #060606 !important;
+overflow: auto;
+}
+pre code {
+color: #ddd;
+background-color: #333 !important;
+border: 0px solid #060606 !important;
+}
+.hljs {
+color: #ddd;
+background-color: #333 !important;
+border: 0px solid #060606 !important;
+}
+code {
+color: #FFA0A0;
+background-color: #333 !important;
+}
+.hljs-title, .hljs-section, .hljs-selector-id, .hljs-selector-class {
+color: #98FB98;
+}
+.hljs-meta {
+color: #98FB98;
+}
+.hljs-number, .hljs-literal, .hljs-variable, .hljs-template-variable, .hljs-tag .hljs-attr {
+color: #FFA0A0;
+}
+.hljs-string, .hljs-doctag {
+color: #FFA0A0;
+}
+.hljs-comment, .hljs-quote, .hljs-link {
+color: #87CEEB;
+}
+.hljs-symbol, .hljs-bullet {
+color: #FFA858;
+}
+.hljs-tag .hljs-title, .hljs-rules .hljs-property, .django .hljs-tag .hljs-keyword {
+color: #FFA0A0;
+}
+.hljs-string, .hljs-tag .hljs-value, .hljs-phpdoc, .hljs-dartdoc, .tex .hljs-formula {
+color: #ddd;
+}
+.hljs-title, .hljs-id, .scss .hljs-preprocessor {
+color: #F0E68C;
+}
+.hljs-number, .hljs-hexcolor, .ruby .hljs-constant {
+color: #FFA0A0;
+}
+.hljs-deletion {
+background: #422;
+}
+.hljs-addition {
+background: #242;
+}
+.hljs-winutils, .nginx .hljs-title, .hljs-subst, .hljs-request, .hljs-status {
+color: #ddd;
+}
+
+/* ZeroBlog */
+
+.comment-new .button-submit {
+background-color: #333;
+}
+.post {
+background-color: transparent;
+}
+.main a {
+color: #8899a6;
+}
+.feed-follow {
+background-color: #333;
+color: #ccc !important;
+}    
+.feed-follow:hover {
+background-color: #444;
+}
+.feed-follow.following .text-following {
+color: #ccc;
+}
+.icon-feed {
+background-color: #999 !important;
+}
+.icon-feed::before {
+border-top: 2px solid #999 !important;
+border-right: 2px solid #999 !important;
+}
+.icon-feed::after {
+border-top: 2px solid #999 !important;
+border-right: 2px solid #999 !important;
+}
+.feed-follow .text-follow, .feed-follow .text-following {
+font-family: Roboto, Helvetica, Arial;
+}
+.post .body h1::before {
+border-top: 1px solid #333;
+}
+.ae-ui .ae-container-input input, .ae-ui .ae-container-input .ae-input {
+color: #ccc !important;
+}
+.ae-ui .ae-container-input {
+background-color: #242424 !important;
+}
+.ae-ui .ae-toolbar, .ae-ui [class^="ae-toolbar-"] {
+background-color: #333 !important;
+color: #ccc !important;
+}
+.post .body {
+font-size: 15px;
+color: #ccc;
+font-family: Helvetica,Arial,sans-serif;
+}    
+.post table th {
+background-color: #242424;
+}
+.zoom-overlay {
+background: #101010;
+}
+.zoom-overlay-open .zoom-overlay {
+opacity: 0.9;
+}
+.left h2 {
+color: #ccc;
+}
+.comment, .lastcomments {
+background-color: #1b1b1b;
+}
+.lastcomments .lastcomment .details .postlink {
+border-bottom: 0px solid #BBB;
+}
+.post .details .comments-num .num {
+border-bottom: 0px solid #eee;
+color: #8899A6;
+}
+.bottombar {
+background-color: rgba(255,255,255,0.2);
+}
+.button.publish {
+background-color: #333;
+color: #bbb;
+}
+.button.publish:hover {
+background-color: #222;
+}
+.button {
+background-color: #333;
+color: #ccc;
+}
+  .button.is-hovered, .button:hover {
+    color: #ccc;
+background-color: #444;
+}
+
+.editbg {
+background-color: transparent;
+}
+.markdown-help {
+background-color: #242424;
+}
+@media screen and (max-width: 750px) {
+.left input ~ .trigger {
+background-color: #242424;
+box-shadow: none;
+}
+.left input:checked ~ .trigger {
+box-shadow: 0px 0px 30px #555;
+}
+.trigger .lastcomments {
+background-color: transparent;
+}
+}
+
+/* chromium scrollbar */
+
+@media screen and (min-width: 750px) {
+::-webkit-scrollbar
+  {
+    width: 6px !important;
+    height: 6px !important;
+  }
+  body::-webkit-scrollbar {
+    width: 6px !important;
+}
+
+  ::-webkit-scrollbar-thumb
+  {
+    height: 50px !important;
+    background-color: #666 !important;
+    border-radius: 3px !important;
+  }
+
+  ::-webkit-scrollbar-button
+  {
+	  display: none !important;
+  }
+
+body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3) !important;
+}
+
+  ::-webkit-scrollbar-track
+  {
+    background-color: #999 !important;
+  }
+
+  ::-webkit-scrollbar-track-piece
+  {
+    background-color: #333 !important;
+  }
+
+  ::-webkit-scrollbar-corner
+  {
+    background-color: #999 !important;
+  }
+
+  ::-webkit-resizer
+  {
+    background-color: #666 !important;
+  }
+
+  }

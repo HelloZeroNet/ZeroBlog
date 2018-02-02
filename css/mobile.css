@@ -2,26 +2,20 @@
 display: none; }
 .left .menu-icon {
 display: none; }
-@media screen and (max-width: 1000px) {
-.right {
-max-width: 650px;
-}
-.post .body pre code {
-max-width: 600px;
-}
-}
 @media screen and (max-width: 750px) {
 body, html {height: 100%;}
-code {max-width: 100%;}
+code {max-width: calc(100%  10px);}
 html, body, p, th, td, li {
 font-size: medium !important;
 }
 .right {
-width: 95%;
-max-width: 100%;
+width: 100%;
 margin-left: 0px;
-padding-right: 10px;
-padding-left: 10px;
+max-width: 750px;
+}
+.left .trigger { padding: 0 10px; }
+.right .posts, .right .post-full, .right .pager, .right .footer {
+padding: 0 10px;
 }
 .editable-edit {
 position: absolute;
@@ -34,7 +28,7 @@ width: 100% !important;
 .editbg {
 z-index: 0 !important;
 }
-.left {
+body.loaded .left {
 position: fixed;
 left: -300px;
 height: 100%;
@@ -109,8 +103,9 @@ padding: 5px 5px;
 white-space: pre-wrap;
 }
 .post .body code {
-max-width: 100%;
+max-width: calc(100% - 10px);
 white-space: pre-wrap;
+word-wrap: break-word;
 }
 
 }

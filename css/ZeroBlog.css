@@ -1,7 +1,14 @@
 /* Design based on medium */
 
+<<<<<<< HEAD
 body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; height: 15000px; overflow: hidden; backface-visibility: hidden }
 body.loaded { height: auto; overflow: auto; max-width: 960px; margin-left: auto; margin-right: auto; }
+=======
+body {
+  background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; backface-visibility: hidden;
+  height: auto; overflow: auto; max-width: 960px; margin-left: auto; margin-right: auto
+}
+>>>>>>> aae7bb934016d38f8a2dc03f143fbfba11ef1c68
 h1, h2, h3, h4 { font-family: 'Roboto Light', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
 h2 { font-size: 24px; margin-top: 2em }
@@ -78,11 +85,20 @@ a:hover { color: #3498db }
 .icon-help.active { background-color: #EEE }
 
 /* -- Left -- */
+<<<<<<< HEAD
 
 .left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
 .right { display: inline-block; width: 75%; padding-top: 60px }
 .left .trigger { padding-left: 20px; }
 .right .posts, .right .post-full, .right .pager, .right .footer { padding-left: 60px; }
+=======
+.left, .footer { display: none }
+body.loaded .footer { display: block }
+body.loaded .left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
+.right { display: inline-block; width: 75%; padding-top: 60px }
+.left .trigger { padding: 0 20px; }
+.right .posts, .right .post-full, .right .pager, .right .footer { padding: 0 30px; }
+>>>>>>> aae7bb934016d38f8a2dc03f143fbfba11ef1c68
 .left .avatar {
 	background-color: #F0F0F0; width: 60px; height: 60px; border-radius: 100%; margin-bottom: 10px;
 	background-position: center center; background-size: 70%; display: inline-block; image-rendering: pixelated;
@@ -143,7 +159,7 @@ a:hover { color: #3498db }
 
 .post .body a img { margin-bottom: -8px }
 .post .body img { max-width: 100% }
-.post .body table { border-collapse: collapse; margin-bottom: 10px; margin: auto }
+.post .body table { display: block; width: 100%; overflow: auto; border-spacing: 0; border-collapse: collapse; margin-bottom: 10px; margin: auto }
 .post .body td, .post .body th { padding: 5px 10px; border: 1px solid #EEE; border-collapse: collapse; text-align: left }
 
 code {
@@ -152,8 +168,8 @@ code {
 	max-width: 660px;
 	overflow: auto;
 }
-.post .body pre { table-layout: fixed; width: auto; display: table; white-space: normal; }
-.post .body pre code { padding: 10px 20px; white-space: pre; max-width: 660px; display: block; overflow: auto }
+.post .body pre { table-layout: fixed; width: auto; max-width: 100%; overflow: auto; white-space: normal; }
+.post .body pre code { padding: 10px 20px; white-space: pre; display: block; overflow: auto }
 
 blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 /*.post .more {
@@ -205,4 +221,14 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 @keyframes bounce {
 	  0% { transform: translateY(0); }
 	100% { transform: translateY(-3px); }
+}
+
+@media screen and (min-width: 750px) {
+.page-post .left {
+  opacity: 0.1;
+  transition: 0.4s;
+}
+.page-post .left:hover {
+  opacity: 1;
+}
 }
