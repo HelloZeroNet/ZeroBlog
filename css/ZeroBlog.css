@@ -206,3 +206,13 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 	  0% { transform: translateY(0); }
 	100% { transform: translateY(-3px); }
 }
+
+@media screen and (min-width: 750px) {
+.page-post .left {
+  opacity: 0.1;
+  transition: 0.4s;
+}
+.page-post .left:hover {
+  opacity: 1;
+}
+}

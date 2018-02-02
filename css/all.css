@@ -197,8 +197,8 @@ a:hover { color: #3498db }
 
 .left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
 .right { display: inline-block; width: 75%; padding-top: 60px }
-.left .trigger { padding-left: 20px; }
-.right .posts, .right .post-full, .right .pager, .right .footer { padding-left: 60px; }
+.left .trigger { padding: 0 20px; }
+.right .posts, .right .post-full, .right .pager, .right .footer { padding: 0 30px; }
 .left .avatar {
 	background-color: #F0F0F0; width: 60px; height: 60px; -webkit-border-radius: 100%; -moz-border-radius: 100%; -o-border-radius: 100%; -ms-border-radius: 100%; border-radius: 100% ; margin-bottom: 10px;
 	background-position: center center; background-size: 70%; display: inline-block; image-rendering: pixelated;
@@ -259,7 +259,7 @@ a:hover { color: #3498db }
 
 .post .body a img { margin-bottom: -8px }
 .post .body img { max-width: 100% }
-.post .body table { border-collapse: collapse; margin-bottom: 10px; margin: auto }
+.post .body table { display: block; width: 100%; overflow: auto; border-spacing: 0; border-collapse: collapse; margin-bottom: 10px; margin: auto }
 .post .body td, .post .body th { padding: 5px 10px; border: 1px solid #EEE; border-collapse: collapse; text-align: left }
 
 code {
@@ -268,8 +268,8 @@ code {
 	max-width: 660px;
 	overflow: auto;
 }
-.post .body pre { table-layout: fixed; width: auto; display: table; white-space: normal; }
-.post .body pre code { padding: 10px 20px; white-space: pre; max-width: 660px; display: block; overflow: auto }
+.post .body pre { table-layout: fixed; width: auto; max-width: 100%; overflow: auto; white-space: normal; }
+.post .body pre code { padding: 10px 20px; white-space: pre; display: block; overflow: auto }
 
 blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 /*.post .more {
@@ -331,6 +331,16 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 	100% { -webkit-transform: translateY(-3px); -moz-transform: translateY(-3px); -o-transform: translateY(-3px); -ms-transform: translateY(-3px); transform: translateY(-3px) ; }
 }
 
+
+@media screen and (min-width: 750px) {
+.page-post .left {
+  opacity: 0.1;
+  -webkit-transition: 0.4s; -moz-transition: 0.4s; -o-transition: 0.4s; -ms-transition: 0.4s; transition: 0.4s ;
+}
+.page-post .left:hover {
+  opacity: 1;
+}
+}
 
 
 
@@ -535,26 +545,20 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 display: none; }
 .left .menu-icon {
 display: none; }
-@media screen and (max-width: 1000px) {
-.right {
-max-width: 650px;
-}
-.post .body pre code {
-max-width: 600px;
-}
-}
 @media screen and (max-width: 750px) {
 body, html {height: 100%;}
-code {max-width: 100%;}
+code {max-width: calc(100%  10px);}
 html, body, p, th, td, li {
 font-size: medium !important;
 }
 .right {
-width: 95%;
-max-width: 100%;
+width: 100%;
 margin-left: 0px;
-padding-right: 10px;
-padding-left: 10px;
+max-width: 750px;
+}
+.left .trigger { padding: 0 10px; }
+.right .posts, .right .post-full, .right .pager, .right .footer {
+padding: 0 10px;
 }
 .editable-edit {
 position: absolute;
@@ -642,8 +646,9 @@ padding: 5px 5px;
 white-space: pre-wrap;
 }
 .post .body code {
-max-width: 100%;
+max-width: calc(100% - 10px);
 white-space: pre-wrap;
+word-wrap: break-word;
 }
 
 }
