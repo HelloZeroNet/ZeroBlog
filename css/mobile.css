@@ -28,7 +28,7 @@ width: 100% !important;
 .editbg {
 z-index: 0 !important;
 }
-.left {
+body.loaded .left {
 position: fixed;
 left: -300px;
 height: 100%;
