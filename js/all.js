@@ -2497,6 +2497,162 @@
       }
     };
 
+<<<<<<< HEAD
+=======
+    ZeroBlog.prototype.pageToc = function(tocType) {
+      $("body").addClass("page-post");
+      if (tocType.match(/^dateDesc/)) {
+        this.pageTocDateDesc();
+      } else if (tocType.match(/^tagAll/)) {
+        this.pageTocTagAll();
+      } else if (tocType.match(/^tag/)) {
+        this.pageTocByTag(tocType.split("&")[0].substring(3));
+      }
+      this.pageLoaded();
+      $(".post .details").hide();
+      $(".editable-edit").hide();
+      return Comments.hide();
+    };
+
+    ZeroBlog.prototype.emptyTocPage = function(title, body) {
+      return this.applyPostdata($(".post-full"), {
+        title: title,
+        post_id: -1,
+        votes: -1,
+        comments: -1,
+        body: body
+      }, true);
+    };
+
+    ZeroBlog.prototype.pageTocByTag = function(tagType) {
+      var queryString, tag;
+      this.pageTocTagAll();
+      $(".left").addClass("tag-page");
+      queryString = "";
+      tag = "";
+      if (tagType.match(/^None/)) {
+        tag = "untagged";
+        queryString = "SELECT date_published,title,post_id FROM post\nWHERE post_id NOT IN (SELECT DISTINCT (post_id) FROM tag)\nORDER BY date_published DESC";
+      } else {
+        tag = decodeURIComponent(tagType.substring(1));
+        this.log("Toc by tag:", tag);
+        queryString = "SELECT post.date_published AS date_published,\npost_id,post.title AS title FROM tag\nJOIN (SELECT date_published,title,post_id FROM post) AS post\nUSING (post_id) WHERE value=\"" + tag + "\"\nORDER BY date_published DESC";
+      }
+      return this.cmd("dbQuery", [queryString], (function(_this) {
+        return function(res) {
+          var parse_res;
+          parse_res = function(res) {
+            var date, i, j, len, markdown;
+            if (res.length === 0) {
+              _this.emptyTocPage("" + tag, "no posts found");
+              return;
+            }
+            markdown = "";
+            for (j = 0, len = res.length; j < len; j++) {
+              i = res[j];
+              date = new Date(i.date_published * 1000);
+              markdown += "- [" + (date.getFullYear()) + "-" + (date.getMonth() + 1) + "-" + (date.getDate()) + ":" + i.title + "](?Post:" + i.post_id + ")\n";
+            }
+            return _this.applyPostdata($(".post-full"), {
+              title: tag,
+              post_id: -1,
+              votes: -1,
+              comments: -1,
+              body: markdown
+            }, true);
+          };
+          if (res.error) {
+            return _this.emptyTocPage("error when getting index", "error when getting index");
+          } else {
+            return parse_res(res);
+          }
+        };
+      })(this));
+    };
+
+    ZeroBlog.prototype.pageTocTagAll = function() {
+      return this.cmd("dbQuery", ["SELECT \"all\" AS value,COUNT(*) AS count FROM post\nUNION ALL\nSELECT \"tagged\" AS value,COUNT(DISTINCT post_id) AS count\nFROM tag\nUNION ALL\nSELECT value, COUNT(post_id)\nFROM tag	GROUP BY value ORDER BY count DESC"], (function(_this) {
+        return function(res) {
+          var parse_res;
+          parse_res = function(res) {
+            var escaped, j, len, markdown, one, tagged, total_post, untagged;
+            total_post = res[0].count;
+            if (total_post === 0) {
+              emptyTocPage("no post", "no post at all");
+              return;
+            }
+            markdown = "";
+            tagged = res.slice(2);
+            for (j = 0, len = tagged.length; j < len; j++) {
+              one = tagged[j];
+              escaped = encodeURIComponent(one.value);
+              markdown += "[" + one.value + " (" + one.count + ")](?Toc=tag:" + escaped + ")\n";
+            }
+            untagged = total_post - res[1].count;
+            if (untagged !== 0) {
+              markdown += "\n[untagged (" + untagged + ")](?Toc=tagNone)";
+            }
+            if ($(".left .tags").attr('class') === "tags") {
+              $(".left .tags").show();
+              $(".left .tags").html(Text.renderMarked(markdown));
+            } else {
+              $(".left .tags").hide();
+            }
+            return $(".left .tags").toggleClass("show");
+          };
+          if (res.error) {
+            return _this.emptyTocPage("error when getting index", "sorry, error happened");
+          } else {
+            return parse_res(res);
+          }
+        };
+      })(this));
+    };
+
+    ZeroBlog.prototype.pageTocDateDesc = function() {
+      this.log("Toc by date desc");
+      return this.cmd("dbQuery", ["SELECT post_id,date_published,title FROM post ORDER BY date_published DESC"], (function(_this) {
+        return function(res) {
+          var parse_res;
+          parse_res = function(res) {
+            var j, len, markdown, month, post, post_date;
+            if (res.length === 0) {
+              _this.emptyTocPage("no post", "no post at all");
+              return;
+            }
+            month = new Date(new Date().getTime() + 31 * 24 * 60 * 60 * 1000);
+            markdown = "";
+            for (j = 0, len = res.length; j < len; j++) {
+              post = res[j];
+              post_date = new Date(post.date_published * 1000);
+              if (post_date < month) {
+                month = new Date(post_date);
+                month.setDate(1);
+                month.setHours(0);
+                month.setMinutes(0);
+                month.setSeconds(0);
+                markdown += "\n" + month.getFullYear() + " " + (month.getMonth() + 1) + "\n";
+              }
+              markdown += "- [" + post_date.getDate() + " :" + post.title + ("](?Post:" + post.post_id + ")\n");
+            }
+            return _this.applyPostdata($(".post-full"), {
+              title: "index by date",
+              post_id: -1,
+              votes: -1,
+              comments: -1,
+              body: markdown
+            }, true);
+          };
+          if (res.error) {
+            return _this.emptyTocPage("error", "error while getting index");
+          } else {
+            return parse_res(res);
+          }
+        };
+      })(this));
+    };
+
+>>>>>>> d925243e5c552e33c7fd9fdb46d722614263d836
     ZeroBlog.prototype.pagePost = function() {
       var s;
       s = +(new Date);
