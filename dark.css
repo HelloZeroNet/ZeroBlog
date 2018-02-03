@@ -224,6 +224,8 @@ background-color: #242424 !important;
 background-color: #333 !important;
 color: #ccc !important;
 }
+.tags-label { color: #8899a6; }
+.tags-label:hover { color: #ccc; }
 .post .body {
 font-size: 15px;
 color: #ccc;

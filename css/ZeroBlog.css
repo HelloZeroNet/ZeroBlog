@@ -101,6 +101,8 @@ body.loaded .left { float: left; display: inline-block; width: 25%; margin-top: 
 /*.left .links { width: 230px; margin-left: -60px }*/
 .left .links.editor { text-align: left !important }
 
+.tags-label { cursor: pointer; font-size: bold; color: #3498db; font-weight: bold; }
+
 .lastcomments { background-color: #FAFAFA; margin-left: -25px; padding-right: 15px; padding-bottom: 5px; padding-top: 3px; margin-top: 40px; margin-right: -15px; display: none }
 .lastcomments h3 { margin-top: 20px; }
 .lastcomments .lastcomment { font-size: 85%; margin-top: 20px; margin-bottom: 30px; margin-left: 20px; overflow: hidden }
