@@ -179,11 +179,13 @@ class ZeroBlog extends ZeroFrame
 			,true)
 
 	pageTocByTag:(tagType) ->
+		@pageTocTagAll()
+		$(".left").addClass("tag-page")
 		queryString = ""
 		tag =""
 		#query untagged
 		if tagType.match /^None/
-			tag="all untagged"
+			tag="untagged"
 			queryString = """SELECT date_published,title,post_id FROM post
 			WHERE post_id NOT IN (SELECT DISTINCT (post_id) FROM tag)
 			ORDER BY date_published DESC"""
@@ -213,7 +215,7 @@ class ZeroBlog extends ZeroFrame
 
 
 				@applyPostdata($(".post-full"),
-					title:"posts of tag:"+tag
+					title:tag
 					post_id:-1
 					votes:-1
 					comments:-1
@@ -247,28 +249,23 @@ class ZeroBlog extends ZeroFrame
 				markdown = ""
 				tagged = res[2..]
 
-				if tagged.length > 0
-					markdown += "Tagged:\n\n"
-
 				for one in tagged
 					escaped = encodeURIComponent(one.value)
-					markdown += "[#{one.value}: #{one.count} post(s)]\
+					markdown += "[#{one.value} (#{one.count})]\
 						(?Toc=tag:#{escaped})\n"
 
 				untagged=total_post - res[1].count
 
 				if untagged != 0
-					markdown += "\n[Untagged: #{untagged} post(s)]\
+					markdown += "\n[untagged (#{untagged})]\
 						(?Toc=tagNone)"
 
-
-				@applyPostdata($(".post-full"),
-					title:"index by tag"
-					post_id:-1
-					votes:-1
-					comments:-1
-					body:markdown
-					,true)
+				if $(".left .tags").attr('class') == "tags"
+					$(".left .tags").show()
+					$(".left .tags").html(Text.renderMarked(markdown))
+				else
+					$(".left .tags").hide()
+				$(".left .tags").toggleClass("show")
 			if res.error
 				@emptyTocPage("error when getting index","sorry, error happened")
 			else

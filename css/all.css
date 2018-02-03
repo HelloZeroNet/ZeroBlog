@@ -196,8 +196,9 @@ a:hover { color: #3498db }
 .icon-help.active { background-color: #EEE }
 
 /* -- Left -- */
-
-.left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
+.left, .footer { display: none }
+body.loaded .footer { display: block }
+body.loaded .left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
 .right { display: inline-block; width: 75%; padding-top: 60px }
 .left .trigger { padding: 0 20px; }
 .right .posts, .right .post-full, .right .pager, .right .footer { padding: 0 30px; }
@@ -338,6 +339,9 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 .page-post .left {
   opacity: 0.1;
   -webkit-transition: 0.4s; -moz-transition: 0.4s; -o-transition: 0.4s; -ms-transition: 0.4s; transition: 0.4s ;
+}
+.page-post .left.tag-page {
+  opacity: 1;
 }
 .page-post .left:hover {
   opacity: 1;
@@ -573,7 +577,7 @@ width: 100% !important;
 .editbg {
 z-index: 0 !important;
 }
-.left {
+body.loaded .left {
 position: fixed;
 left: -300px;
 height: 100%;

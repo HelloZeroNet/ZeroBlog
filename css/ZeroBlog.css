@@ -215,6 +215,9 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
   opacity: 0.1;
   transition: 0.4s;
 }
+.page-post .left.tag-page {
+  opacity: 1;
+}
 .page-post .left:hover {
   opacity: 1;
 }

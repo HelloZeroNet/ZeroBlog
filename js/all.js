@@ -2534,10 +2534,12 @@
 
     ZeroBlog.prototype.pageTocByTag = function(tagType) {
       var queryString, tag;
+      this.pageTocTagAll();
+      $(".left").addClass("tag-page");
       queryString = "";
       tag = "";
       if (tagType.match(/^None/)) {
-        tag = "all untagged";
+        tag = "untagged";
         queryString = "SELECT date_published,title,post_id FROM post\nWHERE post_id NOT IN (SELECT DISTINCT (post_id) FROM tag)\nORDER BY date_published DESC";
       } else {
         tag = decodeURIComponent(tagType.substring(1));
@@ -2560,7 +2562,7 @@
               markdown += "- [" + (date.getFullYear()) + "-" + (date.getMonth() + 1) + "-" + (date.getDate()) + ":" + i.title + "](?Post:" + i.post_id + ")\n";
             }
             return _this.applyPostdata($(".post-full"), {
-              title: "posts of tag:" + tag,
+              title: tag,
               post_id: -1,
               votes: -1,
               comments: -1,
@@ -2589,25 +2591,22 @@
             }
             markdown = "";
             tagged = res.slice(2);
-            if (tagged.length > 0) {
-              markdown += "Tagged:\n\n";
-            }
             for (j = 0, len = tagged.length; j < len; j++) {
               one = tagged[j];
               escaped = encodeURIComponent(one.value);
-              markdown += "[" + one.value + ": " + one.count + " post(s)](?Toc=tag:" + escaped + ")\n";
+              markdown += "[" + one.value + " (" + one.count + ")](?Toc=tag:" + escaped + ")\n";
             }
             untagged = total_post - res[1].count;
             if (untagged !== 0) {
-              markdown += "\n[Untagged: " + untagged + " post(s)](?Toc=tagNone)";
+              markdown += "\n[untagged (" + untagged + ")](?Toc=tagNone)";
             }
-            return _this.applyPostdata($(".post-full"), {
-              title: "index by tag",
-              post_id: -1,
-              votes: -1,
-              comments: -1,
-              body: markdown
-            }, true);
+            if ($(".left .tags").attr('class') === "tags") {
+              $(".left .tags").show();
+              $(".left .tags").html(Text.renderMarked(markdown));
+            } else {
+              $(".left .tags").hide();
+            }
+            return $(".left .tags").toggleClass("show");
           };
           if (res.error) {
             return _this.emptyTocPage("error when getting index", "sorry, error happened");
