@@ -94,8 +94,8 @@ a:hover { color: #3498db }
 =======
 .left, .footer { display: none }
 body.loaded .footer { display: block }
-body.loaded .left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
-.right { display: inline-block; width: 75%; padding-top: 60px }
+body.loaded .left { float: left; display: inline-block; width: 280px; margin-top: 60px; text-align: right }
+.right { display: inline-block; width: calc(100% - 280px); padding-top: 60px }
 .left .trigger { padding: 0 20px; }
 .right .posts, .right .post-full, .right .pager, .right .footer { padding: 0 30px; }
 >>>>>>> aae7bb934016d38f8a2dc03f143fbfba11ef1c68
@@ -116,7 +116,11 @@ body.loaded .left { float: left; display: inline-block; width: 25%; margin-top: 
 
 .tags-label { cursor: pointer; font-size: bold; color: #3498db; font-weight: bold; }
 
+<<<<<<< HEAD
 .lastcomments { background-color: #FAFAFA; margin-left: -25px; padding-right: 15px; padding-bottom: 5px; padding-top: 3px; margin-top: 40px; margin-right: -15px; display: none }
+=======
+.lastcomments { background-color: transparent; margin-left: -25px; padding-right: 15px; padding-bottom: 5px; padding-top: 3px; margin-top: 40px; margin-right: -15px; display: none }
+>>>>>>> 4ae29cf5bae9d4a0daa836e26ab3c5b39a7d5fe3
 .lastcomments h3 { margin-top: 20px; }
 .lastcomments .lastcomment { font-size: 85%; margin-top: 20px; margin-bottom: 30px; margin-left: 20px; overflow: hidden }
 .lastcomments .lastcomment .user_name { font-weight: bold; }
@@ -225,7 +229,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 	100% { transform: translateY(-3px); }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 840px) {
 .page-post .left {
   opacity: 0.1;
   transition: 0.4s;

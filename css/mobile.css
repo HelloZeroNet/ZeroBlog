@@ -2,7 +2,7 @@
 display: none; }
 .left .menu-icon {
 display: none; }
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 840px) {
 body, html {height: 100%;}
 code {max-width: calc(100%  10px);}
 html, body, p, th, td, li {
@@ -63,7 +63,8 @@ text-align: center; }
   fill: #ccc; }
 .left input ~ .trigger {
 background-color: #eee;
-overflow: auto;
+overflow-y: auto;
+overflow-x: hidden;
 position: absolute;
 width: 100%;
 left: 0px;
