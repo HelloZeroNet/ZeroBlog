@@ -82,8 +82,8 @@ a:hover { color: #3498db }
 /* -- Left -- */
 .left, .footer { display: none }
 body.loaded .footer { display: block }
-body.loaded .left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
-.right { display: inline-block; width: 75%; padding-top: 60px }
+body.loaded .left { float: left; display: inline-block; width: 280px; margin-top: 60px; text-align: right }
+.right { display: inline-block; width: calc(100% - 280px); padding-top: 60px }
 .left .trigger { padding: 0 20px; }
 .right .posts, .right .post-full, .right .pager, .right .footer { padding: 0 30px; }
 .left .avatar {
@@ -212,7 +212,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 	100% { transform: translateY(-3px); }
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 840px) {
 .page-post .left {
   opacity: 0.1;
   transition: 0.4s;
