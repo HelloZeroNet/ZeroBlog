@@ -278,7 +278,7 @@ background-color: transparent;
 .markdown-help {
 background-color: #242424;
 }
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 840px) {
 .left input ~ .trigger {
 background-color: #242424;
 box-shadow: none;
