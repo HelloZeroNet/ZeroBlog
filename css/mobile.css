@@ -63,7 +63,8 @@ text-align: center; }
   fill: #ccc; }
 .left input ~ .trigger {
 background-color: #eee;
-overflow: auto;
+overflow-y: auto;
+overflow-x: hidden;
 position: absolute;
 width: 100%;
 left: 0px;
