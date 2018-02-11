@@ -45,8 +45,6 @@ class Meditor extends Class
 		@tag_markdown = @tag.previousSibling
 		@tag_markdown.innerHTML = "<textarea class='meditor-markdown'>MARKDOWN</textarea>"
 		@autoHeight(@tag_markdown.firstChild)
-		@tag_markdown.firstChild.oninput = =>
-			@autoHeight(@tag_markdown.firstChild)
 
 		@tag_markdown.style.display = "none"
 
