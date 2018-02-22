@@ -8,7 +8,7 @@
 .meditor-editmode.markdown { border-color: #9C27B0; background-color: #9C27B0; color: white; }
 .meditor-markdown {
 	width: 100%; font-family: monospace; font-size: 14px; line-height: 1.6; box-sizing: border-box; padding: 10px;
-    border: 1px solid #bbb; border-radius: 3px; box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); overflow: hidden;
+    border: 1px solid #bbb; border-radius: 3px; box-shadow: inset 0px 4px 5px -5px rgba(0, 0, 0, 0.4); overflow: auto;
 }
 
 .ae-icon-h2:before { content: "T"; display: inline-block; line-height: 0px; vertical-align: 3px; font-size: 23px; font-family: serif; }
