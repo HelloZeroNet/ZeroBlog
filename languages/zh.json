@@ -2,7 +2,10 @@
 	"Add new post": "发布新文章",
 	"Follow in Newsfeed": "在新闻源中关注",
 	"Posts": "文章",
-	"Comments": "评论",
+	" Comments:": " 评论:",
+	" Comment:": " 评论:",
+	" comments": "评论",
+	" comment": "评论",
 	"Following": "已关注",
 
 	"Like this post": "喜欢这篇文章",
