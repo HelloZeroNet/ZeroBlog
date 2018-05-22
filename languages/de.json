@@ -1,0 +1,73 @@
+{
+    "Add new post": "Einen Beitrag hinzufügen",
+    "Follow in Newsfeed": "Abonniere diesen Blog",
+    "Username mentions": "Erwähnungen",
+    "Posts": "Beiträge",
+    "Post": "Beitrag",
+    " post(s)": " Beiträg(e)",
+    "0 Comments:": "0 Kommentare:",
+    "Comments": "Kommentare",
+    "Following": "Abonniert",
+
+    "Like this post": "Gefällt mir",
+    "Latest comments:": "Neueste Kommentare:",
+    "Reply": "Antworten",
+
+    "Bold": "Fett",
+    "Italic": "Kursiv",
+    "Strikethrough": "Durchgestrichen",
+    "Code": "Code",
+    "Link": "Link",
+    "Type or paste link here": "Tippe oder füge einen Link hier ein",
+
+    "**bold**": "**fett**",
+    "_italic_": "_kursiv_",
+    "strikethrough": "durchgestrichen",
+    "- Lists": "- Listen",
+    "1. Numbered lists": "Erste Liste",
+    "[Links](http://www.zeronet.io)": "[Links](http://www.zeronet.io)",
+    "[References][1]<br>[1]: Can be used": "[Referenz][1]<br>[1]: Kann benutzt werden",
+    "&gt; Quotes": "&gt; Ziate",
+    "--- Horizontal rule": "--- Horizontale Linie",
+
+    "More comments": "Mehr Kommentare...",
+    "Sign in as...": "Anmelden als...",
+    "Submit comment": "Kommentieren",
+    "Please sign in": "Bitte anmelden",
+    "new comment": "Neuer Kommentar",
+    "used: ": "Benutzt: ",
+
+    " minutes ago": " Minuten vergangen",
+    " hours ago": " Stunden vergangen",
+    " days ago": " Tage vergangen",
+    "on ": "den ",
+    "Just now": "Gerade",
+    "less than 1 min read": "Unter einer Minute zu lesen",
+    " min read": " Minuten zu lesen",
+
+    "tag:": "Stichwort:",
+    "tagged:": "Stichworte:",
+    "not tagged": "nicht markiert",
+    "TOC by date": "Sortieren nach Datum",
+    "TOC by tag": "Sortieren nach Stichwort",
+    "index by date": "Sortierung nach Datum",
+    "index by tag": "Sortierung nach Stichwort",
+    "posts of tag:": "Beiträge nach dem Stichwort: ",
+    "all untagged": "alle Unmarkierte",
+    "untagged:": "unmarkiert",
+    
+    "Content changed": "Inhalt wurde verändert",
+    "Sign &amp; Publish new content": "Anmelden und veröffentliche neuen Inhalt",
+
+    " Editing: ": " Bearbeiten: ",
+    "Save": "Speichern",
+    "Cancel": "Abbrechen",
+    "Delete ": "Lösche ",
+
+    "Prev page": "Vorherige Seite",
+    "Next page": "Nächste Seite",
+
+    "Not found": "Nicht gefunden",
+    "Content changed": "Inhalt wurde verändert",
+    "Are you sure you sure to delete this Post?": "Bist du sicher, diesen Beitrag zu löschen?"
+}
