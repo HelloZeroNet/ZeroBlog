@@ -1,0 +1,34 @@
+{
+	"Add new post": "Adicionar nova publicação",
+	"Follow in Newsfeed": "Seguir as Noticias",
+	"Posts": "Postagens",
+	"Comments": "Comentários",
+	"Following": "Seguindo",
+
+	"Like this post": "Gostei deste publicação",
+	"Latest comments:": "Últimos comentários:",
+	"Reply": "Responder",
+
+	"Bold": "Negrito",
+	"Italic": "Itálico",
+	"Strikethrough": "Tachado",
+	"Code": "Código",
+	"Link": "Link",
+
+	"More comments": "Mais comentários",
+	"Sign in as...": "Entrar como...",
+	"Submit comment": "Enviar comentário",
+	"Please sign in": "Por favor, ente",
+	"new comment": "Novo comentário",
+	"used: ": "usado: ",
+
+	" minutes ago": "minutos atrás",
+	" hours ago": " horas atras",
+	" days ago": " dias atras",
+	"on ": "en ",
+	"Just now": "agora mesmo",
+
+	"Save": "Salvar",
+	"Cancel": "Cancelar",
+	"Delete ": "Excluir "
+}
