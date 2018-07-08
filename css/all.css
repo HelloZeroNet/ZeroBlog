@@ -115,12 +115,14 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 
 /* Design based on medium */
 
-body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; height: 15000px; overflow: hidden; -webkit-backface-visibility: hidden ; -moz-backface-visibility: hidden ; -o-backface-visibility: hidden ; -ms-backface-visibility: hidden ; backface-visibility: hidden  }
-body.loaded { height: auto; overflow: auto }
+body {
+  background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; -webkit-backface-visibility: hidden; -moz-backface-visibility: hidden; -o-backface-visibility: hidden; -ms-backface-visibility: hidden; backface-visibility: hidden ;
+  height: auto; overflow: auto; max-width: 960px; margin-left: auto; margin-right: auto
+}
 h1, h2, h3, h4 { font-family: 'Roboto Light', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
-h2 { margin-top: 2em }
-h3 { font-size: 24px; margin-top: 2em }
+h2 { font-size: 24px; margin-top: 2em }
+h3 { font-size: 18px; margin-top: 2em }
 h1 + h2, h2 + h3 { margin-top: inherit }
 
 p { margin-top: 0.9em; margin-bottom: 0.9em }
@@ -193,10 +195,12 @@ a:hover { color: #3498db }
 .icon-help.active { background-color: #EEE }
 
 /* -- Left -- */
-
-.left { float: left; position: absolute; width: 220px; padding-left: 20px; padding-right: 20px; margin-top: 60px; text-align: right }
-.right { float: left; padding-left: 60px; margin-left: 240px; max-width: 700px; padding-right: 60px; padding-top: 60px }
-
+.left, .footer { display: none }
+body.loaded .footer { display: block }
+body.loaded .left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
+.right { display: inline-block; width: 75%; padding-top: 60px }
+.left .trigger { padding: 0 20px; }
+.right .posts, .right .post-full, .right .pager, .right .footer { padding: 0 30px; }
 .left .avatar {
 	background-color: #F0F0F0; width: 60px; height: 60px; -webkit-border-radius: 100%; -moz-border-radius: 100%; -o-border-radius: 100%; -ms-border-radius: 100%; border-radius: 100% ; margin-bottom: 10px;
 	background-position: center center; background-size: 70%; display: inline-block; image-rendering: pixelated;
@@ -208,6 +212,8 @@ a:hover { color: #3498db }
 .left hr { margin-left: 100px; margin-right: 0px; width: auto }
 /*.left .links { width: 230px; margin-left: -60px }*/
 .left .links.editor { text-align: left !important }
+
+.tags-label { cursor: pointer; font-size: bold; color: #3498db; font-weight: bold; }
 
 .lastcomments { background-color: #FAFAFA; margin-left: -25px; padding-right: 15px; padding-bottom: 5px; padding-top: 3px; margin-top: 40px; margin-right: -15px; display: none }
 .lastcomments h3 { margin-top: 20px; }
@@ -243,7 +249,7 @@ a:hover { color: #3498db }
 .post .details .like .num { margin-left: 21px; color: #CCC; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
 .post .details .like:hover .num { color: #FA6C8D }
 .post .details .like.loading { pointer-events: none; -webkit-animation: bounce .3s infinite alternate ease-out; -moz-animation: bounce .3s infinite alternate ease-out; -o-animation: bounce .3s infinite alternate ease-out; -ms-animation: bounce .3s infinite alternate ease-out; animation: bounce .3s infinite alternate ease-out ; -webkit-animation-delay: 1s; -moz-animation-delay: 1s; -o-animation-delay: 1s; -ms-animation-delay: 1s; animation-delay: 1s ; }
-.post .body { font-size: 21.5px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
+.post .body { font-size: 15px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
 
 .post .body h1 { text-align: center; margin-top: 50px }
 .post .body h1:before { content: " "; border-top: 1px solid #EEE; width: 120px; display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px; }
@@ -254,15 +260,20 @@ a:hover { color: #3498db }
 
 .post .body a img { margin-bottom: -8px }
 .post .body img { max-width: 100% }
-.post .body table { border-collapse: collapse; margin-bottom: 10px; margin: auto }
+.post .body table { display: block; width: 100%; overflow: auto; border-spacing: 0; border-collapse: collapse; margin-bottom: 10px; margin: auto }
 .post .body td, .post .body th { padding: 5px 10px; border: 1px solid #EEE; border-collapse: collapse; text-align: left }
 
 code {
 	background-color: #f5f5f5; border: 1px solid #ccc; padding: 0px 5px; overflow: auto; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; display: inline-block;
 	color: #444; font-weight: normal; font-size: 13px; vertical-align: text-bottom; border-bottom-width: 2px;
 }
+<<<<<<< HEAD
 .post .body pre { table-layout: fixed; width: auto; display: table; white-space: normal; }
 .post .body pre code { padding: 10px 20px; white-space: pre; max-width: 850px; display: block }
+=======
+.post .body pre { table-layout: fixed; width: auto; max-width: 100%; overflow: auto; white-space: normal; }
+.post .body pre code { padding: 10px 20px; white-space: pre; display: block; overflow: auto }
+>>>>>>> aae7bb934016d38f8a2dc03f143fbfba11ef1c68
 
 blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 /*.post .more {
@@ -324,6 +335,19 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 	100% { -webkit-transform: translateY(-3px); -moz-transform: translateY(-3px); -o-transform: translateY(-3px); -ms-transform: translateY(-3px); transform: translateY(-3px) ; }
 }
 
+
+@media screen and (min-width: 750px) {
+.page-post .left {
+  opacity: 0.1;
+  -webkit-transition: 0.4s; -moz-transition: 0.4s; -o-transition: 0.4s; -ms-transition: 0.4s; transition: 0.4s ;
+}
+.page-post .left.tag-page {
+  opacity: 1;
+}
+.page-post .left:hover {
+  opacity: 1;
+}
+}
 
 
 
@@ -521,7 +545,135 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .icon-up { font-weight: normal !important; font-size: 15px; font-family: Tahoma; vertical-align: -4px; padding-right: 5px; display: inline; height: 1px; }
 
 
+<<<<<<< HEAD
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/zoom.css ---- */
+=======
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/mobile.css ---- */
+
+
+.left .nav-trigger {
+display: none; }
+.left .menu-icon {
+display: none; }
+@media screen and (max-width: 750px) {
+body, html {height: 100%;}
+code {max-width: calc(100%  10px);}
+html, body, p, th, td, li {
+font-size: medium !important;
+}
+.right {
+width: 100%;
+margin-left: 0px;
+max-width: 750px;
+}
+.left .trigger { padding: 0 10px; }
+.right .posts, .right .post-full, .right .pager, .right .footer {
+padding: 0 10px;
+}
+.editable-edit {
+position: absolute;
+margin-left: -40px;
+padding: 8px 40px;
+}
+.editable {
+width: 100% !important;
+}
+.editbg {
+z-index: 0 !important;
+}
+body.loaded .left {
+position: fixed;
+left: -300px;
+height: 100%;
+z-index: 1;
+margin-left: -20px;
+margin-top: 0px;
+width: 240px;
+}
+.left .trigger {
+  padding-left: 0;
+}
+.left label[for="nav-trigger"] {
+display: block;
+cursor: pointer;
+position: absolute;
+z-index: 24;
+margin-top: 10px;
+margin-left: 340px;
+}
+.left .menu-icon {
+background-color: #333;
+display: block;
+float: left;
+border: 1px solid #e8e8e8;
+-webkit-border-radius: 5px; -moz-border-radius: 5px; -o-border-radius: 5px; -ms-border-radius: 5px; border-radius: 5px ;
+width: 36px;
+height: 26px;
+line-height: 0;
+padding-top: 10px;
+text-align: center; }
+.left .menu-icon > svg path {
+  fill: #ccc; }
+.left input ~ .trigger {
+background-color: #eee;
+overflow: auto;
+position: absolute;
+width: 100%;
+left: 0px;
+padding-top: 100px;
+margin-top: -100px;
+z-index: 20;
+clear: both;
+display: block;
+height: 100%;
+padding-left: 25px;
+padding-right: 30px;
+-webkit-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -moz-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -o-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); -ms-transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1); transition: 0.3s all cubic-bezier(0.77, 0, 0.175, 1) ;
+border-right: 2px solid #eee;
+}
+.left input:checked ~ .trigger {
+-webkit-box-shadow: 0px 0px 30px #999; -moz-box-shadow: 0px 0px 30px #999; -o-box-shadow: 0px 0px 30px #999; -ms-box-shadow: 0px 0px 30px #999; box-shadow: 0px 0px 30px #999 ;
+left: 310px;
+}
+.lastcomments {
+background-color: transparent;
+}
+.lastcomments .lastcomment {
+font-size: 85% !important;
+}
+.ae-ui .ae-toolbar-add {
+left: 0px !important;
+}
+.post {
+min-width: 300px;
+}
+.post .body pre {
+width: 100%;
+}
+.post .body pre code {
+max-width: 100%;
+padding: 5px 5px;
+white-space: pre-wrap;
+}
+.post .body code {
+max-width: calc(100% - 10px);
+white-space: pre-wrap;
+word-wrap: break-word;
+}
+
+}
+
+/* Fix publish bar */
+@media screen and (max-width: 410px) {
+.publishbar small {
+display: none;
+}
+}
+
+
+
+/* ---- /1NvpGge1v1DVL2q1KRrejveqXj8zrj6HBW/css/zoom.css ---- */
+>>>>>>> aae7bb934016d38f8a2dc03f143fbfba11ef1c68
 
 
 img[data-action="zoom"] {

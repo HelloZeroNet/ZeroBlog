@@ -46,12 +46,31 @@
 
 <!-- left -->
 <div class="left" data-object="Site">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+ <div class="trigger">
+	
  <a href="?Home" class="nolink">
     <img class="avatar" src="img/avatar.png">
  </a>
  <h1><a href="?Home" class="nolink" data-editable="title" data-editable-mode="simple"></a></h1>
  <h2 data-editable="description"></h2>
  <a href="#Follow" class="feed-follow"><span class='text-follow'>Follow in Newsfeed</span><span class='text-following'>Following</span><div class="icon-feed"></div></a>
+ <hr>
+ <a href="?Toc=dateDesc">TOC by date</a>
+ <br>
+ <div class="toggle-tags">
+   <div class="tags-label" onclick="return Page.pageTocTagAll()">TOC by tag</div>
+   <div class="tags"></div>
+ </div>
  <hr>
  <div class="links" data-editable="links" data-editable-mode="meditor"></div>
 
@@ -71,6 +90,15 @@
  </div>
  <!-- EOF Last comments -->
 
+ <!-- Banner -->
+ <div class="banner" style="padding-bottom: 50px;">
+   <a target="_blank" class="banner-link" href="https://github.com/HelloZeroNet">
+     <img alt="ZeroNet banner" src="img/banner-s.png" style="width: 100%; border: 1px solid #777;">
+   </a>
+ </div>
+ <!-- EOF Banner -->
+
+</div>
 </div>
 <!-- EOF left -->
 
@@ -94,6 +122,8 @@
      <span class="score-inactive"> <span class="icon-up">^</span><span class="score-num">0</span> </span>
      <span class="score-active"> <span class="icon-up">^</span><span class="score-num">1</span> </span>
     </a>-->
+    <br>
+      <span class="tag" data-editable="tag" data-editable-mode="simple">tag: </span>
    </div>
    <div class="body" data-editable="body" data-editable-mode="meditor">Body</div>
    <a class="more" href="#"><span class='readmore'>Read more</span> →</a>
@@ -106,10 +136,12 @@
  <!-- Single Post show -->
  <h1 class="notfound" style="display: none">Not found</h1>
  <div class="post post-full" data-object="Post:23" data-deletable="True">
-  <h1 class="title"><a href="?Post:23:Title" data-editable="title" data-editable-mode="simple" class="editable">Title</a></h1>
+  <h1 class="title"><a href="?Post:23:Title" data-editable="title" data-editable-mode="simple" class="editable"> </a></h1>
   <div class="details">
    <span class="published" data-editable="date_published" data-editable-mode="timestamp">21 hours ago &middot; 2 min read</span>
    <a href="#Like" class="like" title="Like this post"><div class="icon-heart"></div><div class="icon-heart icon-heart-anim"></div> <span class="num"></span></a>
+   <br>
+      <span class="tag" data-editable="tag" data-editable-mode="simple">tag: </span>
   </div>
 
   <div class="body" data-editable="body" data-editable-mode="meditor"></div>

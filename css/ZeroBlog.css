@@ -1,18 +1,25 @@
 /* Design based on medium */
 
+<<<<<<< HEAD
 body { background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; height: 15000px; overflow: hidden; backface-visibility: hidden }
-body.loaded { height: auto; overflow: auto }
+body.loaded { height: auto; overflow: auto; max-width: 960px; margin-left: auto; margin-right: auto; }
+=======
+body {
+  background-color: white; color: #333332; margin: 10px; padding: 0px; font-family: 'Roboto Light', sans-serif; backface-visibility: hidden;
+  height: auto; overflow: auto; max-width: 960px; margin-left: auto; margin-right: auto
+}
+>>>>>>> aae7bb934016d38f8a2dc03f143fbfba11ef1c68
 h1, h2, h3, h4 { font-family: 'Roboto Light', sans-serif; font-weight: normal; margin: 0px; padding: 0px }
 h1 { font-size: 32px; line-height: 1.2em; font-weight: bold; letter-spacing: -0.5px; margin-bottom: 5px }
-h2 { margin-top: 2em }
-h3 { font-size: 24px; margin-top: 2em }
+h2 { font-size: 24px; margin-top: 2em }
+h3 { font-size: 18px; margin-top: 2em }
 h1 + h2, h2 + h3 { margin-top: inherit }
 
 p { margin-top: 0.9em; margin-bottom: 0.9em }
 hr { margin: 20px 0px; border: none; border-bottom: 1px solid #eee; margin-left: auto; margin-right: auto; width: 120px; }
 small { font-size: 80%; color: #999; }
 
-a { border-bottom: 1px solid #3498db; text-decoration: none; color: black; font-weight: bold }
+a { text-decoration: none; color: #3498db; font-weight: bold; word-wrap: break-word; }
 a.nolink { border-bottom: none }
 a:hover { color: #3498db }
 
@@ -78,23 +85,42 @@ a:hover { color: #3498db }
 .icon-help.active { background-color: #EEE }
 
 /* -- Left -- */
+<<<<<<< HEAD
 
-.left { float: left; position: absolute; width: 220px; padding-left: 20px; padding-right: 20px; margin-top: 60px; text-align: right }
-.right { float: left; padding-left: 60px; margin-left: 240px; max-width: 700px; padding-right: 60px; padding-top: 60px }
-
+.left { float: left; display: inline-block; width: 25%; margin-top: 60px; text-align: right }
+.right { display: inline-block; width: 75%; padding-top: 60px }
+.left .trigger { padding-left: 20px; }
+.right .posts, .right .post-full, .right .pager, .right .footer { padding-left: 60px; }
+=======
+.left, .footer { display: none }
+body.loaded .footer { display: block }
+body.loaded .left { float: left; display: inline-block; width: 280px; margin-top: 60px; text-align: right }
+.right { display: inline-block; width: calc(100% - 280px); padding-top: 60px }
+.left .trigger { padding: 0 20px; }
+.right .posts, .right .post-full, .right .pager, .right .footer { padding: 0 30px; }
+>>>>>>> aae7bb934016d38f8a2dc03f143fbfba11ef1c68
 .left .avatar {
 	background-color: #F0F0F0; width: 60px; height: 60px; border-radius: 100%; margin-bottom: 10px;
 	background-position: center center; background-size: 70%; display: inline-block; image-rendering: pixelated;
 }
 .left h1 a.nolink { font-family: Tinos; display: inline-block; padding: 1px }
 .left h1 a.editable-edit { float: none }
-.left h2 { font-size: 15px; font-family: Tinos; line-height: 1.6em; color: #AAA; margin-top: 14px; letter-spacing: 0.2px }
+.left h2 { font-size: 15px; font-family: Tinos; line-height: 1.6em; color: #AAA; margin-top: 14px; letter-spacing: 0.2px; color: #000; }
+.left p {
+	word-wrap: break-word;
+}
 .left ul, .left li { padding: 0px; margin: 0px; list-style-type: none; line-height: 2em }
-.left hr { margin-left: 100px; margin-right: 0px; width: auto }
+.left hr { margin-left: 100px; margin-right: 0px; width: auto; border-bottom: 1px solid #333 }
 /*.left .links { width: 230px; margin-left: -60px }*/
 .left .links.editor { text-align: left !important }
 
+.tags-label { cursor: pointer; font-size: bold; color: #3498db; font-weight: bold; }
+
+<<<<<<< HEAD
 .lastcomments { background-color: #FAFAFA; margin-left: -25px; padding-right: 15px; padding-bottom: 5px; padding-top: 3px; margin-top: 40px; margin-right: -15px; display: none }
+=======
+.lastcomments { background-color: transparent; margin-left: -25px; padding-right: 15px; padding-bottom: 5px; padding-top: 3px; margin-top: 40px; margin-right: -15px; display: none }
+>>>>>>> 4ae29cf5bae9d4a0daa836e26ab3c5b39a7d5fe3
 .lastcomments h3 { margin-top: 20px; }
 .lastcomments .lastcomment { font-size: 85%; margin-top: 20px; margin-bottom: 30px; margin-left: 20px; overflow: hidden }
 .lastcomments .lastcomment .user_name { font-weight: bold; }
@@ -128,7 +154,7 @@ a:hover { color: #3498db }
 .post .details .like .num { margin-left: 21px; color: #CCC; transition: all 0.3s }
 .post .details .like:hover .num { color: #FA6C8D }
 .post .details .like.loading { pointer-events: none; animation: bounce .3s infinite alternate ease-out; animation-delay: 1s; }
-.post .body { font-size: 21.5px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
+.post .body { font-size: 15px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
 
 .post .body h1 { text-align: center; margin-top: 50px }
 .post .body h1:before { content: " "; border-top: 1px solid #EEE; width: 120px; display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px; }
@@ -139,15 +165,17 @@ a:hover { color: #3498db }
 
 .post .body a img { margin-bottom: -8px }
 .post .body img { max-width: 100% }
-.post .body table { border-collapse: collapse; margin-bottom: 10px; margin: auto }
+.post .body table { display: block; width: 100%; overflow: auto; border-spacing: 0; border-collapse: collapse; margin-bottom: 10px; margin: auto }
 .post .body td, .post .body th { padding: 5px 10px; border: 1px solid #EEE; border-collapse: collapse; text-align: left }
 
 code {
-	background-color: #f5f5f5; border: 1px solid #ccc; padding: 0px 5px; overflow: auto; border-radius: 2px; display: inline-block;
+	background-color: #f5f5f5; border: 1px solid #ccc; padding: 0px 5px; overflow: auto; border-radius: 2px; display: inline;
 	color: #444; font-weight: normal; font-size: 13px; vertical-align: text-bottom; border-bottom-width: 2px;
+	max-width: 660px;
+	overflow: auto;
 }
-.post .body pre { table-layout: fixed; width: auto; display: table; white-space: normal; }
-.post .body pre code { padding: 10px 20px; white-space: pre; max-width: 850px; display: block }
+.post .body pre { table-layout: fixed; width: auto; max-width: 100%; overflow: auto; white-space: normal; }
+.post .body pre code { padding: 10px 20px; white-space: pre; display: block; overflow: auto }
 
 blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 /*.post .more {
@@ -199,4 +227,17 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 @keyframes bounce {
 	  0% { transform: translateY(0); }
 	100% { transform: translateY(-3px); }
+}
+
+@media screen and (min-width: 840px) {
+.page-post .left {
+  opacity: 0.1;
+  transition: 0.4s;
+}
+.page-post .left.tag-page {
+  opacity: 1;
+}
+.page-post .left:hover {
+  opacity: 1;
+}
 }

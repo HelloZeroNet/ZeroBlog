@@ -14,7 +14,7 @@
 			"to_keyvalue": [ "cert_user_id" ]
 		},
 		"data.json": {
-			"to_table": [ "post" ],
+			"to_table": [ "post" ,"tag"],
 			"to_keyvalue": [ "title", "description", "links", "next_post_id", "demo", "modified", "footer" ]
 		}
 
@@ -51,6 +51,15 @@
 			"indexes": ["CREATE UNIQUE INDEX post_uri ON post(json_id, post_id)", "CREATE INDEX post_id ON post(post_id)"],
 			"schema_changed": 1426195823
 		},
+    "tag": {
+      "cols":[
+        ["value","TEXT NOT NULL CHECK(length(value)!=0)"],
+        ["post_id","REFERENCES post(post_id)"],
+        ["json_id", "INTEGER REFERENCES json (json_id)"]
+      ],
+      "indexes": ["CREATE UNIQUE INDEX tag_post_uri ON tag(value,post_id)"],
+      "schema_changed": 1426195822
+    },
 		"post_vote": {
 			"cols": [
 				["post_id", "INTEGER"],

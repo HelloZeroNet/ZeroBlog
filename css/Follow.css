@@ -13,7 +13,7 @@
 
 .feed-follow {
 	font-size: 14px; display: inline-block; padding: 7px 14px; font-weight: normal; display: none;
-	border-radius: 4px; border: 1px solid #EEE; border-bottom: 1px solid #DDD; transition: all 0.3s
+	border-radius: 4px; border: 1px solid #333; border-bottom: 1px solid #333; transition: all 0.3s
 }
 .feed-follow .text-follow, .feed-follow .text-following {
 	max-width: 0px; opacity: 0; overflow: hidden; display: inline-block; vertical-align: bottom; transition: all 0.3s; white-space: nowrap;

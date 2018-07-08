@@ -169,5 +169,9 @@ class Comments extends Class
 		if elem.height() > 0 then elem.trigger "input"
 		else elem.height("48px")
 
+	hide: () ->
+		$(".comment").hide()
+		$("#Comments").hide()
+
 
 window.Comments = new Comments()
