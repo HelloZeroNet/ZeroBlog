@@ -8,7 +8,10 @@ class Text
 		for i in [0..text.length-1]
 			hash = text.charCodeAt(i) + ((hash << 5) - hash)
 		color = '#'
-		return "hsl(" + (hash % 360) + ",30%,50%)"
+		if Page.server_info?.user_settings?.theme == "dark"
+			return "hsl(" + (hash % 360) + ",55%,65%)"
+		else
+			return "hsl(" + (hash % 360) + ",30%,50%)"
 
 
 	renderMarked: (text, options={}) ->
