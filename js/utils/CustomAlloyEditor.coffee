@@ -20,7 +20,13 @@ class CustomAlloyEditor extends Class
 			), 100
 		editor.get('nativeEditor').on "click", @handleSelectionChange
 		editor.get('nativeEditor').on "change", @handleChange
-		editor.get('nativeEditor').on 'imageAdd', @handleImageAdd
+		editor.get('nativeEditor').on 'imageAdd', (e) =>
+			if e.data.el.$.width > 0
+				@handleImageAdd(e)
+			else
+				setTimeout ( =>
+					@handleImageAdd(e)
+				), 100
 		editor.get('nativeEditor').on "actionPerformed", @handleAction
 		editor.get('nativeEditor').on 'afterCommandExec', @handleCommand
 
