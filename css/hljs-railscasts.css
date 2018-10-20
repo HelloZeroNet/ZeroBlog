@@ -1,0 +1,106 @@
+/*
+
+Railscasts-like style (c) Visoft, Inc. (Damien White)
+
+*/
+
+.theme-dark .hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #232323;
+  color: #e6e1dc;
+}
+
+.theme-dark .hljs-comment,
+.theme-dark .hljs-quote {
+  color: #bc9458;
+  font-style: italic;
+}
+
+.theme-dark .hljs-keyword,
+.theme-dark .hljs-selector-tag {
+  color: #c26230;
+}
+
+.theme-dark .hljs-string,
+.theme-dark .hljs-number,
+.theme-dark .hljs-regexp,
+.theme-dark .hljs-variable,
+.theme-dark .hljs-template-variable {
+  color: #a5c261;
+}
+
+.theme-dark .hljs-subst {
+  color: #519f50;
+}
+
+.theme-dark .hljs-tag,
+.theme-dark .hljs-name {
+  color: #e8bf6a;
+}
+
+.theme-dark .hljs-type {
+  color: #da4939;
+}
+
+
+.theme-dark .hljs-symbol,
+.theme-dark .hljs-bullet,
+.theme-dark .hljs-built_in,
+.theme-dark .hljs-builtin-name,
+.theme-dark .hljs-attr,
+.theme-dark .hljs-link {
+  color: #6d9cbe;
+}
+
+.theme-dark .hljs-params {
+  color: #d0d0ff;
+}
+
+.theme-dark .hljs-attribute {
+  color: #cda869;
+}
+
+.theme-dark .hljs-meta {
+  color: #9b859d;
+}
+
+.theme-dark .hljs-title,
+.theme-dark .hljs-section {
+  color: #ffc66d;
+}
+
+.theme-dark .hljs-addition {
+  background-color: #144212;
+  color: #e6e1dc;
+  display: inline-block;
+  width: 100%;
+}
+
+.theme-dark .hljs-deletion {
+  background-color: #600;
+  color: #e6e1dc;
+  display: inline-block;
+  width: 100%;
+}
+
+.theme-dark .hljs-selector-class {
+  color: #9b703f;
+}
+
+.theme-dark .hljs-selector-id {
+  color: #8b98ab;
+}
+
+.theme-dark .hljs-emphasis {
+  font-style: italic;
+}
+
+.theme-dark .hljs-strong {
+  font-weight: bold;
+}
+
+.theme-dark .hljs-link {
+  text-decoration: underline;
+}
