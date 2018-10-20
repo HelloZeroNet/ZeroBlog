@@ -30,10 +30,10 @@ class Follow extends Class
 			@updateListitems()
 			@elem.css "display", "inline-block"
 
-		setTimeout ( =>
-			if typeof(Page.site_info.feed_follow_num) != "undefined" and Page.site_info.feed_follow_num == null  # Has not manipulated followings yet
-				@followDefaultFeeds()
-		), 100
+			setTimeout ( =>
+				if typeof(Page.site_info.feed_follow_num) != "undefined" and Page.site_info.feed_follow_num == null  # Has not manipulated followings yet
+					@followDefaultFeeds()
+			), 100
 
 
 	addFeed: (title, query, is_default_feed=false, param="") ->
