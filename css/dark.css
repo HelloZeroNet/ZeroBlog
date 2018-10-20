@@ -1,0 +1,40 @@
+.theme-dark { background-color: #30363c; color: #e0e0e6; }
+.theme-dark a { color: #FFF; font-weight: normal; border-color: #7aa4ab }
+.theme-dark a:hover { border-color: #83efff }
+.theme-dark .editbg { background-color: #3a333f }
+.theme-dark .post { border-color: #47505a }
+.theme-dark .post .title a { color: #97f1ff; font-weight: lighter; }
+.theme-dark .post .details .comments-num .num { color: #c6ced7; border-bottom-color: #4b5258 }
+.theme-dark .post .details .comments-num .num:hover { border-bottom-color: #83efff; color: #83efff; }
+.theme-dark .button-outline { background-color: transparent; border: 1px solid #83EFFF; color: #83EFFF; }
+.theme-dark .button:hover { border-bottom-color: inherit; }
+.theme-dark .bottombar { background-color: rgba(56, 63, 70, 0.9) }
+.theme-dark textarea { background-color: transparent; border-color: #4c5864; color: #F6FEF7 }
+.theme-dark .post .body td, .theme-dark .post .body th { border-color: #4b4f54 }
+
+.theme-dark .feed-follow { border-color: #47505a }
+.theme-dark .feed-follow .text-following { color: #F6FEF7 }
+.theme-dark .feed-follow.following .text-following { color: #83EFFF }
+.theme-dark .feed-follow:hover { background-color: #333940; border-color: #83EFFF; color: #83EFFF }
+.theme-dark .menu-item { color: black }
+.theme-dark .menu-item:active, .theme-dark .menu-item:focus { color: white }
+.theme-dark .feed-follow .icon-feed { background-color: #83EFFF }
+.theme-dark .feed-follow .icon-feed:before { border-color: #83EFFF }
+.theme-dark .feed-follow .icon-feed:after { border-color: #83EFFF }
+
+.theme-dark .lastcomments { background-color: transparent; }
+.theme-dark .comment { background-color: transparent; border-color: #47505a }
+.theme-dark .comment .comment-body blockquote a { color: white; }
+.theme-dark hr { border-color: #47505a }
+.theme-dark .pager a { border-color: #83efff; background-color: #83efff17; }
+.theme-dark .button-submit-comment { color: black;  }
+.theme-dark code { background-color: #232323; border-color: #0A0A0A; color: #d3d3d3; }
+.theme-dark .zoom-overlay { background-color: #111 }
+.theme-dark .bottombar .save { background-color: #83EFFF; color: black; border-bottom-color: #4b6a6e; }
+.theme-dark .markdown-help { background-color: rgba(69, 58, 80, 0.93); }
+.theme-dark .left .avatar { background-color: #2f353b; }
+
+.theme-dark .icon-comment { background: #83efff }
+.theme-dark .icon-comment:after { border-top-color: #83efff; border-left-color: #83efff; }
+
+.theme-dark .user-size-used { color: #83efff; }
