@@ -91,7 +91,6 @@ class ZeroBlog extends ZeroFrame
 				if @data.title then $(".left h1 a:not(.editable-edit)").html(@data.title).data("content", @data.title)
 				if @data.description then $(".left h2").html(Text.renderMarked(@data.description)).data("content", @data.description)
 				if @data.links then $(".left .links").html(Text.renderMarked(@data.links)).data("content", @data.links)
-				if @data.footer then $(".footer h4").html(Text.renderMarked(@data.footer)).data("content", @data.footer)
 
 	loadLastcomments: (type="show", cb=false) ->
 		query = "
