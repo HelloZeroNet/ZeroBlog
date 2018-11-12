@@ -1,0 +1,34 @@
+{
+	"Add new post": "Aggiungere un messaggio",
+	"Follow in Newsfeed": "Seguire nelle notifiche",
+	"Posts": "Messaggi",
+	"Comments": "Commenti",
+	"Following": "Osservati",
+
+	"Like this post": "Mi piace guesto messaggio",
+	"Latest comments:": "Ultimi commenti",
+	"Reply": "Rispondi",
+
+	"Bold": "Grassetto",
+	"Italic": "Italico",
+	"Strikethrough": "Barrato",
+	"Code": "Codice",
+	"Link": "Collegamento",
+
+	"More comments": "Altri commenti",
+	"Sign in as...": "Accedi come...",
+	"Submit comment": "Invia commento",
+	"Please sign in": "Si prega di accedere",
+	"new comment": "nuovo commento",
+	"used: ": "utilizzato: ",
+
+	" minutes ago": " minuti fa",
+	" hours ago": " ore fa",
+	" days ago": " giorni fa",
+	"on ": "il ",
+	"Just now": "Adesso",
+
+	"Save": "Salva",
+	"Cancel": "Annulla",
+	"Delete ": "Cancella "
+}
