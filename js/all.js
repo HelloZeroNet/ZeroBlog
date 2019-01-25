@@ -1840,7 +1840,7 @@ var t={keyword:"and elif is global as in if from raise for except finally print 
       }
       color = '#';
       if (((ref1 = Page.server_info) != null ? (ref2 = ref1.user_settings) != null ? ref2.theme : void 0 : void 0) === "dark") {
-        return "hsl(" + (hash % 360) + ",55%,65%)";
+        return "hsl(" + (hash % 360) + ",80%,70%)";
       } else {
         return "hsl(" + (hash % 360) + ",30%,50%)";
       }
@@ -1890,7 +1890,6 @@ var t={keyword:"and elif is global as in if from raise for except finally print 
   window.Text = new Text();
 
 }).call(this);
-
 
 
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/utils/Time.coffee ---- */
@@ -2131,7 +2130,7 @@ var t={keyword:"and elif is global as in if from raise for except finally print 
       return Page.cmd("dbQuery", query, (function(_this) {
         return function(comments) {
           var comment, comment_address, elem, i, len, user_address;
-          $("#Comments_id").text(comments.length + (comments.length > 1 ? " Comments:" : " Comment:"));
+          $("#Comments_header").text(comments.length + (comments.length > 1 ? " Comments:" : " Comment:"));
           for (i = 0, len = comments.length; i < len; i++) {
             comment = comments[i];
             user_address = comment.directory.replace("users/", "");
@@ -2327,6 +2326,7 @@ var t={keyword:"and elif is global as in if from raise for except finally print 
   window.Comments = new Comments();
 
 }).call(this);
+
 
 
 /* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/js/ZeroBlog.coffee ---- */

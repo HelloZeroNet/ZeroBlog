@@ -9,7 +9,7 @@ class Text
 			hash = text.charCodeAt(i) + ((hash << 5) - hash)
 		color = '#'
 		if Page.server_info?.user_settings?.theme == "dark"
-			return "hsl(" + (hash % 360) + ",55%,65%)"
+			return "hsl(" + (hash % 360) + ",80%,70%)"
 		else
 			return "hsl(" + (hash % 360) + ",30%,50%)"
 
