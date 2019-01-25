@@ -6,12 +6,15 @@
 .theme-dark .post .title a { color: #97f1ff; font-weight: lighter; }
 .theme-dark .post .details .comments-num .num { color: #c6ced7; border-bottom-color: #4b5258 }
 .theme-dark .post .details .comments-num .num:hover { border-bottom-color: #83efff; color: #83efff; }
-.theme-dark .button-outline { background-color: transparent; border: 1px solid #83EFFF; color: #83EFFF; }
+.theme-dark .button-outline { background-color: transparent; border: 1px solid #47505a; color: #83EFFF; }
+.theme-dark .button-outline:hover { border-color: #83EFFF; }
 .theme-dark .button:hover { border-bottom-color: inherit; }
+.theme-dark .button.publish:hover { color: white; }
 .theme-dark .bottombar { background-color: rgba(56, 63, 70, 0.9) }
-.theme-dark textarea { background-color: transparent; border-color: #4c5864; color: #F6FEF7 }
+.theme-dark textarea { background-color: #383d44; border-color: #4c5864; color: #F6FEF7 }
 .theme-dark .post .body td, .theme-dark .post .body th { border-color: #4b4f54 }
-
+.theme-dark .meditor-editmode:hover { color: #83efff; }
+.theme-dark .meditor-editmode.markdown { background-color: #83efff; color: #30363c; border-color: #83efff; }
 .theme-dark .feed-follow { border-color: #47505a }
 .theme-dark .feed-follow .text-following { color: #F6FEF7 }
 .theme-dark .feed-follow.following .text-following { color: #83EFFF }
@@ -21,6 +24,9 @@
 .theme-dark .feed-follow .icon-feed { background-color: #83EFFF }
 .theme-dark .feed-follow .icon-feed:before { border-color: #83EFFF }
 .theme-dark .feed-follow .icon-feed:after { border-color: #83EFFF }
+.theme-dark .comment .reply .icon { opacity: 1 }
+.theme-dark .comment .reply:hover { color: white }
+.theme-dark blockquote { border-left-color: #83efff }
 
 .theme-dark .lastcomments { background-color: transparent; }
 .theme-dark .comment { background-color: transparent; border-color: #47505a }
