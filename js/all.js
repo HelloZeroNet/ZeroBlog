@@ -2131,7 +2131,7 @@ var t={keyword:"and elif is global as in if from raise for except finally print 
       return Page.cmd("dbQuery", query, (function(_this) {
         return function(comments) {
           var comment, comment_address, elem, i, len, user_address;
-          $("#Comments").text(comments.length + (comments.length > 1 ? " Comments:" : " Comment:"));
+          $("#Comments_id").text(comments.length + (comments.length > 1 ? " Comments:" : " Comment:"));
           for (i = 0, len = comments.length; i < len; i++) {
             comment = comments[i];
             user_address = comment.directory.replace("users/", "");
