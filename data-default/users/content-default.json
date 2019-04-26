@@ -7,7 +7,8 @@
   }, 
   "user_contents": {
     "cert_signers": {
-      "zeroid.bit": [ "1iD5ZQJMNXu43w1qLB8sfdHVKppVMduGz" ]
+      "zeroid.bit": [ "1iD5ZQJMNXu43w1qLB8sfdHVKppVMduGz" ],
+      "kxoid.bit": [ "12F5SvxoPR128aiudte78h8pY7mobroG6V", "18Mt3CWBpiqJBLsPSu5JxB4B9MeaSwhyJ" ]
     }, 
     "permission_rules": {
       ".*": {

@@ -2112,7 +2112,7 @@ var t={keyword:"and elif is global as in if from raise for except finally print 
           if (Page.server_info.rev < 160) {
             Page.cmd("wrapperNotification", ["error", "Comments requires at least ZeroNet 0.3.0 Please upgade!"]);
           } else {
-            Page.cmd("certSelect", [["zeroid.bit"]]);
+            Page.cmd("certSelect", [["zeroid.bit", "kxoid.bit"]]);
           }
           return false;
         };
@@ -3041,7 +3041,7 @@ var t={keyword:"and elif is global as in if from raise for except finally print 
     ZeroBlog.prototype.submitPostVote = function(e) {
       var elem, inner_path;
       if (!Page.site_info.cert_user_id) {
-        Page.cmd("certSelect", [["zeroid.bit"]]);
+        Page.cmd("certSelect", [["zeroid.bit", "kxoid.bit"]]);
         return false;
       }
       elem = $(e.currentTarget);
