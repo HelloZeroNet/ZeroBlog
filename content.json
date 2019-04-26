@@ -4,6 +4,7 @@
  "cloneable": true,
  "description": "Blogging platform Demo",
  "domain": "Blog.ZeroNetwork.bit",
+ "favicon": "favicon.png",
  "files": {
   "alloy-editor/all.css": {
    "sha512": "c1e2049d304f77ad078fd4546a62c1456ba5459ef169fe82394a090a22487b8e",
