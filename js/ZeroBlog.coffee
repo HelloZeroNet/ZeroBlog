@@ -28,6 +28,12 @@ class ZeroBlog extends ZeroFrame
 			imagedata = new Identicon(@site_info.address, 70).toString();
 			$("body").append("<style>.avatar { background-image: url(data:image/png;base64,#{imagedata}) }</style>")
 			@initFollowButton()
+
+		$(".left-more-link").on "click", =>
+			$(".left .left-more").slideToggle()
+			$(".left").toggleClass("show-more")
+			return false
+
 		@log "inited!"
 
 

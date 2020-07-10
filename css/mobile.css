@@ -1,0 +1,23 @@
+.left .left-more-link { display: none; }
+
+@media screen and (max-width: 960px) {
+
+	.right { padding-right: 5px; padding-left: 0px; margin-left: 5px; max-width: 100%; box-sizing: border-box; }
+	.left {
+		display: block; background-color: white; border-right: 20px solid white;
+	    width: 95%; box-sizing: border-box; text-align: left; margin-top: 20px; position: relative; margin-left: 10px;
+	}
+	.left .avatar-link { display: inline-block; float: left; }
+	.left h1, .left .feed-follow { display: inline-block; float: left; vertical-align: top; margin-left: 25px; }
+	.left .feed-follow { display: none; margin-top: 5px; margin-bottom: 35px; }
+	.left .description { margin-left: 95px; margin-top: -35px; clear: both; float: left; }
+	.left .left-more { display: none; clear: both; float: left }
+	.left .left-more-link { margin-left: -25px; margin-right: 20px; margin-top: 13px; font-size: 22px; border: 0px; float: left; display: inline-block; width: 22px; }
+	.left .left-more-link:before { content: "\002630" }
+	.left.show-more { box-shadow: 0px 20px 15px -20px #9c27b04a; margin-bottom: 40px; padding-bottom: 20px; }
+	.left.show-more .left-more { max-height: none; }
+	.left.show-more .left-more-link:before { content: "\0002DF"; font-size: 40px; top: -5px; position: relative; left: 4px; }
+	.left .lastcomments { margin-left: 0px; }
+	.post { min-width: auto; }
+
+}

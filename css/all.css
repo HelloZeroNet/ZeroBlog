@@ -1,6 +1,5 @@
 
-
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Comments.css ---- */
+/* ---- Comments.css ---- */
 
 
 .comments { margin-bottom: 60px }
@@ -55,8 +54,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 .user-size-used { position: absolute; color: #B10DC9; overflow: hidden; width: 40px; white-space: nowrap }
 
 
-
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Follow.css ---- */
+/* ---- Follow.css ---- */
 
 
 .icon-feed {
@@ -89,13 +87,13 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 .feed-follow.following .icon-feed:after, .feed-follow.following .icon-feed:before { border-color: #7A26E2; -webkit-transition: none ; -moz-transition: none ; -o-transition: none ; -ms-transition: none ; transition: none  }
 
 
-
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/Menu.css ---- */
+/* ---- Menu.css ---- */
 
 
 .menu {
-	background-color: white; padding: 10px 0px; position: absolute; top: 0px; left: 0px; max-height: 0px; overflow: hidden; -webkit-transform: translate(0px, -30px); -moz-transform: translate(0px, -30px); -o-transform: translate(0px, -30px); -ms-transform: translate(0px, -30px); transform: translate(0px, -30px) ; pointer-events: none;
-	-webkit-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -moz-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -o-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -ms-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); box-shadow: 0px 2px 8px rgba(0,0,0,0.3) ; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; opacity: 0; -webkit-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -moz-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -o-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -ms-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out ;
+	background-color: white; padding: 10px 0px; position: absolute; top: 0px; left: 0px; max-height: 0px; overflow: hidden;
+	-webkit-transform: translate(0px, -30px); -moz-transform: translate(0px, -30px); -o-transform: translate(0px, -30px); -ms-transform: translate(0px, -30px); transform: translate(0px, -30px) ; pointer-events: none; -webkit-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -moz-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -o-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); -ms-box-shadow: 0px 2px 8px rgba(0,0,0,0.3); box-shadow: 0px 2px 8px rgba(0,0,0,0.3) ; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ;
+	opacity: 0; -webkit-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -moz-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -o-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; -ms-transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out; transition: opacity 0.2s ease-out, transform 1s ease-out, max-height 0.2s ease-in-out ; z-index: 999;
 }
 .menu.visible { opacity: 1; max-height: 350px; -webkit-transform: translate(0px, 0px); -moz-transform: translate(0px, 0px); -o-transform: translate(0px, 0px); -ms-transform: translate(0px, 0px); transform: translate(0px, 0px) ; -webkit-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -moz-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -o-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; -ms-transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out; transition: opacity 0.1s ease-out, transform 0.3s ease-out, max-height 0.3s ease-in-out ; pointer-events: all }
 .menu-item { display: block; text-decoration: none; color: black; padding: 6px 24px; -webkit-transition: all 0.2s; -moz-transition: all 0.2s; -o-transition: all 0.2s; -ms-transition: all 0.2s; transition: all 0.2s ; border-bottom: none; font-weight: normal; padding-left: 30px; }
@@ -108,8 +106,7 @@ input.text:focus, textarea:focus { border-color: #5FC0EA; outline: none; backgro
 	font-weight: bold; position: absolute; margin-left: -17px; font-size: 12px; margin-top: 2px;
 }
 
-
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/ZeroBlog.css ---- */
+/* ---- ZeroBlog.css ---- */
 
 
 /* Design based on medium */
@@ -209,8 +206,8 @@ a:hover { color: #3498db }
 .left .links.editor { text-align: left !important }
 
 .lastcomments { background-color: #FAFAFA; margin-left: -25px; padding-right: 15px; padding-bottom: 5px; padding-top: 3px; margin-top: 40px; margin-right: -15px; display: none }
-.lastcomments h3 { margin-top: 20px; }
-.lastcomments .lastcomment { font-size: 85%; margin-top: 20px; margin-bottom: 30px; margin-left: 20px; overflow: hidden }
+.lastcomments h3 { margin-top: 20px; margin-left: 15px; }
+.lastcomments .lastcomment { font-size: 85%; margin-top: 20px; margin-bottom: 30px; margin-left: 20px; overflow: hidden; padding-right: 15px; }
 .lastcomments .lastcomment .user_name { font-weight: bold; }
 .lastcomments .lastcomment .details { font-size: 90%; }
 .lastcomments .lastcomment .details .at { color: #999 }
@@ -225,7 +222,7 @@ a:hover { color: #3498db }
 .page-post.loaded .post-full { display: block; border-bottom: none }
 
 
-.post { margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid #eee; min-width: 500px }
+.post { margin-bottom: 50px; padding-bottom: 50px; border-bottom: 1px solid #eee; min-width: 450px }
 .post .title a { text-decoration: none; color: inherit; display: inline-block; border-bottom: none; font-weight: inherit }
 .posts .title a:visited { color: #666969 }
 .post .details { color: #BBB; margin-top: 5px; margin-bottom: 20px }
@@ -242,7 +239,7 @@ a:hover { color: #3498db }
 .post .details .like .num { margin-left: 21px; color: #CCC; -webkit-transition: all 0.3s ; -moz-transition: all 0.3s ; -o-transition: all 0.3s ; -ms-transition: all 0.3s ; transition: all 0.3s  }
 .post .details .like:hover .num { color: #FA6C8D }
 .post .details .like.loading { pointer-events: none; -webkit-animation: bounce .3s infinite alternate ease-out; -moz-animation: bounce .3s infinite alternate ease-out; -o-animation: bounce .3s infinite alternate ease-out; -ms-animation: bounce .3s infinite alternate ease-out; animation: bounce .3s infinite alternate ease-out ; -webkit-animation-delay: 1s; -moz-animation-delay: 1s; -o-animation-delay: 1s; -ms-animation-delay: 1s; animation-delay: 1s ; }
-.post .body { font-size: 21.5px; line-height: 1.6; font-family: Tinos; margin-top: 20px }
+.post .body { font-size: 21.5px; line-height: 1.6; font-family: Tinos; margin-top: 20px; overflow-wrap: break-word; }
 
 .post .body h1 { text-align: center; margin-top: 50px }
 .post .body h1:before { content: " "; border-top: 1px solid #EEE; width: 120px; display: block; margin-left: auto; margin-right: auto; margin-bottom: 50px; }
@@ -260,8 +257,8 @@ code {
 	background-color: #f5f5f5; border: 1px solid #ccc; padding: 0px 5px; overflow: auto; -webkit-border-radius: 2px; -moz-border-radius: 2px; -o-border-radius: 2px; -ms-border-radius: 2px; border-radius: 2px ; display: inline-block;
 	color: #444; font-weight: normal; font-size: 13px; vertical-align: text-bottom; border-bottom-width: 2px;
 }
-.post .body pre { table-layout: fixed; width: auto; display: table; white-space: normal; }
-.post .body pre code { padding: 10px 20px; white-space: pre; max-width: 850px; display: block }
+.post .body pre { table-layout: fixed; width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; display: table; white-space: normal; }
+.post .body pre code { padding: 10px 20px; white-space: pre; display: block; max-width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; }
 
 blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 /*.post .more {
@@ -325,8 +322,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 
 
 
-
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/dark.css ---- */
+/* ---- dark.css ---- */
 
 
 .theme-dark { background-color: #30363c; color: #e0e0e6; }
@@ -377,8 +373,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 .theme-dark .user-size-used { color: #83efff; }
 
 
-
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/fonts.css ---- */
+/* ---- fonts.css ---- */
 
 
 /* Base64 encoder: http://www.motobit.com/util/base64-decoder-encoder.asp */
@@ -414,8 +409,7 @@ blockquote { border-left: 3px solid #333; margin-left: 0px; padding-left: 1em }
 }
 
 
-
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/hljs-github.css ---- */
+/* ---- hljs-github.css ---- */
 
 
 /*
@@ -518,8 +512,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
   font-weight: bold;
 }
 
-
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/hljs-railscasts.css ---- */
+/* ---- hljs-railscasts.css ---- */
 
 
 /*
@@ -630,8 +623,7 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
 }
 
 
-
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/icons.css ---- */
+/* ---- icons.css ---- */
 
 
 .icon { display: inline-block; vertical-align: text-bottom; background-repeat: no-repeat; }
@@ -657,8 +649,35 @@ Railscasts-like style (c) Visoft, Inc. (Damien White)
 .icon-heart:after { left: 0; -webkit-transform: rotate(45deg); -moz-transform: rotate(45deg); -o-transform: rotate(45deg); -ms-transform: rotate(45deg); transform: rotate(45deg) ; transform-origin :100% 100% }
 .icon-up { font-weight: normal !important; font-size: 15px; font-family: Tahoma; vertical-align: -4px; padding-right: 5px; display: inline; height: 1px; }
 
+/* ---- mobile.css ---- */
 
-/* ---- /1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8/css/zoom.css ---- */
+
+.left .left-more-link { display: none; }
+
+@media screen and (max-width: 960px) {
+
+	.right { padding-right: 5px; padding-left: 0px; margin-left: 5px; max-width: 100%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; }
+	.left {
+		display: block; background-color: white; border-right: 20px solid white;
+	    width: 95%; -webkit-box-sizing: border-box; -moz-box-sizing: border-box; -o-box-sizing: border-box; -ms-box-sizing: border-box; box-sizing: border-box ; text-align: left; margin-top: 20px; position: relative; margin-left: 10px;
+	}
+	.left .avatar-link { display: inline-block; float: left; }
+	.left h1, .left .feed-follow { display: inline-block; float: left; vertical-align: top; margin-left: 25px; }
+	.left .feed-follow { display: none; margin-top: 5px; margin-bottom: 35px; }
+	.left .description { margin-left: 95px; margin-top: -35px; clear: both; float: left; }
+	.left .left-more { display: none; clear: both; float: left }
+	.left .left-more-link { margin-left: -25px; margin-right: 20px; margin-top: 13px; font-size: 22px; border: 0px; float: left; display: inline-block; width: 22px; }
+	.left .left-more-link:before { content: "\002630" }
+	.left.show-more { -webkit-box-shadow: 0px 20px 15px -20px #9c27b04a; -moz-box-shadow: 0px 20px 15px -20px #9c27b04a; -o-box-shadow: 0px 20px 15px -20px #9c27b04a; -ms-box-shadow: 0px 20px 15px -20px #9c27b04a; box-shadow: 0px 20px 15px -20px #9c27b04a ; margin-bottom: 40px; padding-bottom: 20px; }
+	.left.show-more .left-more { max-height: none; }
+	.left.show-more .left-more-link:before { content: "\0002DF"; font-size: 40px; top: -5px; position: relative; left: 4px; }
+	.left .lastcomments { margin-left: 0px; }
+	.post { min-width: auto; }
+
+}
+
+
+/* ---- zoom.css ---- */
 
 
 img[data-action="zoom"] {
