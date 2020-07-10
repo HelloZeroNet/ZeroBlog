@@ -1,33 +1,43 @@
 {
  "address": "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8",
  "background-color": "white",
+ "background-color-dark": "#30363c",
  "cloneable": true,
+ "default_page": "index.html",
  "description": "Blogging platform Demo",
  "domain": "Blog.ZeroNetwork.bit",
  "files": {
+  "LICENSE": {
+   "sha512": "d281feecb7d1218e1aea8269f288fcd63385da1a130681fadae77262637cb65f",
+   "size": 18027
+  },
+  "README.md": {
+   "sha512": "07dbb7b8386b600d7eea237f237269ed705cf3d97a46edc02c8ba43fa63b59c2",
+   "size": 312
+  },
   "alloy-editor/all.css": {
-   "sha512": "c1e2049d304f77ad078fd4546a62c1456ba5459ef169fe82394a090a22487b8e",
-   "size": 63344
+   "sha512": "7f92b9206df4994b119df0123734193ad95c5961c2b5190aa1e60f394026d150",
+   "size": 63384
   },
   "alloy-editor/all.js": {
    "sha512": "0c917acb6b3f7397d37263a8ee01100929e7aed3c752b2103cb884f65aef7b23",
    "size": 737537
   },
   "css/all.css": {
-   "sha512": "b5426b2cc41ca837fea4f0c72b21d4cd456739d794404504d2dbbbf486c3c725",
-   "size": 130050
+   "sha512": "7f5d792397331b71403edf67510b812c597bf200ae8ca538d0864b2eb098cb50",
+   "size": 136196
   },
   "data-default/data.json": {
-   "sha512": "aff6accbac7e950ff567105666ddf29b70ca7c2dcd9d90f9a969509a42a9b195",
-   "size": 352
+   "sha512": "c8952629acf0c47ac1a53c7b8910e3aae2eda34371cb5182b9c9a50e483a297c",
+   "size": 437
   },
   "data-default/users/content-default.json": {
    "sha512": "0603ce08f7abb92b3840ad0cf40e95ea0b3ed3511b31524d4d70e88adba83daa",
    "size": 679
   },
   "data/data.json": {
-   "sha512": "5f419fff6baaf3ee1c41ba5d3b396f0d5d406136f5aa681376889f4fb7380243",
-   "size": 123877
+   "sha512": "7da2160bce9f61cc52513f02fed7861e5e76a2fe4f6a235d79f4dcb9617c9f0b",
+   "size": 187072
   },
   "data/files/ZeroFrame.coffee": {
    "sha512": "e9d440c26e858ff524313e60881714bcaf292470ce63d2b33b93d9920a21a7c4",
@@ -113,6 +123,70 @@
    "sha512": "6bdad39da3dfbc3db3a57e52fc10d9205cf0729a6cd124e7e5c8704a130161b4",
    "size": 15562
   },
+  "data/img/post_107_1489106790.jpg": {
+   "sha512": "d26b09e35853fe3d2b69ce2e1b3532af4fa830dff7fc8bf8248114a21a54aea0",
+   "size": 97447
+  },
+  "data/img/post_108_tor_hs_limit.png": {
+   "sha512": "f42e8b8e03856ede429c7bf97ce7490f33a541881a5943eedb9601b617696aab",
+   "size": 4254
+  },
+  "data/img/post_109_blacklist.png": {
+   "sha512": "d8211426370fe3ee03306b15c2896d1242dacf44d026d09953a42c13dd727876",
+   "size": 6186
+  },
+  "data/img/post_110_zerosites.png": {
+   "sha512": "07a87584e2f95b42bf0880594b4aab54809b04c3acc14ba297370bec444e9d4f",
+   "size": 40366
+  },
+  "data/img/post_113_mavo.jpg": {
+   "sha512": "174eb14349a5f6e9679b3acf7cb0545cd91544fb1058312c460e873fa5eb288e",
+   "size": 121176
+  },
+  "data/img/post_115_mobile-sm.png": {
+   "sha512": "e0b76406a9ef06d3f7fdc29036d77162e661efe063c9038b53f7611f432622b4",
+   "size": 70656
+  },
+  "data/img/post_116_20785768_1658990647475567_7520728110450357066_o.jpg": {
+   "sha512": "958bb514ec019267ca6c1c7f25d9950530728e04cc1eee33b571b9f8f1c3a58d",
+   "size": 72858
+  },
+  "data/img/post_121_zeroup.png": {
+   "sha512": "2cf2f8ed080534251a5ef4e454fe25674411391ec1b142e20bc4c20c755dbce9",
+   "size": 51890
+  },
+  "data/img/post_124_chart_top.jpg": {
+   "sha512": "6d4f6e8d72b8612bef0e62e4d36a72800344c834f72311ee5f9bb5e97718806a",
+   "size": 170450
+  },
+  "data/img/post_131_blocklist.png": {
+   "sha512": "27f3e449aa327b135b995b964e9191460968bb70201aaca1814e0d93a0e61ee4",
+   "size": 14440
+  },
+  "data/img/post_132_Config.png": {
+   "sha512": "fdba7451da4a782bdc1770cfd9a341314b2ffde01dddea63edfa97fca9616b40",
+   "size": 20278
+  },
+  "data/img/post_134_dws2018.jpg": {
+   "sha512": "959e1c4b1daddc4e62edeb6706934f4adfa14d9ac8c94243900c1525f314b797",
+   "size": 93811
+  },
+  "data/img/post_139_TEDSalon.jpg": {
+   "sha512": "dc884a044124d5ebe1d1cb98f52d41f5dfa50fb42014d6b7d0395a57a9e58ba5",
+   "size": 67023
+  },
+  "data/img/post_140_dark-theme.png": {
+   "sha512": "7de42c38798c8dc6b940ff679b3052f98aaecd1bfff42954cf05c9ab05b7161d",
+   "size": 46002
+  },
+  "data/img/post_147_console.png": {
+   "sha512": "3fcd9cf43f78513f2b2bfc3542ede0aa98a994fdd3ec3e92a0f1154578152138",
+   "size": 34446
+  },
+  "data/img/post_151_benchmark.png": {
+   "sha512": "4f238b57db77c55b080a3b63113c1bf94a6206e160f9726fd20c11eeb9536d49",
+   "size": 5729
+  },
   "data/img/progressbar.png": {
    "sha512": "23d592ae386ce14158cec34d32a3556771725e331c14d5a4905c59e0fe980ebf",
    "size": 13294
@@ -193,6 +267,10 @@
    "sha512": "70274438cf2fbb63e1d3c75a74250ca5d968d63cadbb4426305b3b51f2608a01",
    "size": 472084
   },
+  "data/video/local_peer_discovery.jpg": {
+   "sha512": "a3d33cf1eba1560bf5c23d984053ea812aa83551752ee0f95125e3d6306756eb",
+   "size": 64818
+  },
   "dbschema.json": {
    "sha512": "fa70ee2fce3f8342c6909e0e9b853bca71fa996f23f85739f94c086f2bda5ceb",
    "size": 2571
@@ -206,19 +284,59 @@
    "size": 723
   },
   "index.html": {
-   "sha512": "503623af793ba3d4209a08b7c94b06db410804bdf7089fed040c471c459a71a5",
-   "size": 6382
+   "sha512": "82b962d4c7ae0ece5bde1938f16431e4f8b44e84d857d4291fbcd6a7335c8c8c",
+   "size": 6542
   },
   "js/all.js": {
-   "sha512": "2e75e1eddde295bc99ce54f87b987219caed30d0828fe361c900ffb9a9fe1905",
-   "size": 247867
+   "sha512": "8f12f6a7eed48d004777d9546bedbc2a4228a4ad52c4c3d77072e5fc19386472",
+   "size": 262515
+  },
+  "languages/de.json": {
+   "sha512": "8fef5db6d592cc1d6baaf27489cdbaa2649c14ab5735fc18fd8c2506292b1289",
+   "size": 2437
+  },
+  "languages/es.json": {
+   "sha512": "9005bf63e41b2670af8eba0103badfe9ba24ae94b6cac64d00193cfbb2624d85",
+   "size": 871
+  },
+  "languages/fr.json": {
+   "sha512": "6e87d27a3ee084c8300642ac83133d9b967d8ba3997d7bb0dfbe104ee3e1b327",
+   "size": 1773
+  },
+  "languages/it.json": {
+   "sha512": "f5c15cf8f36984c29b38911946c18a0414bb2739fd95196bc42004d90979f43e",
+   "size": 804
+  },
+  "languages/nl.json": {
+   "sha512": "1844365e54a2a5b53fcff4f36ad2e870fe738ba033dbae77172de3126e72bcb7",
+   "size": 912
   },
   "languages/pl.json": {
    "sha512": "f84ea772597afc947fb0e759318aaa3371a36efe542abdbd6b6411ea99468826",
    "size": 864
+  },
+  "languages/pt-br": {
+   "sha512": "804a255da65cb8de0e425326bce69874aab03a6d58c05b95bf6c5102b337f9d1",
+   "size": 822
+  },
+  "languages/zh.json": {
+   "sha512": "fdc18e8db95603481f107036f77ed0e851afa3259fb4f3476117ceb98462f752",
+   "size": 1963
   }
  },
- "ignore": "((js|css|alloy-editor)/(?!all.(js|css))|data/.*db|data/users/.*/.*)",
+ "files_optional": {
+  "data/video/local_peer_discovery.mp4": {
+   "piece_size": 1048576,
+   "piecemap": "data/video/local_peer_discovery.mp4.piecemap.msgpack",
+   "sha512": "06c34ee9a5e86ab6312e8676e6273dca77af5716e0ea549564fc961b8041d299",
+   "size": 7809567
+  },
+  "data/video/local_peer_discovery.mp4.piecemap.msgpack": {
+   "sha512": "6f8186658cc2aa27a2a91cf4f655bafcc4c39a8ee0d0d600c2865ca0fe48139c",
+   "size": 322
+  }
+ },
+ "ignore": "((js|css|alloy-editor)/(?!all.(js|css))|data/.*db|data/users/.*)",
  "includes": {
   "data/users/content.json": {
    "signers": [],
@@ -226,22 +344,14 @@
   }
  },
  "inner_path": "content.json",
- "modified": 1486949114,
+ "modified": 1594422823,
+ "optional": "data/video/.*mp4",
  "postmessage_nonce_security": true,
- "sign": [
-  46220524892014274189597736846232592807986501080175547419624109664319912543976,
-  48261414791532551873927752970010534526261073351836499372694272435238865271264
- ],
  "signers_sign": "G7W/oNvczE5nPTFYVOqv8+GOpQd23LS/Dc1Q6xQ1NRDDHlYzmoSE63UQ7Za05kD0rwIYXbuUSr8z8p6RhZmnUs8=",
- "signs": {
-  "1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "G4MrVTYetIomtruNF7KyB5VNSynx4oy/IEZJzNz84XwTcW1GQNkXuRHLFVK0YLtVxmTyX8Jm3AscS4e2+0QG/wg="
- },
+ "signs": {"1BLogC9LN4oPDcruNz3qo1ysa133E9AGg8": "G8uuWUYFhzXWl5qolK3+EZTiCNpJHPI8G+vWDDLO8NOBRb9MlR1M4C7kOW8v24zTevWHYRuNHXk4Vl3ZsJj480k="},
  "signs_required": 1,
  "title": "ZeroBlog",
- "translate": [
-  "index.html",
-  "js/all.js",
-  "alloy-editor/all.js"
- ],
- "zeronet_version": "0.5.2"
+ "translate": ["index.html","js/all.js","alloy-editor/all.js"],
+ "viewport": "width=device-width, initial-scale=0.8",
+ "zeronet_version": "0.7.1"
 }
