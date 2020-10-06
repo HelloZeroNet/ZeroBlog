@@ -19,7 +19,9 @@ class Text
 		options["breaks"] = true
 		if options.sanitize
 			options["renderer"] = renderer # Dont allow images
+		text = text.replace(/((?<=\s|^)http[s]?:\/\/.*?)(?=\s|$)/g, '<$1>')  # Auto linkify IPv6 urls by adding <> around urls
 		text = marked(text, options)
+		text = text.replace(/(https?:\/\/)%5B(.*?)%5D/g, '$1[$2]')  # Fix IPv6 links
 		return @fixHtmlLinks text
 
 
