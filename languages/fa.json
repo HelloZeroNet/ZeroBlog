@@ -1,0 +1,73 @@
+{
+    "Add new post": "اضافه کردن پست جدید",
+    "Follow in Newsfeed": "در خوراک‌اخبار دنبال کنید",
+    "Username mentions": "اشاره به نام‌کاربری",
+    "Posts": "پست ها",
+    "Post": "پست",
+    " post(s)": " پست(ها)",
+    "0 Comments:": "0 نظرات:",
+    "Comments": "نظرات",
+    "Following": "دنبال میکنید",
+
+    "Like this post": "لایک کردن این پست",
+    "Latest comments:": "اخرین نظرات:",
+    "Reply": "پاسخ",
+
+    "Bold": "حروف‌درشت",
+    "Italic": "کج",
+    "Strikethrough": "خط زیر",
+    "Code": "کد",
+    "Link": "لینک",
+    "Type or paste link here": "لینک را در اینجا بنویسید یا بچسبانید",
+
+    "**bold**": "**حروف‌درست**",
+    "_italic_": "_کج_",
+    "strikethrough": "خط زیر",
+    "- Lists": "- فهرست ها",
+    "1. Numbered lists": "۱. لیست های شماره شده",
+    "[Links](http://www.zeronet.io)": "[لینک‌ها](http://www.zeronet.io)",
+    "[References][1]<br>[1]: Can be used": "[مراجع][1]<br>[1]: میتوانند استفاده شوند",
+    "&gt; Quotes": "&gt; نقل‌قول ها",
+    "--- Horizontal rule": "--- قانون افقی",
+
+    "More comments": "نظرات بیشتر...",
+    "Sign in as...": "با عنوان ... وارد شوید",
+    "Submit comment": "ارسال نظر",
+    "Please sign in": "لطفا وارد شوید",
+    "new comment": "نظر جدید",
+    "used: ": "استفاده شده: ",
+
+    " minutes ago": " دقایقی پیش",
+    " hours ago": " ساعاتی پیش",
+    " days ago": " چند‌روز پیش",
+    "on ": "در ",
+    "Just now": "همین الآن",
+    "less than 1 min read": "خواندن در کمتر از یک دقیقه",
+    " min read": " دقیقه خواندن",
+
+    "tag:": "برچسب:",
+    "tagged:": "برچسب  شده:",
+    "not tagged": "برچسب نشده",
+    "TOC by date": "مرتب‌سازی بر اساس تاریخ",
+    "TOC by tag": "مرتب‌سازی بر اساس برچسب",
+    "index by date": "نمایش بر اساس تاریخ",
+    "index by tag": "نمایش بر اسا برچسب",
+    "posts of tag:": "پست‌ها بر اساس برچسب: ",
+    "all untagged": "همه برچسب نشده ها",
+    "untagged:": "برچسب نشده",
+    
+    "Content changed": "محتوا تغییر کرد",
+    "Sign &amp; Publish new content": "امضا &amp; انتشار محتوای جدید",
+
+    " Editing: ": " تغییر‌دادن: ",
+    "Save": "ذخیره",
+    "Cancel": "لغو",
+    "Delete ": "حذف‌کردن ",
+
+    "Prev page": "صفحه قبل",
+    "Next page": "صفحه بعد",
+
+    "Not found": "پیدا نشد",
+    "Content changed": "محتوا تغییر کرد",
+    "Are you sure you sure to delete this Post?": "آیا از پاک کردن این پست اطمینان داری؟"
+}
